@@ -5,13 +5,23 @@ import './Login.css'
 function Login() {
   const [users, setUsers] = useState([])
   const [user, setPost] = useState({patient_dpi: "", name: ""} )
-  const { patient_dpi, name } = user
+  let { username, password, loginState } = String
+  let succesfull_login = false
   
   useEffect(() => {
     fetchPosts()
-    console.log('database copy')
-    console.log({users})
+    // console.log('database copy')
+    // console.log({users})
   },[])
+
+  const evaluate_login = () => {
+    if(succesfull_login){
+      loginState = 'Login Succesfully!'
+    }
+    else{
+      loginState = ''
+    }
+  }
 
   async function fetchPosts(){
     const { data } = await supabase
@@ -20,31 +30,51 @@ function Login() {
     setUsers(data)
     console.log("data: ", data)
     console.log('users: ', {users})
-    if(users.length>0){
-      console.log('The USER 0: ',users[0])
-    }
+    // if(users.length>0){
+    //   console.log('The USER 0: ',users[0].patient_dpi)
+    // }
   }
+
+  const check_login = () => {
+    succesfull_login = false
+    if(!(document.getElementById('input-username')==null)){
+      username = document.getElementById('input-username').value
+      password = document.getElementById('input-password').value
+      // console.log('theUSER',username)
+      // console.log('thePASSWORD',password)
+      let while_counter = 0
+      while(while_counter<users.length && succesfull_login==false){
+        if((username==users[while_counter].name)&&(password==users[while_counter].patient_dpi)){
+          succesfull_login = true
+          console.log('SUCCESFULL LOGIN~',succesfull_login.toString())
+        }
+        else{
+          while_counter++
+        }
+      }
+    }
+    evaluate_login()
+    console.log(loginState.toString())
+  }
+
   return (
-    //<div className="login-root" >
       <div className="login-container">
         <img
           className="logo"
           src="https://cdn.pixabay.com/photo/2017/05/15/23/47/stethoscope-icon-2316460_960_720.png"
         />
         <div className="login-labels" >Username:</div>
-        <input onClick={fetchPosts} ></input>
+        <input id="input-username" onClick={fetchPosts} ></input>
         <div className="login-labels" >Password:</div>
-        <input onClick={fetchPosts} ></input>
-        {
-          users.map(user =>(
-            <div key={user.patient_dpi}>
-              <h3>{user.patient_dpi}</h3>
-              <p>{user.name}</p>
-            </div>
-          ))
-        }
+        <input id="input-password" onClick={fetchPosts} ></input>
+        <button
+          className="login-button"
+          onClick={check_login}
+        >
+          Login
+        </button>
+        <div>{loginState}</div>
       </div>
-    //</div>
   )
 }
 
