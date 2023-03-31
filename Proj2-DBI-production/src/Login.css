@@ -29,10 +29,14 @@
 .login-button {
   position: relative;
   display: table;
-  margin: 15px 70px 0px 70px;
+  margin: 15px 70px 10px 70px;
   /* padding: 0px; */
   text-align: center;
   border-radius: 5px;
   border: 0.5px solid black;
   cursor: pointer;
+}
+
+.div-login-message {
+  font-size: 15px;
 }

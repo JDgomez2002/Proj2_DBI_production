@@ -5,7 +5,7 @@ import './Login.css'
 function Login() {
   const [users, setUsers] = useState([])
   const [user, setPost] = useState({patient_dpi: "", name: ""} )
-  let { username, password, loginState } = String
+  let { username, password, loginState } = ''
   let succesfull_login = false
   
   useEffect(() => {
@@ -17,9 +17,12 @@ function Login() {
   const evaluate_login = () => {
     if(succesfull_login){
       loginState = 'Login Succesfully!'
+      document.getElementById('div-login-status').textContent = 'Login Succesfully!'
+      document.getElementById('div-login-status').style.color = 'green'
     }
     else{
-      loginState = ''
+      document.getElementById('div-login-status').textContent = "Can't login. Check credentials"
+      document.getElementById('div-login-status').style.color = 'red'
     }
   }
 
@@ -46,7 +49,6 @@ function Login() {
       while(while_counter<users.length && succesfull_login==false){
         if((username==users[while_counter].name)&&(password==users[while_counter].patient_dpi)){
           succesfull_login = true
-          console.log('SUCCESFULL LOGIN~',succesfull_login.toString())
         }
         else{
           while_counter++
@@ -54,7 +56,7 @@ function Login() {
       }
     }
     evaluate_login()
-    console.log(loginState.toString())
+    console.log('succesfullLoginVar',succesfull_login.toString())
   }
 
   return (
@@ -73,7 +75,7 @@ function Login() {
         >
           Login
         </button>
-        <div>{loginState}</div>
+        <div id="div-login-status" className="div-login-message" ></div>
       </div>
   )
 }
