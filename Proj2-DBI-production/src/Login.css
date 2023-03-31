@@ -1,0 +1,27 @@
+.login-root {
+  /* height: 500px;
+  width: 500px; */
+  text-align: center;
+}
+
+.logo {
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  padding: 10px 1px 1px 1px;
+}
+
+.login-container {
+  height: 175px;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  display: table;
+  flex-direction: column;
+  background-color: white;
+}
+
+.login-labels {
+  text-align: left;
+  padding: 10px 0px 0px 0px;
+}
