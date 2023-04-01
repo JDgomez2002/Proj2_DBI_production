@@ -75,7 +75,7 @@ function Login() {
         Login
       </button> */}
       <BrowserRouter>
-        {/* <Link className="login-button" onClick={check_login} to={succesfull_login ? '../MainPage/MainPage' : '#'}> */}
+        {/* <Link className="login-button" onClick={check_login} to={succesfull_login==true ? '/MainPage' : '#'} > */}
         <Link className="login-button" onClick={check_login} to={"/MainPage"}>
           Login
         </Link>
