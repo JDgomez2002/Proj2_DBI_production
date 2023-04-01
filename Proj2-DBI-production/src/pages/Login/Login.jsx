@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../client'
 import { Switch, BrowserRouter, Link, Route, useHistory } from 'react-router-dom'
-import MainPage from '../MainPage/MainPage'
 import './Login.css'
 
 function Login() {
@@ -40,9 +39,6 @@ function Login() {
     setUsers(data)
     console.log('data: ', data)
     console.log('users: ', { users })
-    // if(users.length>0){
-    //   console.log('The USER 0: ',users[0].patient_dpi)
-    // }
   }
 
   const check_login = () => {
@@ -69,12 +65,12 @@ function Login() {
     <div className="login-container">
       <img
         className="logo"
-        src="https://cdn.pixabay.com/photo/2017/05/15/23/47/stethoscope-icon-2316460_960_720.png"
+        src="./src/img/stethoscope-icon.png"
       />
       <div className="login-labels">Username:</div>
-      <input id="input-username" onClick={fetchPosts}></input>
+      <input id="input-username" onClick={fetchPosts} className="input-login"></input>
       <div className="login-labels">Password:</div>
-      <input id="input-password" onClick={fetchPosts}></input>
+      <input id="input-password" onClick={fetchPosts} className="input-login"></input>
       {/* <button className="login-button" onClick={check_login}>
         Login
       </button> */}

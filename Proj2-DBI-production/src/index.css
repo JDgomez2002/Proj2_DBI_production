@@ -20,7 +20,10 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #2a9d8f;
+  /* background-color: #2a9d8f; */
+  background-image: url("./src/img/background/blue-gradient.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 /* a {

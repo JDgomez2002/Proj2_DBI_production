@@ -3,9 +3,9 @@ import Login from './Login'
 import MainPage from './MainPage'
 import { Switch, Route } from 'react-router-dom'
 
-const navigate = (page) => {
-  window.location = `/?route=${page}`
-}
+// const navigate = (page) => {
+//   window.location = `/?route=${page}`
+// }
 
 const Page = () => {
   // escoger la pagina
@@ -22,5 +22,5 @@ const Page = () => {
   )
 }
 
-export { navigate }
+// export { navigate }
 export default Page
