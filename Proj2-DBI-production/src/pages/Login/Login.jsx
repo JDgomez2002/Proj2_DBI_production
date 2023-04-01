@@ -65,7 +65,7 @@ function Login() {
     <div className="login-container">
       <img
         className="logo"
-        src="./src/img/stethoscope-icon.png"
+        src="https://github.com/JDgomez2002/Proj2_DBI_production/blob/main/Proj2-DBI-production/src/img/stethoscope-icon.png?raw=true"
       />
       <div className="login-labels">Username:</div>
       <input id="input-username" onClick={fetchPosts} className="input-login"></input>
