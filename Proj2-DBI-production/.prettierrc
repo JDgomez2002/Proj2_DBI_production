@@ -1,0 +1,17 @@
+{
+  "width": 120,
+  "printWidth": 100,
+  "userTabs": 2,
+  "semi": false,
+  "singleQuote": true,
+  "overrides": [
+    {
+      "files":["**/*.css", "**/*.html"],
+      "options": {
+        "singleQuote": false
+      }
+    }
+  ],
+  "jsxSingleQuote": false,
+  "jsxBracketSameLine": false
+}
