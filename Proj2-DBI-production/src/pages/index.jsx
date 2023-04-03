@@ -1,5 +1,6 @@
 import React from 'react'
 import Login from './Login'
+import SignIn from './SignIn'
 import MainPage from './MainPage'
 import { Switch, Route } from 'react-router-dom'
 
@@ -16,7 +17,8 @@ const Page = () => {
         <MainPage />
       </Route>
       <Route path="/">
-        <Login />
+        {/*/<Login />*/}
+        <SignIn />
       </Route>
     </Switch>
   )

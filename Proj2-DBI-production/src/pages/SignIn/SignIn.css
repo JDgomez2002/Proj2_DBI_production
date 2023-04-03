@@ -1,0 +1,65 @@
+.login-root {
+    /* height: 500px;
+    width: 500px; */
+    text-align: center;
+  }
+  
+  .logo {
+    height: 100px;
+    width: 100px;
+    text-align: center;
+    padding: 10px 1px 1px 1px;
+  }
+  
+  .login-container {
+    /* height: 175px; */
+    height: 300px;
+    width: 200px;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    display: table;
+    flex-direction: column;
+    background-color: white;
+  }
+  
+  .login-labels {
+    font-size: 25px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: left;
+    padding: 15px 0px 0px 0px;
+  }
+  
+  .input-login {
+    font-size: 25px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    width: 100%;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    border-radius: 3px;
+    border: 0.5px solid black;
+    text-indent: 3px;
+  }
+  
+  .login-button {
+    font-size: 20px;
+    position: relative;
+    display: table;
+    margin: 15px 70px 10px 70px;
+    padding: 2px 5px 2px 5px;
+    text-align: center;
+    border-radius: 5px;
+    border: 0.5px solid black;
+    cursor: pointer;
+    color: inherit;
+    text-decoration: inherit;
+    /* all: unset; */
+  }
+  
+  .login-button:hover {
+    background-color: #a6c3c3c5;
+  }
+  
+  .div-login-message {
+    font-size: 12px;
+  }
