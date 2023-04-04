@@ -18,11 +18,17 @@ const Page = () => {
       <Route path="/MainPage">
         <MainPage />
       </Route>
-      <Route path="/">
-        {/*/<Login />*/}
-        {/*<SignIn />*/}
-        {/*<InfoPatient />*/}
+      <Route path="/SignIn">
+        <SignIn />
+      </Route>
+      <Route path="/InfoPatient">
+        <InfoPatient />
+      </Route>
+      <Route path="/InfoDoctor">
         <InfoDoctor />
+      </Route>
+      <Route path="/">
+        <Login />
       </Route>
     </Switch>
   )

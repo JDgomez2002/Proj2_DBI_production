@@ -33,7 +33,7 @@ function SignIn() {
       document.getElementById('div-login-status').textContent = 'Sign in Succesfully!'
       document.getElementById('div-login-status').style.color = 'green'
       createUser()
-      history.push('/MainPage')
+      history.push('/Login')
     } else {
       document.getElementById('div-login-status').textContent = "Can't Sign in. Check credentials"
       document.getElementById('div-login-status').style.color = 'red'
@@ -86,7 +86,7 @@ function SignIn() {
   }
 
   return (
-    <div className="login-container">
+    <div className="sign-in-container">
       <img
         className="logo"
         src="https://github.com/JDgomez2002/Proj2_DBI_production/blob/main/Proj2-DBI-production/src/img/stethoscope-icon.png?raw=true"
@@ -95,15 +95,15 @@ function SignIn() {
       <input id="input-username" onClick={fetchPosts} className="input-login"></input>
       <div className="login-labels">Password:</div>
       <input id="input-password" onClick={fetchPosts} className="input-login"></input>
-      <label><input type="checkbox" id="input-role" hecked ={isChecked} onChange={handleOnChange} className="input-login" />Doctor</label>
+      <label><input type="checkbox" id="input-role" hecked={isChecked} onChange={handleOnChange} className="input-login" />Doctor</label>
 
       {/* <button className="login-button" onClick={check_login}>
     Login
   </button> */}
       <BrowserRouter>
         {/* <Link className="login-button" onClick={check_login} to={succesfull_signin==true ? '/MainPage' : '#'} > */}
-        <Link className="login-button" onClick={check_signIn} to={'/MainPage'}>
-          SignIn
+        <Link className="sign-in-button" onClick={check_signIn} to={'/'}>
+          Sign in
         </Link>
       </BrowserRouter>
       <div id="div-login-status" className="div-login-message"></div>

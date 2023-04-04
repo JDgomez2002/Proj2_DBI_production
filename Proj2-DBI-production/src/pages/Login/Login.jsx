@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../client'
-import { Switch, BrowserRouter, Link, Route, useHistory } from 'react-router-dom'
+import { BrowserRouter, Link, useHistory } from 'react-router-dom'
 import './Login.css'
 
 function Login() {
@@ -32,6 +32,11 @@ function Login() {
       document.getElementById('div-login-status').textContent = "Can't login. Check credentials"
       document.getElementById('div-login-status').style.color = 'red'
     }
+  }
+
+  const sign_in = () => {
+    console.log('/SignIn')
+    history.push('/SignIn')
   }
 
   async function fetchPosts() {
@@ -79,7 +84,9 @@ function Login() {
         <Link className="login-button" onClick={check_login} to={"/MainPage"}>
           Login
         </Link>
-        
+        <Link className="sign-in-button-link" onClick={sign_in} to={"/SignIn"} >
+          Sign in
+        </Link>
       </BrowserRouter>
       <div id="div-login-status" className="div-login-message"></div>
     </div>
