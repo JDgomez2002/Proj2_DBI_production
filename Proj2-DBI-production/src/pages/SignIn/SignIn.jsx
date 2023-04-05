@@ -26,7 +26,11 @@ function SignIn() {
       document.getElementById('div-sign-in-status').style.color = 'green'
       createUser()
       setTimeout(() => {
-        history.push('/Login')
+        if(isChecked) {
+          history.push('/InfoDoctor')}
+        else{
+          history.push('/InfoPatient')
+        }
       }, 3000)
     } else {
       document.getElementById('div-sign-in-status').textContent = "Can't Sign in. User already exists!"
@@ -69,7 +73,6 @@ function SignIn() {
       while (while_counter < users.length && UserUnsigned == true) {
         if (user_id == users[while_counter].user_id || password == users[while_counter].password) {
           UserUnsigned = false
-          // break
         } else {
           while_counter++
         }
