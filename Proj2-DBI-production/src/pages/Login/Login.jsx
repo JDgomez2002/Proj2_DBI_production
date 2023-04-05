@@ -27,7 +27,9 @@ function Login() {
       loginState = 'Login Succesfully!'
       document.getElementById('div-login-status').textContent = 'Login Succesfully!'
       document.getElementById('div-login-status').style.color = 'green'
-      history.push('/MainPage')
+      setTimeout(() => {
+        history.push('/MainPage')
+      }, 3000)
     } else {
       document.getElementById('div-login-status').textContent = "Can't login. Check credentials"
       document.getElementById('div-login-status').style.color = 'red'

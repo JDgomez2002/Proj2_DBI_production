@@ -17,26 +17,20 @@ function SignIn() {
 
   useEffect(() => {
     fetchPosts()
-    // console.log('database copy')
-    // console.log({users})
   }, [])
-
-  // useEffect(() => {
-  //   history.push('/MainPage')
-  //   // console.log('database copy')
-  //   // console.log({users})
-  // }, [succesfull_signin])
 
   const evaluate_signin = () => {
     if (UserUnsigned) {
       SignInState = 'Sign in Succesfully!'
-      document.getElementById('div-login-status').textContent = 'Sign in Succesfully!'
-      document.getElementById('div-login-status').style.color = 'green'
+      document.getElementById('div-sign-in-status').textContent = 'Sign in Succesfully!'
+      document.getElementById('div-sign-in-status').style.color = 'green'
       createUser()
-      history.push('/Login')
+      setTimeout(() => {
+        history.push('/Login')
+      }, 3000)
     } else {
-      document.getElementById('div-login-status').textContent = "Can't Sign in. Check credentials"
-      document.getElementById('div-login-status').style.color = 'red'
+      document.getElementById('div-sign-in-status').textContent = "Can't Sign in. User already exists!"
+      document.getElementById('div-sign-in-status').style.color = 'red'
     }
   }
 
@@ -72,10 +66,10 @@ function SignIn() {
       // console.log('theUSER',username)
       // console.log('thePASSWORD',password)
       let while_counter = 0
-      while (while_counter < users.length && UserUnsigned  == true) {
-        if (user_id == users[while_counter].password_entry && password == users[while_counter].username) {
-          UserUnsigned  = false
-          break
+      while (while_counter < users.length && UserUnsigned == true) {
+        if (user_id == users[while_counter].user_id || password == users[while_counter].password) {
+          UserUnsigned = false
+          // break
         } else {
           while_counter++
         }
@@ -96,17 +90,13 @@ function SignIn() {
       <div className="login-labels">Password:</div>
       <input id="input-password" onClick={fetchPosts} className="input-login"></input>
       <label><input type="checkbox" id="input-role" hecked={isChecked} onChange={handleOnChange} className="input-login" />Doctor</label>
-
-      {/* <button className="login-button" onClick={check_login}>
-    Login
-  </button> */}
       <BrowserRouter>
-        {/* <Link className="login-button" onClick={check_login} to={succesfull_signin==true ? '/MainPage' : '#'} > */}
-        <Link className="sign-in-button" onClick={check_signIn} to={'MainPage'}>
+        {/* <Link className="login-button" onClick={check_login} to={succesfull_signin==true ? '/Login' : '#'} > */}
+        <Link className="sign-in-button" onClick={check_signIn} to={'Login'}>
           Sign in
         </Link>
       </BrowserRouter>
-      <div id="div-login-status" className="div-login-message"></div>
+      <div id="div-sign-in-status" className="div-login-message"></div>
     </div>
   )
 }
