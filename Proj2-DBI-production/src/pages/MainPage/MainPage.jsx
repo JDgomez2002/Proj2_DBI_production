@@ -5,6 +5,7 @@ function MainPage() {
   
   return (
     <div className="main-page-header-container" >
+      <div></div>
       MAIN PAGES
     </div>
   )
