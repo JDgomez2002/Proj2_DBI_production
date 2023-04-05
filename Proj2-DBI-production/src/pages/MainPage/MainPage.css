@@ -1,0 +1,10 @@
+* {
+  border-radius: 5px;
+  background-color: white;
+  padding: 0px;
+  margin: 0px;
+}
+
+.main-page-header-container {
+  padding: 15px;
+}

@@ -4,8 +4,8 @@ import './MainPage.css'
 function MainPage() {
   
   return (
-    <div>
-      MAIN PAGE
+    <div className="main-page-header-container" >
+      MAIN PAGES
     </div>
   )
 }
