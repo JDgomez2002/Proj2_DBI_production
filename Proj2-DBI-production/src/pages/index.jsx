@@ -4,6 +4,7 @@ import SignIn from './SignIn'
 import InfoPatient from './InfoPatient'
 import InfoDoctor from './InfoDoctor'
 import MainPage from './MainPage'
+import Incidence from './Incidence'
 import { Switch, Route } from 'react-router-dom'
 
 // const navigate = (page) => {

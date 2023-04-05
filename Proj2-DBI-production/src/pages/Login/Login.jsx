@@ -5,7 +5,7 @@ import './Login.css'
 
 function Login() {
   const [users, setUsers] = useState([])
-  const [user, setPost] = useState({ patient_dpi: '', name: '' })
+  const [user, setPost] = useState({ user_id: '', password: '' })
   let { username, password, loginState } = ''
   let succesfull_login = false
   const history = useHistory()
@@ -40,7 +40,7 @@ function Login() {
   }
 
   async function fetchPosts() {
-    const { data } = await supabase.from('patient').select()
+    const { data } = await supabase.from('users').select()
     setUsers(data)
     console.log('data: ', data)
     console.log('users: ', { users })
@@ -55,7 +55,7 @@ function Login() {
       // console.log('thePASSWORD',password)
       let while_counter = 0
       while (while_counter < users.length && succesfull_login == false) {
-        if (username == users[while_counter].name && password == users[while_counter].patient_dpi) {
+        if (username == users[while_counter].user_id && password == users[while_counter].password) {
           succesfull_login = true
         } else {
           while_counter++

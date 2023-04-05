@@ -102,7 +102,7 @@ function SignIn() {
   </button> */}
       <BrowserRouter>
         {/* <Link className="login-button" onClick={check_login} to={succesfull_signin==true ? '/MainPage' : '#'} > */}
-        <Link className="sign-in-button" onClick={check_signIn} to={'/'}>
+        <Link className="sign-in-button" onClick={check_signIn} to={'MainPage'}>
           Sign in
         </Link>
       </BrowserRouter>
