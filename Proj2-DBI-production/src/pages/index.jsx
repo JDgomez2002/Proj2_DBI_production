@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Login from './Login'
 import SignIn from './SignIn'
 import InfoPatient from './InfoPatient'
 import InfoDoctor from './InfoDoctor'
 import MainPage from './MainPage'
 import Incidence from './Incidence'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, useHistory } from 'react-router-dom'
 
 // const navigate = (page) => {
 //   window.location = `/?route=${page}`
@@ -13,22 +13,24 @@ import { Switch, Route } from 'react-router-dom'
 
 const Page = () => {
   // escoger la pagina
+  const history = useHistory()
+  history.push('/Proj2_DBI/')
 
   return (
     <Switch>
-      <Route path="/MainPage">
+      <Route path="/Proj2_DBI/MainPage">
         <MainPage />
       </Route>
-      <Route path="/SignIn">
+      <Route path="/Proj2_DBI/SignIn">
         <SignIn />
       </Route>
-      <Route path="/InfoPatient">
+      <Route path="/Proj2_DBI/InfoPatient">
         <InfoPatient />
       </Route>
-      <Route path="/InfoDoctor">
+      <Route path="/Proj2_DBI/InfoDoctor">
         <InfoDoctor />
       </Route>
-      <Route path="/">
+      <Route path="/Proj2_DBI/">
         <Login />
       </Route>
     </Switch>

@@ -16,19 +16,14 @@ function Login() {
     // console.log({users})
   }, [])
 
-  // useEffect(() => {
-  //   history.push('/MainPage')
-  //   // console.log('database copy')
-  //   // console.log({users})
-  // }, [succesfull_login])
-
   const evaluate_login = () => {
     if (succesfull_login) {
       loginState = 'Login Succesfully!'
       document.getElementById('div-login-status').textContent = 'Login Succesfully!'
       document.getElementById('div-login-status').style.color = 'green'
+      document.getElementById('div-login-loading').textContent = 'Loading...'
       setTimeout(() => {
-        history.push('/MainPage')
+        history.push('/Proj2_DBI/MainPage')
       }, 3000)
     } else {
       document.getElementById('div-login-status').textContent = "Can't login. Check credentials"
@@ -50,14 +45,12 @@ function Login() {
 
   const check_login = () => {
     succesfull_login = false
-    if (!(document.getElementById('input-username') == null)) {
-      username = document.getElementById('input-username').value
-      password = document.getElementById('input-password').value
-      // console.log('theUSER',username)
-      // console.log('thePASSWORD',password)
+    username = document.getElementById('input-username').value
+    password = document.getElementById('input-password').value
+    if(!((username==='')&&(password===''))){
       let while_counter = 0
-      while (while_counter < users.length && succesfull_login == false) {
-        if (username == users[while_counter].user_id && password == users[while_counter].password) {
+      while ((while_counter < users.length) && (succesfull_login == false)) {
+        if ((username == users[while_counter].user_id) && (password == users[while_counter].password)) {
           succesfull_login = true
         } else {
           while_counter++
@@ -78,19 +71,17 @@ function Login() {
       <input id="input-username" onClick={fetchPosts} className="input-login"></input>
       <div className="login-labels">Password:</div>
       <input id="input-password" onClick={fetchPosts} className="input-login"></input>
-      {/* <button className="login-button" onClick={check_login}>
-        Login
-      </button> */}
       <BrowserRouter>
         {/* <Link className="login-button" onClick={check_login} to={succesfull_login==true ? '/MainPage' : '#'} > */}
-        <Link className="login-button" onClick={check_login} to={"/MainPage"}>
+        <Link className="login-button" onClick={check_login} to={"#"}>
           Login
         </Link>
-        <Link className="sign-in-button-link" onClick={sign_in} to={"/SignIn"} >
+        <Link className="sign-in-button-link" onClick={sign_in} to={"#"} >
           Sign in
         </Link>
       </BrowserRouter>
       <div id="div-login-status" className="div-login-message"></div>
+      <div id="div-login-loading" className="div-login-message" style={{fontSize:'20px'}}></div>
     </div>
   )
 }
