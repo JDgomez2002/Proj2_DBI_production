@@ -5,16 +5,9 @@ import InfoPatient from './InfoPatient'
 import InfoDoctor from './InfoDoctor'
 import MainPage from './MainPage'
 import Incidence from './Incidence'
-import { Switch, Route, useHistory } from 'react-router-dom'
-
-// const navigate = (page) => {
-//   window.location = `/?route=${page}`
-// }
+import { Switch, Route } from 'react-router-dom'
 
 const Page = () => {
-  // escoger la pagina
-  const history = useHistory()
-  history.push('/Proj2_DBI/')
 
   return (
     <Switch>
@@ -30,7 +23,7 @@ const Page = () => {
       <Route path="/Proj2_DBI/InfoDoctor">
         <InfoDoctor />
       </Route>
-      <Route path="/Proj2_DBI/">
+      <Route path="/">
         <Login />
       </Route>
     </Switch>

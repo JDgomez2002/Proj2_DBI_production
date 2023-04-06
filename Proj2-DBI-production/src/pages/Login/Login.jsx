@@ -12,6 +12,7 @@ function Login() {
 
   useEffect(() => {
     fetchPosts()
+    history.push('/Proj2_DBI/')
     // console.log('database copy')
     // console.log({users})
   }, [])
@@ -23,6 +24,7 @@ function Login() {
       document.getElementById('div-login-status').style.color = 'green'
       document.getElementById('div-login-loading').textContent = 'Loading...'
       setTimeout(() => {
+        history.push('/Proj2_DBI/')
         history.push('/Proj2_DBI/MainPage')
       }, 3000)
     } else {
@@ -33,7 +35,8 @@ function Login() {
 
   const sign_in = () => {
     console.log('/SignIn')
-    history.push('/SignIn')
+    history.push('/Proj2_DBI/')
+    history.push('/Proj2_DBI/SignIn')
   }
 
   async function fetchPosts() {
@@ -71,15 +74,13 @@ function Login() {
       <input id="input-username" onClick={fetchPosts} className="input-login"></input>
       <div className="login-labels">Password:</div>
       <input id="input-password" onClick={fetchPosts} className="input-login"></input>
-      <BrowserRouter>
         {/* <Link className="login-button" onClick={check_login} to={succesfull_login==true ? '/MainPage' : '#'} > */}
-        <Link className="login-button" onClick={check_login} to={"#"}>
-          Login
-        </Link>
-        <Link className="sign-in-button-link" onClick={sign_in} to={"#"} >
-          Sign in
-        </Link>
-      </BrowserRouter>
+      <button className="login-button" onClick={check_login} >
+        Login
+      </button>
+      <button className="sign-in-button-link" onClick={sign_in} >
+        Sign in
+      </button>
       <div id="div-login-status" className="div-login-message"></div>
       <div id="div-login-loading" className="div-login-message" style={{fontSize:'20px'}}></div>
     </div>

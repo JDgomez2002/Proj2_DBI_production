@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../client'
-import { Switch, BrowserRouter, Link, Route, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import './SignIn.css'
 
 function SignIn() {
@@ -9,14 +9,15 @@ function SignIn() {
   let { user_id, password, role, SignInState } = ''
   let UserUnsigned  = true
   const [isChecked, setIsChecked] = useState(false)
+  const history = useHistory()
 
   const handleOnChange = () => {
     setIsChecked(!isChecked);
   }
-  const history = useHistory()
 
   useEffect(() => {
     fetchPosts()
+    history.push('/Proj2_DBI/SignIn')
   }, [])
 
   const evaluate_signin = () => {
@@ -27,14 +28,19 @@ function SignIn() {
       createUser()
       setTimeout(() => {
         if(isChecked) {
-          history.push('/InfoDoctor')}
+          history.push('/Proj2_DBI/InfoDoctor')}
         else{
-          history.push('/InfoPatient')
+          history.push('/Proj2_DBI/InfoPatient')
         }
       }, 3000)
     } else {
-      document.getElementById('div-sign-in-status').textContent = "Can't Sign in. User already exists!"
       document.getElementById('div-sign-in-status').style.color = 'red'
+      if((document.getElementById('input-username').value==='')||((document.getElementById('input-password').value===''))||((document.getElementById('input-confirm-password').value===''))){
+        document.getElementById('div-sign-in-status').textContent = "Can't Sign in. Complete form, please."
+      }
+      else{
+        document.getElementById('div-sign-in-status').textContent = "Can't Sign in. User already exists!"
+      }
     }
   }
 
@@ -71,7 +77,8 @@ function SignIn() {
       // console.log('thePASSWORD',password)
       let while_counter = 0
       while (while_counter < users.length && UserUnsigned == true) {
-        if (user_id == users[while_counter].user_id || password == users[while_counter].password) {
+        // if (user_id == users[while_counter].user_id || password == users[while_counter].password) {
+        if (user_id == users[while_counter].user_id) {
           UserUnsigned = false
         } else {
           while_counter++
@@ -92,13 +99,13 @@ function SignIn() {
       <input id="input-username" onClick={fetchPosts} className="input-login"></input>
       <div className="login-labels">Password:</div>
       <input id="input-password" onClick={fetchPosts} className="input-login"></input>
-      <label><input type="checkbox" id="input-role" hecked={isChecked} onChange={handleOnChange} className="input-login" />Doctor</label>
-      <BrowserRouter>
+      <div className="login-labels">Confirm password:</div>
+      <input id="input-confirm-password" onClick={fetchPosts} className="input-login"></input>
+      <label className="checkbox-label-doctor" ><input type="checkbox" id="input-role" hecked={isChecked.toString()} onChange={handleOnChange} className="input-checkbox-doctor" />Doctor</label>
         {/* <Link className="login-button" onClick={check_login} to={succesfull_signin==true ? '/Login' : '#'} > */}
-        <Link className="sign-in-button" onClick={check_signIn} to={'Login'}>
+        <button className="sign-in-button" onClick={check_signIn} >
           Sign in
-        </Link>
-      </BrowserRouter>
+        </button>
       <div id="div-sign-in-status" className="div-login-message"></div>
     </div>
   )

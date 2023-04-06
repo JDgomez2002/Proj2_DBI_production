@@ -1,3 +1,7 @@
+* {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial,
+}
+
 .login-root {
   /* height: 500px;
   width: 500px; */
@@ -36,10 +40,21 @@
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
   width: 100%;
   margin: 0px 0px 0px 0px;
-  padding: px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
   border-radius: 3px;
   border: 0.5px solid black;
   text-indent: 3px;
+}
+
+.input-checkbox-doctor {
+  margin: 15px 10px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  border-radius: 5px;
+}
+
+.checkbox-label-doctor {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  font-size: 16px;
 }
 
 .login-button {
