@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../client'
-import { BrowserRouter, Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import './Login.css'
 
 function Login() {
   const [users, setUsers] = useState([])
-  const [user, setPost] = useState({ user_id: '', password: '' })
+  const [user, setUser] = useState({ user_id: '', password: '', logged_in: false })
   let { username, password, loginState } = ''
   let succesfull_login = false
   const history = useHistory()
@@ -13,15 +13,21 @@ function Login() {
   useEffect(() => {
     fetchPosts()
     history.push('/Proj2_DBI/')
-    // console.log('database copy')
-    // console.log({users})
+    // const browser_data = window.localStorage.getItem('LOGIN_STATUS')
+    // if (browser_data !== null) setUser(JSON.parse(browser_data))
+    // console.log('reading', browser_data)
   }, [])
+
+  useEffect(() => {
+    // console.log('writing', user)
+    window.localStorage.setItem('LOGIN_STATUS', JSON.stringify(user))
+  }, [user])
 
   const evaluate_login = () => {
     if (succesfull_login) {
-      loginState = 'Login Succesfully!'
-      document.getElementById('div-login-status').textContent = 'Login Succesfully!'
+      // loginState = 'Login Succesfully!'
       document.getElementById('div-login-status').style.color = 'green'
+      document.getElementById('div-login-status').textContent = 'Login Succesfully!'
       document.getElementById('div-login-loading').textContent = 'Loading...'
       setTimeout(() => {
         history.push('/Proj2_DBI/')
@@ -55,13 +61,14 @@ function Login() {
       while ((while_counter < users.length) && (succesfull_login == false)) {
         if ((username == users[while_counter].user_id) && (password == users[while_counter].password)) {
           succesfull_login = true
+          setUser({ user_id: username, password: password, logged_in: true })
         } else {
           while_counter++
         }
       }
     }
     evaluate_login()
-    console.log('succesfullLoginVar', succesfull_login.toString())
+    // console.log('succesfullLoginVar', succesfull_login.toString())
   }
 
   return (
