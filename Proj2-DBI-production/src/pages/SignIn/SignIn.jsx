@@ -5,27 +5,30 @@ import './SignIn.css'
 
 function SignIn() {
   const [users, setUsers] = useState([])
-  const [user, setPost] = useState({ username: '', password_entry: '', role: ''})
+  const [user, setPost] = useState({ username: '', password_entry: '', role: '' })
   let { user_id, password, role, SignInState } = ''
-  let UserUnsigned  = true
+  let UserUnsigned = true
   let password_Confirmed = false
   const [isChecked, setIsChecked] = useState(false)
   const history = useHistory()
 
   const handleOnChange = () => {
-    setIsChecked(!isChecked);
+    setIsChecked(!isChecked)
   }
 
   useEffect(() => {
     fetchPosts()
+    history.push('/Proj2_DBI/')
     history.push('/Proj2_DBI/SignIn')
   }, [])
 
   const evaluate_signin = () => {
-    if(document.getElementById('input-password').value != document.getElementById('input-confirm-password').value){
+    if (
+      document.getElementById('input-password').value !=
+      document.getElementById('input-confirm-password').value
+    ) {
       document.getElementById('div-sign-in-status').style.color = 'red'
       document.getElementById('div-sign-in-status').textContent = "Password don't match!"
-      console.log('password didnt match')
     } else {
       if (UserUnsigned) {
         SignInState = 'Sign in Succesfully!'
@@ -34,19 +37,24 @@ function SignIn() {
         console.log('creating password')
         createUser()
         setTimeout(() => {
-          if(isChecked) {
-            history.push('/Proj2_DBI/InfoDoctor')}
-          else{
+          if (isChecked) {
+            history.push('/Proj2_DBI/InfoDoctor')
+          } else {
             history.push('/Proj2_DBI/InfoPatient')
           }
         }, 3000)
       } else {
         document.getElementById('div-sign-in-status').style.color = 'red'
-        if((document.getElementById('input-username').value==='')||((document.getElementById('input-password').value===''))||((document.getElementById('input-confirm-password').value===''))){
-          document.getElementById('div-sign-in-status').textContent = "Can't Sign in. Complete form, please."
-        }
-        else{
-          document.getElementById('div-sign-in-status').textContent = "Can't Sign in. User already exists!"
+        if (
+          document.getElementById('input-username').value === '' ||
+          document.getElementById('input-password').value === '' ||
+          document.getElementById('input-confirm-password').value === ''
+        ) {
+          document.getElementById('div-sign-in-status').textContent =
+            "Can't Sign in. Complete form, please."
+        } else {
+          document.getElementById('div-sign-in-status').textContent =
+            "Can't Sign in. User already exists!"
         }
       }
     }
@@ -60,12 +68,7 @@ function SignIn() {
   }
 
   async function createUser() {
-    await supabase
-    .from('users')
-    .insert([
-      {user_id,password,role}
-    ])
-    .single()
+    await supabase.from('users').insert([{ user_id, password, role }]).single()
     fetchPosts()
   }
 
@@ -74,11 +77,10 @@ function SignIn() {
     if (!(document.getElementById('input-username') == null)) {
       user_id = document.getElementById('input-username').value
       password = document.getElementById('input-password').value
-      if(isChecked == true){
-      role = "Doctor"
-      }
-      else{
-        role = "Paciente"
+      if (isChecked == true) {
+        role = 'Doctor'
+      } else {
+        role = 'Paciente'
       }
 
       // console.log('theUSER',username)
@@ -109,11 +111,20 @@ function SignIn() {
       <input id="input-password" onClick={fetchPosts} className="input-login"></input>
       <div className="login-labels">Confirm password:</div>
       <input id="input-confirm-password" onClick={fetchPosts} className="input-login"></input>
-      <label className="checkbox-label-doctor" ><input type="checkbox" id="input-role" hecked={isChecked.toString()} onChange={handleOnChange} className="input-checkbox-doctor" />Doctor</label>
-        {/* <Link className="login-button" onClick={check_login} to={succesfull_signin==true ? '/Login' : '#'} > */}
-        <button className="sign-in-button" onClick={check_signIn} >
-          Sign in
-        </button>
+      <label className="checkbox-label-doctor">
+        <input
+          type="checkbox"
+          id="input-role"
+          hecked={isChecked.toString()}
+          onChange={handleOnChange}
+          className="input-checkbox-doctor"
+        />
+        Doctor
+      </label>
+      {/* <Link className="login-button" onClick={check_login} to={succesfull_signin==true ? '/Login' : '#'} > */}
+      <button className="sign-in-button" onClick={check_signIn}>
+        Sign in
+      </button>
       <div id="div-sign-in-status" className="div-login-message"></div>
     </div>
   )
