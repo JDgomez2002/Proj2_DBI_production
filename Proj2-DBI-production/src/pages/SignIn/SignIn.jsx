@@ -8,6 +8,7 @@ function SignIn() {
   const [user, setPost] = useState({ username: '', password_entry: '', role: ''})
   let { user_id, password, role, SignInState } = ''
   let UserUnsigned  = true
+  let password_Confirmed = false
   const [isChecked, setIsChecked] = useState(false)
   const history = useHistory()
 
@@ -21,25 +22,32 @@ function SignIn() {
   }, [])
 
   const evaluate_signin = () => {
-    if (UserUnsigned) {
-      SignInState = 'Sign in Succesfully!'
-      document.getElementById('div-sign-in-status').textContent = 'Sign in Succesfully!'
-      document.getElementById('div-sign-in-status').style.color = 'green'
-      createUser()
-      setTimeout(() => {
-        if(isChecked) {
-          history.push('/Proj2_DBI/InfoDoctor')}
-        else{
-          history.push('/Proj2_DBI/InfoPatient')
-        }
-      }, 3000)
-    } else {
+    if(document.getElementById('input-password').value != document.getElementById('input-confirm-password').value){
       document.getElementById('div-sign-in-status').style.color = 'red'
-      if((document.getElementById('input-username').value==='')||((document.getElementById('input-password').value===''))||((document.getElementById('input-confirm-password').value===''))){
-        document.getElementById('div-sign-in-status').textContent = "Can't Sign in. Complete form, please."
-      }
-      else{
-        document.getElementById('div-sign-in-status').textContent = "Can't Sign in. User already exists!"
+      document.getElementById('div-sign-in-status').textContent = "Password don't match!"
+      console.log('password didnt match')
+    } else {
+      if (UserUnsigned) {
+        SignInState = 'Sign in Succesfully!'
+        document.getElementById('div-sign-in-status').textContent = 'Sign in Succesfully!'
+        document.getElementById('div-sign-in-status').style.color = 'green'
+        console.log('creating password')
+        createUser()
+        setTimeout(() => {
+          if(isChecked) {
+            history.push('/Proj2_DBI/InfoDoctor')}
+          else{
+            history.push('/Proj2_DBI/InfoPatient')
+          }
+        }, 3000)
+      } else {
+        document.getElementById('div-sign-in-status').style.color = 'red'
+        if((document.getElementById('input-username').value==='')||((document.getElementById('input-password').value===''))||((document.getElementById('input-confirm-password').value===''))){
+          document.getElementById('div-sign-in-status').textContent = "Can't Sign in. Complete form, please."
+        }
+        else{
+          document.getElementById('div-sign-in-status').textContent = "Can't Sign in. User already exists!"
+        }
       }
     }
   }
@@ -47,8 +55,8 @@ function SignIn() {
   async function fetchPosts() {
     const { data } = await supabase.from('users').select()
     setUsers(data)
-    console.log('data: ', data)
-    console.log('users: ', { users })
+    // console.log('data: ', data)
+    // console.log('users: ', { users })
   }
 
   async function createUser() {

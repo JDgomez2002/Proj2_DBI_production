@@ -42,8 +42,8 @@ function Login() {
   async function fetchPosts() {
     const { data } = await supabase.from('users').select()
     setUsers(data)
-    console.log('data: ', data)
-    console.log('users: ', { users })
+    // console.log('data: ', data)
+    // console.log('users: ', { users })
   }
 
   const check_login = () => {
