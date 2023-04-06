@@ -5,8 +5,8 @@ import './Login.css'
 
 function Login() {
   const [users, setUsers] = useState([])
-  const [user, setUser] = useState({ user_id: '', password: '', logged_in: false })
-  let { username, password, loginState } = ''
+  const [user, setUser] = useState({ user_id: '', password: '', logged_in: false, role:'' })
+  let { username, password, role } = ''
   let succesfull_login = false
   const history = useHistory()
 
@@ -19,9 +19,13 @@ function Login() {
   }, [])
 
   useEffect(() => {
-    // console.log('writing', user)
+    console.log('writing', user)
     window.localStorage.setItem('LOGIN_STATUS', JSON.stringify(user))
   }, [user])
+
+  useEffect(() => {
+    console.log('users', users)
+  }, [users])
 
   const evaluate_login = () => {
     if (succesfull_login) {
@@ -61,7 +65,8 @@ function Login() {
       while ((while_counter < users.length) && (succesfull_login == false)) {
         if ((username == users[while_counter].user_id) && (password == users[while_counter].password)) {
           succesfull_login = true
-          setUser({ user_id: username, password: password, logged_in: true })
+          role = users[while_counter].role
+          setUser({ user_id: username, password: password, logged_in: true, role: role })
         } else {
           while_counter++
         }

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import './MainPage.css'
 
 function MainPage() {
-  const [user, setUser] = useState({ user_id: '', password: '', logged_in: false })
+  const [user, setUser] = useState({ user_id: '', password: '', logged_in: false, role:'' })
   const [logged_In, set_Logged_In_Status] = useState(false)
   const history = useHistory()
 
@@ -20,7 +20,7 @@ function MainPage() {
   const signOut = () => {
     // console.log('signing out...')
     set_Logged_In_Status(false)
-    window.localStorage.setItem('LOGIN_STATUS', JSON.stringify({ user_id: '', password: '', logged_in: false }))
+    window.localStorage.setItem('LOGIN_STATUS', JSON.stringify({ user_id: '', password: '', logged_in: false, role:'' }))
     setTimeout(() => {
       history.push('/Proj2_DBI/')
     }, 3000)
@@ -31,7 +31,7 @@ function MainPage() {
     return(
       <div>
         <div>You are signed in!</div>
-        <div>USER: {user.user_id} <br/>PSSW: {user.password} </div>
+        <div>USER: {user.user_id} <br/>PSSW: {user.password} <br/>ROLE: {user.role} </div>
         <button onClick={signOut} >Sign out</button>
       </div>
     )
