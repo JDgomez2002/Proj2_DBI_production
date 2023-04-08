@@ -34,16 +34,8 @@ body {
     margin-left: -180px;
 }
 
-.enfermedad{
-    margin-left: -210px;
-}
-
 .radio {
     margin-left: -310px;
-}
-
-.adiccion{
-    margin-left: -300px;
 }
 
 #contact input[type="text"], #contact input[type="email"], #contact input[type="tel"], #contact input[type="url"], #contact textarea, #contact button[type="submit"], #contact select

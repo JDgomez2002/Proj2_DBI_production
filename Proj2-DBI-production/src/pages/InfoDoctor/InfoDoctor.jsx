@@ -10,8 +10,8 @@ function InfoDoctor() {
 
 
 
-   return (
-    <div class="container">  
+  return (
+    <div class="container">
   <form id="contact" action="" method="post">
     <h3>Información del Doctor</h3>
     <h4>Porfavor llenar todos los espacios asignados</h4>

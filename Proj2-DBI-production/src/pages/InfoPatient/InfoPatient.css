@@ -35,7 +35,7 @@ body {
 }
 
 .enfermedad{
-    margin-left: -210px;
+    margin-left: -150px;
 }
 
 .radio {
@@ -43,7 +43,7 @@ body {
 }
 
 .adiccion{
-    margin-left: -300px;
+    margin-left: -290px;
 }
 
 #contact input[type="text"], #contact input[type="email"], #contact input[type="tel"], #contact input[type="url"], #contact textarea, #contact button[type="submit"], #contact select

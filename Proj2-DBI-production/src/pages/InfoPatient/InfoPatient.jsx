@@ -10,8 +10,8 @@ function InfoPatient() {
 
 
 
-   return (
-    <div class="container">  
+  return (
+    <div class="container">
   <form id="contact" action="" method="post">
     <h3>Información del Paciente</h3>
     <h4>Porfavor llenar todos los espacios asignados</h4>
@@ -55,23 +55,24 @@ function InfoPatient() {
       <input placeholder="Peso en libras" type="text" tabindex="4" required />
     </fieldset>
     <fieldset>
-    <label className="adiccion" >Adicción: </label>
-    <div className="radio">
-        <label>
-            <input type="radio" name="hosting" value="si" /> Sí
-        </label>
-    </div>
-    <div className="radio">
-        <label>
-            <input type="radio" name="hosting" value="no" /> No
-        </label>
-    </div>    </fieldset>
+      <form method="get" action="form-action.html">
+        <label className="adiccion" >Adicción: </label>
+          <div className="radio">
+              <label>
+                  <input type="radio" name="hosting" value="si" /> Sí
+              </label>
+          </div>
+          <div className="radio">
+              <label>
+                  <input type="radio" name="hosting" value="no" /> No
+              </label>
+          </div>
+      </form>
+      </fieldset>
     <fieldset>
       <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
     </fieldset>
   </form>
- 
-  
 </div>
    )
 }
