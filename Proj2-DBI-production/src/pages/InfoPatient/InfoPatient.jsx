@@ -11,70 +11,54 @@ function InfoPatient() {
 
 
   return (
-    <div class="container">
-  <form id="contact" action="" method="post">
-    <h3>Información del Paciente</h3>
-    <h4>Porfavor llenar todos los espacios asignados</h4>
-    <fieldset>
-      <input placeholder="DPI del Paciente" type="text" tabindex="1" required autofocus />
-    </fieldset>
-    <fieldset>
-      <input placeholder="Nombres" type="text" tabindex="2" required />
-    </fieldset>
-    <fieldset>
-      <input placeholder="Apellidos" type="text" tabindex="2" required />
-    </fieldset>
-    <fieldset>
-      <input placeholder="Numero de teléfono" type="tel" tabindex="3" required />
-    </fieldset>
-    <fieldset>
-        <select name="state" class="form-control selectpicker" >
-            <option value=" " >Hospital en el que se encuentra</option>
-        </select>
-    </fieldset>
-    <fieldset>
-    <label className="enfermedad" >Posee enfermedades hereditarias? </label>
-    <div className="radio">
-        <label>
-            <input type="radio" name="hosting" value="si" /> Sí
-        </label>
-    </div>
-    <div className="radio">
-        <label>
-            <input type="radio" name="hosting" value="no" /> No
-        </label>
-    </div>
-    </fieldset>
-    <fieldset>
-      <input placeholder="índice de masa corporal" type="text" tabindex="4" required />
-    </fieldset>
-    <fieldset>
-      <input placeholder="Altura en cm" type="text" tabindex="4" required />
-    </fieldset>
-    <fieldset>
-      <input placeholder="Peso en libras" type="text" tabindex="4" required />
-    </fieldset>
-    <fieldset>
-      <form method="get" action="form-action.html">
-        <label className="adiccion" >Adicción: </label>
-          <div className="radio">
-              <label>
-                  <input type="radio" name="hosting" value="si" /> Sí
-              </label>
-          </div>
-          <div className="radio">
-              <label>
-                  <input type="radio" name="hosting" value="no" /> No
-              </label>
-          </div>
-      </form>
+    <div id="contact" class="container">
+      <h3>Información del Paciente</h3>
+      <h4>Porfavor llenar todos los espacios asignados</h4>
+      <fieldset>
+        <input placeholder="DPI del Paciente" type="text" tabIndex="1" required autoFocus />
       </fieldset>
-    <fieldset>
-      <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
-    </fieldset>
-  </form>
-</div>
-   )
+      <fieldset>
+        <input placeholder="Nombres" type="text" tabIndex="2" required />
+      </fieldset>
+      <fieldset>
+        <input placeholder="Apellidos" type="text" tabIndex="2" required />
+      </fieldset>
+      <fieldset>
+        <input placeholder="Numero de teléfono" type="tel" tabIndex="3" required />
+      </fieldset>
+      <fieldset>
+          <select name="state" class="form-control selectpicker" >
+              <option value=" " >Hospital en el que se encuentra</option>
+          </select>
+      </fieldset>
+      <fieldset>
+          <select className="enfermedad" >
+            <option className="enfermedad" value="">Posee enfermedades hereditarias?</option>
+            <option value="si" > Sí</option>
+            <option value="no" > No</option>
+          </select>
+      </fieldset>
+      <fieldset>
+        <input placeholder="índice de masa corporal" type="text" tabIndex="4" required />
+      </fieldset>
+      <fieldset>
+        <input placeholder="Altura en cm" type="text" tabIndex="4" required />
+      </fieldset>
+      <fieldset>
+        <input placeholder="Peso en libras" type="text" tabIndex="4" required />
+      </fieldset>
+      <fieldset>
+      <select className="enfermedad" >
+            <option className="enfermedad" value="">Posee adiccion?</option>
+            <option value="si" > Sí</option>
+            <option value="no" > No</option>
+          </select>
+      </fieldset>
+      <fieldset>
+        <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+      </fieldset>
+    </div>
+  )
 }
 
 export default InfoPatient

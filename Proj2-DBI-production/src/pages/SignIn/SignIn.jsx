@@ -5,7 +5,7 @@ import './SignIn.css'
 
 function SignIn() {
   const [users, setUsers] = useState([])
-  const [user, setPost] = useState({ username: '', password_entry: '', role: '' })
+  const [user, setUser] = useState({ username: '', password_entry: '', role: '' })
   let { user_id, password, role, SignInState } = ''
   let UserUnsigned = true
   let password_Confirmed = false
@@ -15,6 +15,11 @@ function SignIn() {
   const handleOnChange = () => {
     setIsChecked(!isChecked)
   }
+
+  useEffect(() => {
+    console.log('writing', user)
+    window.localStorage.setItem('SIGNIN_INFORMATION', JSON.stringify(user))
+  }, [user])
 
   useEffect(() => {
     fetchPosts()
@@ -74,6 +79,7 @@ function SignIn() {
 
   async function createUser() {
     await supabase.from('users').insert([{ user_id, password, role }]).single()
+    setUser({ username: user_id, password_entry: password, role: role })
     fetchPosts()
   }
 
