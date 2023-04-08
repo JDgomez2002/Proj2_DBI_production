@@ -13,18 +13,19 @@ function Login() {
   useEffect(() => {
     fetchPosts()
     history.push('/Proj2_DBI/')
+    // console.log('Users before loading page', users)
     // const browser_data = window.localStorage.getItem('LOGIN_STATUS')
     // if (browser_data !== null) setUser(JSON.parse(browser_data))
     // console.log('reading', browser_data)
   }, [])
 
   useEffect(() => {
-    console.log('writing', user)
+    // console.log('writing', user)
     window.localStorage.setItem('LOGIN_STATUS', JSON.stringify(user))
   }, [user])
 
   useEffect(() => {
-    console.log('users', users)
+    // console.log('Users after loading page', users)
   }, [users])
 
   const evaluate_login = () => {
