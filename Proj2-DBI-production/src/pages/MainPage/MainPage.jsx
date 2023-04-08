@@ -6,7 +6,6 @@ function MainPage() {
   const [user, setUser] = useState({})
   const [logged_In, set_Logged_In_Status] = useState(false)
   const [user_Authorized, setUserAuthorized] = useState(false)
-  const [authorizedChange, setauthorizedChange] = useState(false)
   // let logged = false
   const history = useHistory()
 
@@ -33,12 +32,15 @@ function MainPage() {
   }
 
   const verify_Loggin_status = () => {
-    setTimeout(() => {
-        if(!user_Authorized){
+    console.log('user_id', user.user_id)
+    if(!(user.user_id===undefined)){
+      console.log('inside if: lloged_In (useState)', logged_In)
+      if((!logged_In)&&(logged_In!=undefined)){
+        setTimeout(() => {
           history.push('/Proj2_DBI/')
-          console.log('waited 1 more')
-        }
-      }, [1000])
+        }, [3000])
+      }
+    }
   }
 
   function UserMainPage() {
@@ -58,14 +60,7 @@ function MainPage() {
 
   function UserUnauthorized() {
     console.log('UserUnauthorized rendered', user.user_id)
-    if(!(user.user_id===undefined)){
-      console.log('inside if', logged_In)
-      if((!logged_In)&&(logged_In!=undefined)){
-        setTimeout(() => {
-          history.push('/Proj2_DBI/')
-        }, [3000])
-      }
-    }
+    verify_Loggin_status()
     return (
       <>
         <div>You are not authorized... </div>
