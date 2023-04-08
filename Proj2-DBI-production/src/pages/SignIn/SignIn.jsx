@@ -60,6 +60,11 @@ function SignIn() {
     }
   }
 
+  const login = () => {
+    console.log('/Login')
+    history.push('/Proj2_DBI/')
+  }
+
   async function fetchPosts() {
     const { data } = await supabase.from('users').select()
     setUsers(data)
@@ -124,6 +129,9 @@ function SignIn() {
       {/* <Link className="login-button" onClick={check_login} to={succesfull_signin==true ? '/Login' : '#'} > */}
       <button className="sign-in-button" onClick={check_signIn}>
         Sign in
+      </button>
+      <button className="login-button-link" onClick={login} >
+        Back to Login
       </button>
       <div id="div-sign-in-status" className="div-login-message"></div>
     </div>

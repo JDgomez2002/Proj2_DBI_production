@@ -72,11 +72,26 @@
   /* all: unset; */
 }
 
+.login-button-link {
+  font-size: 15px;
+  position: relative;
+  display: table;
+  margin: 15px 0px 10px 45px;
+  padding: 2px 5px 2px 5px;
+  text-align: center;
+  border-radius: 5px;
+  border: 0.5px solid black;
+  cursor: pointer;
+  color: inherit;
+  text-decoration: inherit;
+  /* all: unset; */
+}
+
 .sign-in-button {
   font-size: 20px;
   position: relative;
   display: table;
-  margin: 15px 0px 10px 65px;
+  margin: 15px 0px 10px 60px;
   padding: 2px 5px 2px 5px;
   text-align: center;
   border-radius: 5px;
@@ -88,6 +103,10 @@
 }
 
 .sign-in-button:hover {
+  background-color: #a6c3c3c5;
+}
+
+.login-button-link:hover {
   background-color: #a6c3c3c5;
 }
 
