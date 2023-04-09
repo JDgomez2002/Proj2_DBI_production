@@ -22,6 +22,23 @@ function InfoDoctor() {
   }
 
   const get_Info = () => {
+    if (
+      document.getElementById('input-DPI').value === '' ||
+      document.getElementById('input-nombres').value === '' ||
+      document.getElementById('input-apellidos').value === ''||
+      document.getElementById('input-Num').value === '' ||
+      document.getElementById('input-state-especialidad').value === '' ||
+      document.getElementById('input-state-hospital').value === '' ||
+      document.getElementById('input-direccion').value === '' ||
+      document.getElementById('input-numero-colegiado').value === ''
+    ) {
+      document.getElementById('div-sign-in-status').style.color = 'red'
+      document.getElementById('div-sign-in-status').textContent =
+        "Can't upload information. Complete all the form, please."
+    }
+    else{
+      document.getElementById('div-sign-in-status').textContent = 'Information upload sucessfully!'
+      document.getElementById('div-sign-in-status').style.color = 'green'
       doctor_dpi = document.getElementById('input-DPI').value
       user_id = user.username
       name = document.getElementById('input-nombres').value
@@ -32,6 +49,7 @@ function InfoDoctor() {
       direction = document.getElementById('input-direccion').value
       collegiate_number = document.getElementById('input-numero-colegiado').value
       InsertInfo()
+    }
   }
 
   return (
@@ -59,6 +77,7 @@ function InfoDoctor() {
     <fieldset>
         <select id = "input-state-hospital" name="state" className="form-control selectpicker">
             <option value="1" >En que hospital se encuentra: </option>
+            <option value="2"> Rupertos</option>
         </select>
     </fieldset>
     <fieldset>
@@ -68,6 +87,7 @@ function InfoDoctor() {
       <input id = "input-numero-colegiado" placeholder="Numero de colegiado" type="text" tabIndex="4" required />
     </fieldset>
   <button type="submit" onClick={get_Info} >Submit</button>
+  <div id="div-sign-in-status" className="div-login-message"></div>
 </div>
   )
 }
