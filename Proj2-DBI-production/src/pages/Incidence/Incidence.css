@@ -47,7 +47,7 @@ fieldset {
 #dpi_paciente textarea {
 	height:100px;
 	max-width:100%;
-  resize:none;
+  	resize:none;
 }
 
 .buscar{
@@ -62,7 +62,18 @@ fieldset {
 }
 
 .detalles{
+	font-weight: bolder;
     font-size: 15px;
     text-align: left;
     padding: 15px 0px 0px 0px;
+}
+
+.status-message{
+	font-size: 15px;
+}
+
+.cadaDetalle{
+	font-size: 15px;
+	text-align: left;
+	padding: 0px 0px 15px 15px;
 }
