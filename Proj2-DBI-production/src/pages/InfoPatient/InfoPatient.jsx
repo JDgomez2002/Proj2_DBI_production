@@ -4,6 +4,8 @@ import { Switch, BrowserRouter, Link, Route, useHistory } from 'react-router-dom
 import './InfoPatient.css'
 
 function InfoPatient() {
+  const [hospital, setHospitals] = useState([])
+  const [hospital_ini, setHospital_ini] = useState(null)
   const [user, setUser] = useState({ username: '', password_entry: '', role:'' })
   let { patient_dpi, user_id, name, last_name , phone_number, country, hereditary_diseases, body_mass_index, height, weight, addictions  } = ''
   const history = useHistory()
@@ -18,6 +20,11 @@ function InfoPatient() {
     setTimeout(() => {
         history.push('/Proj2_DBI/')
     }, 3000)
+  }
+
+  async function fetchPosts(){
+    const { data } = await supabase.from('hospital').select()
+    setHospitals(data)
   }
 
   const get_Info = () => {
@@ -85,9 +92,17 @@ function InfoPatient() {
         <input id = "input-Num" placeholder="Numero de teléfono" type="tel" tabIndex="3" required />
       </fieldset>
       <fieldset>
-          <select id = "input-state-pais" name="state" className="form-control selectpicker" >
-              <option value="1" >Hospital en el que se encuentra</option>
-          </select>
+          <select id = "input-state-pais" name="state" className="form-control selectpicker" required value={hospital_ini} onChange={(e) => setHospital_ini(e.target.value)}>
+          {hospital&&(
+            <>
+            <option value="" >Hospital en el que se encuentra: </option>
+            {hospital.map(e=> (
+              <>
+              <option value ={e.hospital_id}>{e.name+", "+e.localization}</option>
+              </>
+            ))}
+          </>
+          )}
       </fieldset>
       <fieldset>
           <select id = "input-state-hereditary-diseases"  className="enfermedad" >

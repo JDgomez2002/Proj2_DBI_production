@@ -5,6 +5,10 @@ import './InfoDoctor.css'
 
 function InfoDoctor() {
 
+  const [hospital, setHospitals] = useState([])
+  const [hospital_ini, setHospital_ini] = useState(null)
+  const [medical_speciality, setMedical_speciality] = useState([])
+  const [medical_speciality_ini, setMedical_speciality_ini] = useState(null)
   const [user, setUser] = useState({ username: '', password_entry: '', role:'' })
   let { doctor_dpi, user_id, name, last_name , phone_number, medical_speciality_id, in_hospital, direction, collegiate_number } = ''
   const history = useHistory()
@@ -12,6 +16,7 @@ function InfoDoctor() {
   useEffect(() => {
     const browser_data = window.localStorage.getItem('SIGNIN_INFORMATION')
     if (browser_data !== null) setUser(JSON.parse(browser_data))
+    fetchPosts()
   }, [])
 
   async function InsertInfo() {
@@ -19,6 +24,13 @@ function InfoDoctor() {
     setTimeout(() => {
         history.push('/Proj2_DBI/')
     }, 3000)
+  }
+
+  async function fetchPosts(){
+    const { data } = await supabase.from('hospital').select()
+    setHospitals(data)
+    const { data2 } = await supabase.from('medical_speciality').select()
+    setMedical_speciality(data2)
   }
 
   const get_Info = () => {
@@ -69,15 +81,31 @@ function InfoDoctor() {
       <input id = "input-Num" placeholder="Numero de teléfono" type="tel" tabIndex="3" required />
     </fieldset>
     <fieldset>
-        <select id = "input-state-especialidad" name="state" className="form-control selectpicker">
-            <option value="1" >Especialidad Medica: </option>
-            <option value="1"> Fernando </option>
+        <select id = "input-state-especialidad" name="state" className="form-control selectpicker"  required value={medical_speciality_ini} onChange={(e) => setMedical_speciality_ini(e.target.value)}>
+        {medical_speciality&&(
+            <>
+            <option value="" >Especialidad médica: </option>
+            {medical_speciality.map(e=> (
+              <>
+              <option value ={e.medical_speciality_id}>{e.name}</option>
+              </>
+            ))}
+          </>
+          )}
         </select>
     </fieldset>
     <fieldset>
-        <select id = "input-state-hospital" name="state" className="form-control selectpicker">
-            <option value="1" >En que hospital se encuentra: </option>
-            <option value="2"> Rupertos</option>
+        <select id = "input-state-hospital" name="state" className="form-control selectpicker" required value={hospital_ini} onChange={(e) => setHospital_ini(e.target.value)}>
+          {hospital&&(
+            <>
+            <option value="" >En que hospital se encuentra: </option>
+            {hospital.map(e=> (
+              <>
+              <option value ={e.hospital_id}>{e.name+", "+e.localization}</option>
+              </>
+            ))}
+          </>
+          )}
         </select>
     </fieldset>
     <fieldset>
