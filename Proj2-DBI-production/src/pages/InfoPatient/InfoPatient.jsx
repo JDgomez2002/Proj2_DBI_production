@@ -13,6 +13,7 @@ function InfoPatient() {
   useEffect(() => {
     const browser_data = window.localStorage.getItem('SIGNIN_INFORMATION')
     if (browser_data !== null) setUser(JSON.parse(browser_data))
+    fetchPosts()
   }, [])
 
   async function InsertInfo() {
@@ -103,6 +104,7 @@ function InfoPatient() {
             ))}
           </>
           )}
+          </select>
       </fieldset>
       <fieldset>
           <select id = "input-state-hereditary-diseases"  className="enfermedad" >
