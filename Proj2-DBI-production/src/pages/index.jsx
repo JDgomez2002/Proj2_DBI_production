@@ -5,14 +5,16 @@ import InfoPatient from './InfoPatient'
 import InfoDoctor from './InfoDoctor'
 import MainPage from './MainPage'
 import Incidence from './Incidence'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, BrowserRouter } from 'react-router-dom'
 
 const Page = () => {
 
   return (
     <Switch>
       <Route path="/Proj2_DBI/MainPage">
-        <MainPage />
+        <BrowserRouter>
+          <MainPage />
+        </BrowserRouter>
       </Route>
       <Route path="/Proj2_DBI/SignIn">
         <SignIn />

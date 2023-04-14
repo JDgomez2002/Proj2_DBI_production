@@ -1,11 +1,17 @@
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import './MainPage.css'
+import { ColorModeContext, useMode } from '../../theme'
+import { CssBaseline, ThemeProvider } from '@mui/material'
+import Topbar from './scenes/global/Topbar'
 
 function MainPage() {
   const [user, setUser] = useState({})
   const [logged_In, set_Logged_In_Status] = useState(false)
   const [user_Authorized, setUserAuthorized] = useState(false)
+  // MaterialUI mode colors
+  const [theme, colorMode] = useMode()
+
   // let logged = false
   const history = useHistory()
 
@@ -15,11 +21,11 @@ function MainPage() {
   }, [])
 
   useEffect(() => {
-    console.log('user UseEffect:', user, typeof user.user_id)
+    // console.log('user UseEffect:', user, typeof user.user_id)
     set_Logged_In_Status(user.logged_in)
     setUserAuthorized((user.logged_in))
     // logged = user.logged_in
-    console.log('uawe authorized', user.logged_in)
+    // console.log('uawe authorized', user.logged_in)
   }, [user])
 
   const signOut = () => {
@@ -32,9 +38,9 @@ function MainPage() {
   }
 
   const verify_Loggin_status = () => {
-    console.log('user_id', user.user_id)
+    // console.log('user_id', user.user_id)
     if(!(user.user_id===undefined)){
-      console.log('inside if: lloged_In (useState)', logged_In)
+      // console.log('inside if: lloged_In (useState)', logged_In)
       if((!logged_In)&&(logged_In!=undefined)){
         setTimeout(() => {
           history.push('/Proj2_DBI/')
@@ -59,7 +65,7 @@ function MainPage() {
   }
 
   function UserUnauthorized() {
-    console.log('UserUnauthorized rendered', user.user_id)
+    // console.log('UserUnauthorized rendered', user.user_id)
     verify_Loggin_status()
     return (
       <>
@@ -70,12 +76,17 @@ function MainPage() {
   }
 
   return (
-    <div className="main-page-header-container" >
-      <div></div>
-      MAIN PAGE
-      {/* {logged_In ? <UserMainPage /> : <div id="logged-out-status" style={{color: 'red'}} > Signing out...</div>} */}
-      {user_Authorized ? <UserMainPage /> : <UserUnauthorized/> }
-    </div>
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <div className="main-page" >
+          <main className="content">
+          </main>
+          {/* {logged_In ? <UserMainPage /> : <div id="logged-out-status" style={{color: 'red'}} > Signing out...</div>} */}
+          {user_Authorized ? <UserMainPage /> : <UserUnauthorized/> }
+        </div>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   )
 }
 

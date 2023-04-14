@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../client'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import './Login.css'
 
 function Login() {
@@ -9,6 +9,7 @@ function Login() {
   let { username, password, role } = ''
   let succesfull_login = false
   const history = useHistory()
+  const location = useLocation()
 
   useEffect(() => {
     fetchPosts()
@@ -35,8 +36,10 @@ function Login() {
       document.getElementById('div-login-status').textContent = 'Login Succesfully!'
       document.getElementById('div-login-loading').textContent = 'Loading...'
       setTimeout(() => {
-        history.push('/Proj2_DBI/')
-        history.push('/Proj2_DBI/MainPage')
+        // history.push('/Proj2_DBI/MainPage')
+        // const path = `${location.pathname}MainPage`
+        history.push(`${location.pathname}MainPage`)
+        
       }, 3000)
     } else {
       document.getElementById('div-login-status').textContent = "Can't login. Check credentials"
