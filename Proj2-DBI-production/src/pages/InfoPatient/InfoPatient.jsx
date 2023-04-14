@@ -6,26 +6,45 @@ import './InfoPatient.css'
 function InfoPatient() {
   const [hospital, setHospitals] = useState([])
   const [hospital_ini, setHospital_ini] = useState(null)
+  const [disease, setDisease] = useState("")
+  const [disease_ini, setDisease_ini] = useState([])
+  const [dise, setDise] = useState(null)
   const [user, setUser] = useState({ username: '', password_entry: '', role:'' })
-  let { patient_dpi, user_id, name, last_name , phone_number, country, hereditary_diseases, body_mass_index, height, weight, addictions  } = ''
+  let { patient_dpi, user_id, name, last_name , phone_number, country, hereditary_diseases,disease_id, body_mass_index, height, weight, addictions  } = ''
   const history = useHistory()
 
   useEffect(() => {
     const browser_data = window.localStorage.getItem('SIGNIN_INFORMATION')
     if (browser_data !== null) setUser(JSON.parse(browser_data))
-    fetchPosts()
+    fetchall()
   }, [])
 
+  useEffect(() =>{
+    console.log('info',disease_ini)
+  },[disease_ini])
+
   async function InsertInfo() {
-    await supabase.from('patient').insert([{ patient_dpi, user_id , name, last_name, phone_number, country, hereditary_diseases, body_mass_index, height, weight, addictions  }]).single()
+    await supabase.from('patient').insert([{ patient_dpi, user_id , name, last_name, phone_number, country, hereditary_diseases, disease_id, body_mass_index, height, weight, addictions  }]).single()
     setTimeout(() => {
         history.push('/Proj2_DBI/')
     }, 3000)
   }
 
-  async function fetchPosts(){
+
+  async function fetchall(){
+    await fetchPost1()
+    await fetchPost2()
+  }
+
+  async function fetchPost1(){
     const { data } = await supabase.from('hospital').select()
     setHospitals(data)
+  }
+  
+  async function fetchPost2(){
+    const { data } = await supabase.from('disease').select()
+    setDisease_ini(data)
+    console.log('data',data)
   }
 
   const get_Info = () => {
@@ -54,12 +73,15 @@ function InfoPatient() {
       last_name = document.getElementById('input-apellidos').value
       phone_number = document.getElementById('input-Num').value
       country = document.getElementById('input-state-pais').value
-      if (document.getElementById('input-state-hereditary-diseases').value ==="true"){
-        hereditary_diseases = `true`
+      if (document.getElementById('input-state-hereditary-diseases').value ===""){
+          hereditary_diseases = `false`
+          disease_id = `null`
         }
         else{
-          hereditary_diseases = `false`
+          hereditary_diseases = `true`
+          disease_id =  document.getElementById('input-state-hereditary-diseases-id').value
         }
+
       body_mass_index = document.getElementById('input-body-mass-index').value
       height = document.getElementById('input-height').value
       weight = document.getElementById('input-weight').value
@@ -107,11 +129,26 @@ function InfoPatient() {
           </select>
       </fieldset>
       <fieldset>
-          <select id = "input-state-hereditary-diseases"  className="enfermedad" >
-            <option className="enfermedad" value="">Posee enfermedades hereditarias?</option>
+          <select id = "input-state-hereditary-diseases"  className="enfermedad" value={disease} onChange={(e) => setDisease(e.target.value)} >
+            <option className="enfermedad" value="" >Posee enfermedades hereditarias?</option>
             <option value="true" > Sí</option>
-            <option value="false" > No</option>
-          </select>
+            </select>
+              {disease&&(
+                <select id = "input-state-hereditary-diseases-id" className="enfermedad"  onChange={(e) => setDise(e.target.value)} >
+                  <>
+                  <option className="enfermedad" value="" >Enfermedad que posee: </option>
+                    {disease_ini&&(
+                      <>
+                      {disease_ini.map(e=> (
+                        <>
+                        <option value ={e.disease_id}>{e.name}</option>
+                        </>
+                      ))}
+                      </>
+                    )}
+                  </>
+                </select>
+              )}
       </fieldset>
       <fieldset>
         <input id="input-body-mass-index" placeholder="índice de masa corporal" type="text" tabIndex="4" required />
