@@ -81,24 +81,26 @@ function Login() {
   }
 
   return (
-    <div className="login-container">
-      <img
-        className="logo"
-        src="https://github.com/JDgomez2002/Proj2_DBI_production/blob/main/Proj2-DBI-production/src/img/stethoscope-icon.png?raw=true"
-      />
-      <div className="login-labels">Username:</div>
-      <input id="input-username" onClick={fetchPosts} className="input-login"></input>
-      <div className="login-labels">Password:</div>
-      <input id="input-password" onClick={fetchPosts} className="input-login"></input>
-        {/* <Link className="login-button" onClick={check_login} to={succesfull_login==true ? '/MainPage' : '#'} > */}
-      <button className="login-button" onClick={check_login} >
-        Login
-      </button>
-      <button className="sign-in-button-link" onClick={sign_in} >
-        Sign in
-      </button>
-      <div id="div-login-status" className="div-login-message"></div>
-      <div id="div-login-loading" className="div-login-message" style={{fontSize:'20px'}}></div>
+    <div className="login-root">
+      <div className="login-container">
+        <img
+          className="logo"
+          src="https://github.com/JDgomez2002/Proj2_DBI_production/blob/main/Proj2-DBI-production/src/img/stethoscope-icon.png?raw=true"
+        />
+        <div className="login-labels">Username:</div>
+        <input id="input-username" onClick={fetchPosts} className="input-login"></input>
+        <div className="login-labels">Password:</div>
+        <input id="input-password" onClick={fetchPosts} className="input-login"></input>
+          {/* <Link className="login-button" onClick={check_login} to={succesfull_login==true ? '/MainPage' : '#'} > */}
+        <button className="login-button" onClick={check_login} >
+          Login
+        </button>
+        <button className="sign-in-button-link" onClick={sign_in} >
+          Sign in
+        </button>
+        <div id="div-login-status" className="div-login-message"></div>
+        <div id="div-login-loading" className="div-login-message" style={{fontSize:'20px'}}></div>
+      </div>
     </div>
   )
 }

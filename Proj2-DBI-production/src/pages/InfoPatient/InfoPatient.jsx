@@ -99,6 +99,7 @@ function InfoPatient() {
 
 
   return (
+    <div className="info-patient-root" >
     <div id="contact" className="container">
       <h3>Información del Paciente</h3>
       <h4>Porfavor llenar todos los espacios asignados</h4>
@@ -168,6 +169,7 @@ function InfoPatient() {
       </fieldset>
         <button  type="submit" id="contact-submit" onClick={get_Info} >Submit</button>
         <div id="div-sign-in-status" className="div-login-message"></div>
+    </div>
     </div>
   )
 }

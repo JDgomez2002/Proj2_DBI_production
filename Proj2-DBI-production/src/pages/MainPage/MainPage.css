@@ -1,21 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap');
 
 .main-page {
-  height: 100%;
-  width: 100%;
-  padding: 15px;
-  display: flex;
+  height: 100vh;
+  width: 100vw;
+  /* margin: -300px; */
+  /* min-width: 100vh; */
+  /* min-height: 100vh; */
+  /* padding: 15px; */
+  /* display: flex; */
   position: relative;
   font-family: 'Source Sans Pro', sans-serif;
-  color: black;
+  justify-content: center;
+  /* border: 1px solid white; */
+  /* color: black; */
 }
 
-* {
+/* body {
+  height: 100vh;
+  width: 100vh;
+} */
+
+/* #root {
+  height: 100vh;
+  width: 100vh;
+} */
+
+/* * {
   border-radius: 5px;
   background-color: white;
   padding: 0px;
   margin: 0px;
-}
+} */
 
 ::-webkit-scrollbar {
   width: 10px;

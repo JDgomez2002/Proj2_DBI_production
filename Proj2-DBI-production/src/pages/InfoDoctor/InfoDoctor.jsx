@@ -73,57 +73,59 @@ function InfoDoctor() {
   }
 
   return (
-    <div id="contact"className="container">
-    <h3>Información del Doctor</h3>
-    <h4>Porfavor llenar todos los espacios asignados</h4>
-    <fieldset>
-      <input id = "input-DPI" placeholder="DPI del Doctor" type="text" tabIndex="1" required autoFocus />
-    </fieldset>
-    <fieldset>
-      <input id = "input-nombres" placeholder="Nombres" type="text" tabIndex="2" required />
-    </fieldset>
-    <fieldset>
-      <input id = "input-apellidos" placeholder="Apellidos" type="text" tabIndex="2" required />
-    </fieldset>
-    <fieldset>
-      <input id = "input-Num" placeholder="Numero de teléfono" type="tel" tabIndex="3" required />
-    </fieldset>
-    <fieldset>
-        <select id = "input-state-especialidad" name="state" className="form-control selectpicker"  required value={medical_speciality_ini} onChange={(e) => setMedical_speciality_ini(e.target.value)}>
-        {medical_speciality&&(
-            <>
-            <option value="" >Especialidad médica: </option>
-            {medical_speciality.map(e=> (
+    <div className="info-doctor-root">
+      <div id="contact"className="container">
+      <h3>Información del Doctor</h3>
+      <h4>Porfavor llenar todos los espacios asignados</h4>
+      <fieldset>
+        <input id = "input-DPI" placeholder="DPI del Doctor" type="text" tabIndex="1" required autoFocus />
+      </fieldset>
+      <fieldset>
+        <input id = "input-nombres" placeholder="Nombres" type="text" tabIndex="2" required />
+      </fieldset>
+      <fieldset>
+        <input id = "input-apellidos" placeholder="Apellidos" type="text" tabIndex="2" required />
+      </fieldset>
+      <fieldset>
+        <input id = "input-Num" placeholder="Numero de teléfono" type="tel" tabIndex="3" required />
+      </fieldset>
+      <fieldset>
+          <select id = "input-state-especialidad" name="state" className="form-control selectpicker"  required value={medical_speciality_ini} onChange={(e) => setMedical_speciality_ini(e.target.value)}>
+          {medical_speciality&&(
               <>
-              <option value ={e.medical_speciality_id}>{e.name}</option>
-              </>
-            ))}
-          </>
-          )}
-        </select>
-    </fieldset>
-    <fieldset>
-        <select id = "input-state-hospital" name="state" className="form-control selectpicker" required value={hospital_ini} onChange={(e) => setHospital_ini(e.target.value)}>
-          {hospital&&(
-            <>
-            <option value="" >En que hospital se encuentra: </option>
-            {hospital.map(e=> (
+              <option value="" >Especialidad médica: </option>
+              {medical_speciality.map(e=> (
+                <>
+                <option value ={e.medical_speciality_id}>{e.name}</option>
+                </>
+              ))}
+            </>
+            )}
+          </select>
+      </fieldset>
+      <fieldset>
+          <select id = "input-state-hospital" name="state" className="form-control selectpicker" required value={hospital_ini} onChange={(e) => setHospital_ini(e.target.value)}>
+            {hospital&&(
               <>
-              <option value ={e.hospital_id}>{e.name+", "+e.localization}</option>
-              </>
-            ))}
-          </>
-          )}
-        </select>
-    </fieldset>
-    <fieldset>
-      <input id = "input-direccion" placeholder="Dirección" type="text" tabIndex="4" required />
-    </fieldset>
-    <fieldset>
-      <input id = "input-numero-colegiado" placeholder="Numero de colegiado" type="text" tabIndex="4" required />
-    </fieldset>
-  <button type="submit" onClick={get_Info} >Submit</button>
-  <div id="div-sign-in-status" className="div-login-message"></div>
+              <option value="" >En que hospital se encuentra: </option>
+              {hospital.map(e=> (
+                <>
+                <option value ={e.hospital_id}>{e.name+", "+e.localization}</option>
+                </>
+              ))}
+            </>
+            )}
+          </select>
+      </fieldset>
+      <fieldset>
+        <input id = "input-direccion" placeholder="Dirección" type="text" tabIndex="4" required />
+      </fieldset>
+      <fieldset>
+        <input id = "input-numero-colegiado" placeholder="Numero de colegiado" type="text" tabIndex="4" required />
+      </fieldset>
+    <button type="submit" onClick={get_Info} >Submit</button>
+    <div id="div-sign-in-status" className="div-login-message"></div>
+  </div>
 </div>
   )
 }

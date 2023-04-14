@@ -1,5 +1,14 @@
 .login-root {
-  text-align: center;
+  /* justify-content: center; */
+  /* align-items: center; */
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  width: 100vw;
+  /* position: relative; */
+  background-image: url("https://github.com/JDgomez2002/Proj2_DBI_production/blob/main/Proj2-DBI-production/src/img/background/blue-gradient-2.png?raw=true");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .logo {
@@ -11,12 +20,14 @@
 
 .login-container {
   /* height: 175px; */
+  margin: 0px;
   height: 300px;
   width: 200px;
   padding: 15px;
   border-radius: 5px;
   text-align: center;
   display: table;
+  /* position: absolute; */
   flex-direction: column;
   background-color: white;
 }

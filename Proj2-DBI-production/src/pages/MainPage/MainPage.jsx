@@ -55,6 +55,7 @@ function MainPage() {
       <div>
         {logged_In ? 
         <>
+          <Topbar/>
           <div>You are signed in!</div>
           <div>USER: {user.user_id} <br/>PSSW: {user.password} <br/>ROLE: {user.role} </div>
           <button onClick={signOut} >Sign out</button>
