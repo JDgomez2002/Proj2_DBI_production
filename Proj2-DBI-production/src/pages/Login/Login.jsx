@@ -26,8 +26,14 @@ function Login() {
   }, [user])
 
   useEffect(() => {
-    console.log('Users after loading page', users)
+    // console.log('Users after loading page', users)
   }, [users])
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter'){
+      check_login()
+    }
+  }
 
   const evaluate_login = () => {
     if (succesfull_login) {
@@ -88,9 +94,9 @@ function Login() {
           src="https://github.com/JDgomez2002/Proj2_DBI_production/blob/main/Proj2-DBI-production/src/img/stethoscope-icon.png?raw=true"
         />
         <div className="login-labels">Username:</div>
-        <input id="input-username" onClick={fetchPosts} className="input-login"></input>
+        <input id="input-username" onClick={fetchPosts} className="input-login" onKeyDown={handleKeyDown} ></input>
         <div className="login-labels">Password:</div>
-        <input id="input-password" onClick={fetchPosts} className="input-login"></input>
+        <input id="input-password" onClick={fetchPosts} className="input-login" onKeyDown={handleKeyDown} ></input>
           {/* <Link className="login-button" onClick={check_login} to={succesfull_login==true ? '/MainPage' : '#'} > */}
         <button className="login-button" onClick={check_login} >
           Login

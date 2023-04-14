@@ -34,6 +34,8 @@ function MainPage() {
     window.localStorage.setItem('LOGIN_STATUS', JSON.stringify({ user_id: '', password: '', logged_in: false, role:'' }))
     setTimeout(() => {
       history.push('/Proj2_DBI/')
+      console.log('pushing to /Proj2_DBI/')
+      history.go(0)
     }, 3000)
   }
 
@@ -44,13 +46,13 @@ function MainPage() {
       if((!logged_In)&&(logged_In!=undefined)){
         setTimeout(() => {
           history.push('/Proj2_DBI/')
+          history.go(0)
         }, [3000])
       }
     }
   }
 
   function UserMainPage() {
-    // const [user, setUser] = useState({})
     return(
       <div>
         {logged_In ? 
@@ -81,8 +83,8 @@ function MainPage() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="main-page" >
-          <main className="content">
-          </main>
+          {/* <main className="content">
+          </main> */}
           {/* {logged_In ? <UserMainPage /> : <div id="logged-out-status" style={{color: 'red'}} > Signing out...</div>} */}
           {user_Authorized ? <UserMainPage /> : <UserUnauthorized/> }
         </div>
