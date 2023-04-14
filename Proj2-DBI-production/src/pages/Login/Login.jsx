@@ -26,7 +26,7 @@ function Login() {
   }, [user])
 
   useEffect(() => {
-    // console.log('Users after loading page', users)
+    console.log('Users after loading page', users)
   }, [users])
 
   const evaluate_login = () => {

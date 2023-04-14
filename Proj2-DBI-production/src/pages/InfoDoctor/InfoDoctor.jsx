@@ -16,7 +16,7 @@ function InfoDoctor() {
   useEffect(() => {
     const browser_data = window.localStorage.getItem('SIGNIN_INFORMATION')
     if (browser_data !== null) setUser(JSON.parse(browser_data))
-    fetchPosts()
+    fetchPostAll()
   }, [])
 
   async function InsertInfo() {
@@ -26,11 +26,19 @@ function InfoDoctor() {
     }, 3000)
   }
 
-  async function fetchPosts(){
+  async function fetchPostAll(){
+    fetchPost1()
+    fetchPost2()
+  }
+
+  async function fetchPost1(){
     const { data } = await supabase.from('hospital').select()
     setHospitals(data)
-    const { data2 } = await supabase.from('medical_speciality').select()
-    setMedical_speciality(data2)
+  }
+
+  async function fetchPost2(){
+    const { data } = await supabase.from('medical_speciality').select()
+    setMedical_speciality(data)
   }
 
   const get_Info = () => {
