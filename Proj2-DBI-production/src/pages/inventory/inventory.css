@@ -1,1 +1,48 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600);
+
+body {
+	font-family:"Open Sans", Helvetica, Arial, sans-serif;
+	font-weight:300;
+	font-size: 12px;
+	line-height:30px;
+	color:#777;
+	background:#0CF;
+}
+
+.inventario {
+	height: fit-content;
+    width: 500px;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    display: table;
+    flex-direction: column;
+    background-color: white;
+}
+
+.h3 {
+	color: #F96;
+	display: block;
+	font-size: 30px;
+	font-weight: 400;
+	padding:10px;
+}
+
+fieldset {
+	border: medium none !important;
+	margin: 0 0 10px;
+	min-width: 100%;
+	padding: 0;
+	width: 100%;
+}
+
+.buscar_mensual{
+	cursor:pointer;
+	width:100%;
+	border:none;
+	background:#0CF;
+	color:#FFF;
+	margin:0 0 5px;
+	padding:10px;
+	font-size:15px;
+}
