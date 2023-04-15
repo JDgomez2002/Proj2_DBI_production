@@ -5,6 +5,7 @@ import InfoPatient from './InfoPatient'
 import InfoDoctor from './InfoDoctor'
 import MainPage from './MainPage'
 import Incidence from './Incidence'
+import Insert_Incidence from './Insert_Incidence'
 import { Switch, Route, BrowserRouter } from 'react-router-dom'
 
 const Page = () => {
