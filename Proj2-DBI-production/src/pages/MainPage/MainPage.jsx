@@ -1,9 +1,19 @@
 import { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import './MainPage.css'
+import { useHistory, Route, Switch } from 'react-router-dom'
 import { ColorModeContext, useMode } from '../../theme'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 import Topbar from './scenes/global/Topbar'
+import  Sidebar  from './scenes/global/Sidebar'
+import './MainPage.css'
+// import Dashboard from './scenes/dashboard'
+// import Team from "./scenes/team";
+// import Invoices from "./scenes/invoices";
+// import Contacts from "./scenes/contacts";
+// import Bar from "./scenes/bar";
+// import Form from "./scenes/form";
+// import Line from "./scenes/line";
+// import Pie from "./scenes/pie";
+// import FAQ from "./scenes/faq";
 
 function MainPage() {
   const [user, setUser] = useState({})
@@ -55,12 +65,28 @@ function MainPage() {
   function UserMainPage() {
     return(
       <div>
-        {logged_In ? 
+        {logged_In ?
         <>
-          <Topbar/>
-          <div>You are signed in!</div>
-          <div>USER: {user.user_id} <br/>PSSW: {user.password} <br/>ROLE: {user.role} </div>
-          <button onClick={signOut} >Sign out</button>
+          <Sidebar />
+          <main className="content">
+            <Topbar/>
+            <Switch>
+              {/* <Route path="/" element={<Dashboard />} /> */}
+              {/* <Route path="/team" element={<Team />} /> */}
+              {/* <Route path="/contacts" element={<Contacts />} /> */}
+              {/* <Route path="/invoices" element={<Invoices />} /> */}
+              {/* <Route path="/form" element={<Form />} /> */}
+              {/* <Route path="/bar" element={<Bar />} /> */}
+              {/* <Route path="/pie" element={<Pie />} /> */}
+              {/* <Route path="/line" element={<Line />} /> */}
+              {/* <Route path="/faq" element={<FAQ />} /> */}
+              {/* <Route path="/calendar" element={<Calendar />} /> */}
+              {/* <Route path="/geography" element={<Geography />} /> */}
+            </Switch>
+            {/* <div>You are signed in!</div>
+            <div>USER: {user.user_id} <br/>PSSW: {user.password} <br/>ROLE: {user.role} </div>
+            <button onClick={signOut} >Sign out</button> */}
+          </main>
         </>
         : <div id="logged-out-status" style={{color: 'red'}} > Signing out...</div>}
       </div>

@@ -12,9 +12,9 @@ const Page = () => {
   return (
     <Switch>
       <Route path="/Proj2_DBI/MainPage">
-        <BrowserRouter>
+        {/* <BrowserRouter> */}
           <MainPage />
-        </BrowserRouter>
+        {/* </BrowserRouter> */}
       </Route>
       <Route path="/Proj2_DBI/SignIn">
         <SignIn />
