@@ -42,9 +42,9 @@ function Login() {
       document.getElementById('div-login-status').textContent = 'Login Succesfully!'
       document.getElementById('div-login-loading').textContent = 'Loading...'
       setTimeout(() => {
-        // history.push('/Proj2_DBI/MainPage')
+        history.push('/Proj2_DBI/MainPage')
         // const path = `${location.pathname}MainPage`
-        history.push(`${location.pathname}MainPage`)
+        // history.push(`${location.pathname}MainPage`)
         
       }, 3000)
     } else {
@@ -55,7 +55,7 @@ function Login() {
 
   const sign_in = () => {
     console.log('/SignIn')
-    history.push('/Proj2_DBI/')
+    // history.push('/Proj2_DBI/')
     history.push('/Proj2_DBI/SignIn')
   }
 

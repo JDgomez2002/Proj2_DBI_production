@@ -12,10 +12,13 @@ const Page = () => {
 
   return (
     <Switch>
-      <Route path="/Proj2_DBI/MainPage">
-        {/* <BrowserRouter> */}
+      <Route path="/Proj2_DBI/MainPage/incidence/">
+        {console.log('rendering routes')}
           <MainPage />
-        {/* </BrowserRouter> */}
+          <Incidence />
+      </Route>
+      <Route path="/Proj2_DBI/MainPage">
+          <MainPage />
       </Route>
       <Route path="/Proj2_DBI/SignIn">
         <SignIn />

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useHistory, Route, Switch } from 'react-router-dom'
 import { ColorModeContext, useMode } from '../../theme'
 import { CssBaseline, ThemeProvider } from '@mui/material'
+import Incidence from '../Incidence'
 import Topbar from './scenes/global/Topbar'
 import  Sidebar  from './scenes/global/Sidebar'
 import './MainPage.css'
@@ -66,12 +67,12 @@ function MainPage() {
     return(
       <div>
         {logged_In ?
-        <>
+        <div className="app" >
           <Sidebar />
           <main className="content">
             <Topbar/>
             <Switch>
-              {/* <Route path="/" element={<Dashboard />} /> */}
+              <Route path="/Proj2_DBI/MainPage/incidence/" element={<Incidence />} />
               {/* <Route path="/team" element={<Team />} /> */}
               {/* <Route path="/contacts" element={<Contacts />} /> */}
               {/* <Route path="/invoices" element={<Invoices />} /> */}
@@ -87,7 +88,7 @@ function MainPage() {
             <div>USER: {user.user_id} <br/>PSSW: {user.password} <br/>ROLE: {user.role} </div>
             <button onClick={signOut} >Sign out</button> */}
           </main>
-        </>
+        </div>
         : <div id="logged-out-status" style={{color: 'red'}} > Signing out...</div>}
       </div>
     )
