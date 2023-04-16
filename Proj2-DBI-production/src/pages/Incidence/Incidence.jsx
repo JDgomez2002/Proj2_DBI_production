@@ -1,85 +1,367 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { supabase } from '../../client'
-import { useHistory } from 'react-router-dom'
 import './Incidence.css'
 
 function Incidence(){
-    const [incidences, setDPIs] = useState([])
-    const [incidence, setDPI] = useState({dpis: '', busqueda: false})
+    const [lista_dpi, setDPIs] = useState([])
+    const [fecha, setFecha] = useState([])
+    const [enfermedad, setEnfermedad] = useState([])
+    const [examen, setExamen] = useState([])
+    const [hospital, setHospital] = useState([])
+    const [doctor, setDoctor] = useState([])
+    const [status_paciente, setStatusPaciente] = useState([])
+    const [fileIds, setFileIds] = useState([]);
+    let{dpi_ingresado} = ''
     let dpiFound = false
-    const history = useHistory()
-
-    useEffect(() => {
-        window.localStorage.setItem('STATUS', JSON.stringify(incidence))
-    }, [incidence])
-
-    useEffect(() => {
-    }, [incidences])
-
+    
     async function fetchPosts() {
-        const { data } = await supabase
-            .from('incidences')
-            .select()
+        await fetchPost()
+        await fetchPost1()
+        await fetchPost2()
+        await fetchPost3()
+        await fetchPost4()
+        await fetchPost5()
+        await fetchPost6()
+        await fetchPost7()
+    }
+
+    //queries para obtener cada uno de los datos del expediente
+    async function fetchPost() {
+        const { data } = await supabase.from('incidence').select('patient_dpi').eq('patient_dpi', dpi_ingresado)
         setDPIs(data)
     }
 
+    async function fetchPost1(){
+        const {data} = await supabase.from('incidence').select('file_id').eq('patient_dpi', dpi_ingresado)
+        const fileIds = data.map((item) => item.file_id)
+        setFileIds(fileIds)
+    }
+
+    async function fetchPost2(){
+        const {data} = await supabase.from('incidence').select('date_time').eq('patient_dpi', dpi_ingresado)
+        const fecha = data.map((item) => item.date_time)
+        setFecha(fecha)
+    }
+
+    async function fetchPost3(){
+        const {data} = await supabase
+            .from('incidence')
+            .select('disease_id')
+            .eq('patient_dpi', dpi_ingresado)
+        const diseaseIds = data.map((item) => item.disease_id)
+
+        const {data: generalData} = await supabase
+            .from('disease')
+            .select('name')
+            .in('disease_id', diseaseIds)
+        const enfermedad = generalData.map((item) => item.name)
+        setEnfermedad(enfermedad)   
+    }
+
+    async function fetchPost4(){
+        const {data} = await supabase
+            .from('incidence')
+            .select('exam_id')
+            .eq('patient_dpi', dpi_ingresado)
+        const examenId = data.map((item) => item.exam_id)
+
+        const {data: generalData} = await supabase
+            .from('exams')
+            .select('name')
+            .in('exam_id', examenId)
+        const examen = generalData.map((item) => item.name)
+        setExamen(examen)
+    }
+
+    async function fetchPost5(){
+        const {data} = await supabase
+            .from('incidence')
+            .select('hospital_id')
+            .eq('patient_dpi', dpi_ingresado)
+        const hospitalId = data.map((item) => item.hospital_id)
+
+        const {data: generalData} = await supabase
+            .from('hospital')
+            .select('name')
+            .in('hospital_id', hospitalId)
+        const examen = generalData.map((item) => item.name)
+        setHospital(examen)
+    }
+
+    async function fetchPost6(){
+        const {data} = await supabase
+            .from('incidence')
+            .select('doctor_dpi')
+            .eq('patient_dpi', dpi_ingresado)
+        const doctorId = data.map((item) => item.doctor_dpi)
+
+        const {data: generalData} = await supabase
+            .from('doctor')
+            .select('name, last_name')
+            .in('doctor_dpi', doctorId)
+        const doctor = generalData.map((item) => `${item.name} ${item.last_name}`)
+        setDoctor(doctor)
+    }
+
+    async function fetchPost7(){
+        const {data} = await supabase.from('incidence').select('status').eq('patient_dpi', dpi_ingresado)
+        const status_paciente = data.map((item) => item.status)
+        setStatusPaciente(status_paciente)
+    }
+
+    //busca el dpi en la tabla
     const buscarDPI = () => {
-        dpi = document.getElementById('input-dpi').value
+        dpi_ingresado = document.getElementById('input-dpi').value.toString()
         dpiFound = false
-        
         let while_counter = 0
-        while ((while_counter < incidences.length) && (dpiFound == false)){
-            if(dpi == incidences[while_counter].dpis){
+        fetchPosts()
+        console.log('fetch',lista_dpi)
+        while ((while_counter < lista_dpi.length)){
+            if(dpi_ingresado == lista_dpi[while_counter].patient_dpi){
                 dpiFound = true
-                setDPI({dpis: dpi, busqueda: true})
+                while_counter++
             } else {
                 while_counter++
             }
         }
-        DPIfindMessage()
     }
 
-    const DPIfindMessage = () => {
-        if(dpiFound){
-            document.getElementById('status').style.color = 'green'
-            document.getElementById('status').textContent = 'DPI found'
-        } else {
-            document.getElementById('status').textContent = 'DPI not found'
-            document.getElementById('status').style.color = 'red'
-        }
+    //comienza a guardar cada uno de los datos en arrays
+    const n = 5; 
+    const displayedFileIds = []; 
+    for (let i = 0; i < n && i < fileIds.length; i++) {
+        displayedFileIds.push(
+        <div key={fileIds[i]}>
+            <p>{fileIds[i]}</p>
+        </div>
+        ); 
     }
 
+    const displayedFechas = []; 
+    for (let i = 0; i < n && i < fecha.length; i++) {
+        displayedFechas.push(
+        <div key={fecha[i]}>
+            <p>{fecha[i]}</p>
+        </div>
+        ); 
+    }
+
+    const displayedEnfermedades = []; 
+    for (let i = 0; i < n && i < enfermedad.length; i++) {
+        displayedEnfermedades.push(
+        <div key={enfermedad[i]}>
+            <p>{enfermedad[i]}</p>
+        </div>
+        ); 
+    }
+
+    const displayedExamenes = []; 
+    for (let i = 0; i < n && i < examen.length; i++) {
+        displayedExamenes.push(
+        <div key={examen[i]}>
+            <p>{examen[i]}</p>
+        </div>
+        ); 
+    }
+
+    const displayedHospitales = []; 
+    for (let i = 0; i < n && i < hospital.length; i++) {
+        displayedHospitales.push(
+        <div key={hospital[i]}>
+            <p>{hospital[i]}</p>
+        </div>
+        ); 
+    }
+
+    const displayedDoctores = []; 
+    for (let i = 0; i < n && i < doctor.length; i++) {
+        displayedDoctores.push(
+        <div key={doctor[i]}>
+            <p>{doctor[i]}</p>
+        </div>
+        ); 
+    }
+
+    const displayedStatus = []; 
+    for (let i = 0; i < n && i < status_paciente.length; i++) {
+        displayedStatus.push(
+        <div key={status_paciente[i]}>
+            <p>{status_paciente[i]}</p>
+        </div>
+        ); 
+    }
+    
+    //muestra la informacion en la interfaz
     return (
-        <div className='contenedor'>
-            <form id='dpi_paciente' action='' method='post'>
-                <h3>Expediente del paciente</h3>
-                <fieldset>
-                    <input id="input-dpi" onClick={fetchPosts} placeholder='DPI del paciente' type='text'></input>
-                    <button className="buscar" onClick={buscarDPI}>Buscar</button>
-                    <div id="status" className="status-message"></div>
-                </fieldset>
-            </form>
+        <div className='incindence-root'>
+            <div className='contenedor'>
+                <form id='dpi_paciente' action='' method='post'>
+                    <h3>Expediente del paciente</h3>
+                    <fieldset>
+                        <input id="input-dpi" placeholder='DPI del paciente' type='text'></input>
+                    </fieldset>
+                </form>
+                <button className="buscar" onClick={buscarDPI}  >Buscar</button>
+                <div id="status" className="status-message"></div>
 
-            <div className='detalles'>
-                <fieldset>
-                    <h4>No. expediente: </h4>
-                    <div id="noExpediente" className="cadaDetalle"></div>
+                <div className='detalles'>
+                        <div>
+                            <h4>No. expediente: </h4>
+                            <div id="noExpediente" className="cadaDetalle" >
+                            {displayedFileIds[0]}
+                            </div>
 
-                    <h4>Fecha: </h4>
-                    <div id="fecha" className="cadaDetalle"></div>
+                            <h4>Fecha: </h4>
+                            <div id="fecha" className="cadaDetalle">
+                            {displayedFechas[0]}
+                            </div>
 
-                    <h4>Enfermedades padecidas: </h4>
-                    <div id="enfermedades" className="cadaDetalle"></div>
+                            <h4>Enfermedades padecidas: </h4>
+                            <div id="enfermedades" className="cadaDetalle">
+                            {displayedEnfermedades[0]}
+                            </div>
 
-                    <h4>Examenes realizados: </h4>
-                    <div id="examenes" className="cadaDetalle"></div>
+                            <h4>Examenes realizados: </h4>
+                            <div id="examenes" className="cadaDetalle">
+                            {displayedExamenes[0]}
+                            </div>
 
-                    <h4>Hospitales visitados: </h4>
-                    <div id="hospitales" className="cadaDetalle"></div>
+                            <h4>Hospital que visitó: </h4>
+                            <div id="hospitales" className="cadaDetalle">
+                            {displayedHospitales[0]}
+                            </div>
 
-                    <h4>Doctores que le han atendido: </h4>
-                    <div id="doctores" className="cadaDetalle"></div>
-                </fieldset>
+                            <h4>Doctor que le atendió: </h4>
+                            <div id="doctores" className="cadaDetalle">
+                            {displayedDoctores[0]}
+                            </div>
+
+                            <h4>Status del paciente: </h4>
+                            <div id="statusDelPaciente" className="cadaDetalle">
+                            {displayedStatus[0]}
+                            </div>
+                        </div>
+                    
+                    {fileIds.length >= 2 &&
+                        <div>
+                            <hr></hr>
+                            <h4>No. expediente: </h4>
+                            <div id="noExpediente" className="cadaDetalle" >
+                            {displayedFileIds[1]}
+                            </div>
+
+                            <h4>Fecha: </h4>
+                            <div id="fecha" className="cadaDetalle">
+                            {displayedFechas[1]}
+                            </div>
+
+                            <h4>Enfermedades padecidas: </h4>
+                            <div id="enfermedades" className="cadaDetalle">
+                            {displayedEnfermedades[1]}
+                            </div>
+
+                            <h4>Examenes realizados: </h4>
+                            <div id="examenes" className="cadaDetalle">
+                            {displayedExamenes[1]}
+                            </div>
+
+                            <h4>Hospital que visitó: </h4>
+                            <div id="hospitales" className="cadaDetalle">
+                            {displayedHospitales[1]}
+                            </div>
+
+                            <h4>Doctor que le atendió: </h4>
+                            <div id="doctores" className="cadaDetalle">
+                            {displayedDoctores[1]}
+                            </div>
+
+                            <h4>Status del paciente: </h4>
+                            <div id="statusDelPaciente" className="cadaDetalle">
+                            {displayedStatus[1]}
+                            </div>
+                        </div>
+                    }
+
+                    {fileIds.length >= 3 &&
+                        <div>
+                            <hr></hr>
+                            <h4>No. expediente: </h4>
+                            <div id="noExpediente" className="cadaDetalle" >
+                            {displayedFileIds[2]}
+                            </div>
+
+                            <h4>Fecha: </h4>
+                            <div id="fecha" className="cadaDetalle">
+                            {displayedFechas[2]}
+                            </div>
+
+                            <h4>Enfermedades padecidas: </h4>
+                            <div id="enfermedades" className="cadaDetalle">
+                            {displayedEnfermedades[2]}
+                            </div>
+
+                            <h4>Examenes realizados: </h4>
+                            <div id="examenes" className="cadaDetalle">
+                            {displayedExamenes[2]}
+                            </div>
+
+                            <h4>Hospital que visitó: </h4>
+                            <div id="hospitales" className="cadaDetalle">
+                            {displayedHospitales[2]}
+                            </div>
+
+                            <h4>Doctor que le atendió: </h4>
+                            <div id="doctores" className="cadaDetalle">
+                            {displayedDoctores[2]}
+                            </div>
+
+                            <h4>Status del paciente: </h4>
+                            <div id="statusDelPaciente" className="cadaDetalle">
+                            {displayedStatus[2]}
+                            </div>
+                        </div>
+                    }
+
+                    {fileIds.length >= 4 &&
+                        <div>
+                            <hr></hr>
+                            <h4>No. expediente: </h4>
+                            <div id="noExpediente" className="cadaDetalle" >
+                            {displayedFileIds[3]}
+                            </div>
+
+                            <h4>Fecha: </h4>
+                            <div id="fecha" className="cadaDetalle">
+                            {displayedFechas[3]}
+                            </div>
+
+                            <h4>Enfermedades padecidas: </h4>
+                            <div id="enfermedades" className="cadaDetalle">
+                            {displayedEnfermedades[3]}
+                            </div>
+
+                            <h4>Examenes realizados: </h4>
+                            <div id="examenes" className="cadaDetalle">
+                            {displayedExamenes[3]}
+                            </div>
+
+                            <h4>Hospital que visitó: </h4>
+                            <div id="hospitales" className="cadaDetalle">
+                            {displayedHospitales[3]}
+                            </div>
+
+                            <h4>Doctor que le atendió: </h4>
+                            <div id="doctores" className="cadaDetalle">
+                            {displayedDoctores[3]}
+                            </div>
+
+                            <h4>Status del paciente: </h4>
+                            <div id="statusDelPaciente" className="cadaDetalle">
+                            {displayedStatus[3]}
+                            </div>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     )

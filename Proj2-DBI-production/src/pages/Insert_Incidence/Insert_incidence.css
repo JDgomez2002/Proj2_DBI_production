@@ -30,7 +30,7 @@ body {
 	background:#0CF;
 }
 
-.contenedor {
+.container {
 	height: fit-content;
     width: 500px;
     padding: 15px;
@@ -41,7 +41,7 @@ body {
     background-color: white;
 }
 
-#dpi_paciente h3 {
+#contact h3 {
 	color: #F96;
 	display: block;
 	font-size: 30px;
@@ -57,7 +57,7 @@ fieldset {
 	width: 100%;
 }
 
-#dpi_paciente input[type="text"], #dpi_paciente textarea , #dpi_paciente select {
+#contact input[type="text"], #contact input[type="date"]  , #contact textarea , #contact select {
 	width:100%;
 	border:1px solid #CCC;
 	background:#FFF;
@@ -65,7 +65,7 @@ fieldset {
 	padding:10px;
 }
 
-#dpi_paciente textarea {
+#contact textarea {
 	height:100px;
 	max-width:100%;
   	resize:none;
