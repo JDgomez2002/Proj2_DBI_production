@@ -32,12 +32,12 @@ body {
 	background:#0CF;
 }
 
-.container {
+/* .container {
 	max-width:400px;
 	width:100%;
 	margin:0 auto;
 	position:relative;
-}
+} */
 
 #contact input[type="checkbox"] {
     margin-right: 10px;

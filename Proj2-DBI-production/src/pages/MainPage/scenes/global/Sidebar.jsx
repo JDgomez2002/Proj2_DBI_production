@@ -17,6 +17,7 @@ import TimelineOutlinedIcon from '@mui/icons-material/TimelineOutlined'
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import InsertPageBreakIcon from '@mui/icons-material/InsertPageBreak';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme()
@@ -27,7 +28,16 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
       style={{
         color: colors.grey[100],
       }}
-      onClick={() => setSelected(title)}
+      onClick={() => {
+        setSelected({page_selected: title})
+        if(title!=='Sign Out'){
+          define_selected_page(title)
+        }
+        else{
+          define_selected_page('')
+          window.localStorage.removeItem('MAINPAGE_SELECTED')
+        }
+      }}
       icon={icon}
     >
       <Typography>{title}</Typography>
@@ -36,11 +46,16 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   )
 }
 
+const define_selected_page = (page) => {
+  window.localStorage.setItem('MAINPAGE_SELECTED', JSON.stringify({ page_selected: page }))
+  console.log('define',typeof page,page)
+}
+
 const Sidebar = () => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
   const [isCollapsed, setIsCollapsed] = useState(false)
-  const [selected, setSelected] = useState('Dashboard')
+  const [selected, setSelected] = useState({page_selected: 'Home'})
   const [user, setUser] = useState({})
   const [logged_In, set_Logged_In_Status] = useState(false)
 
@@ -48,12 +63,17 @@ const Sidebar = () => {
 
   useEffect(() => {
     const browser_data = window.localStorage.getItem('LOGIN_STATUS')
-    if (browser_data !== null) setUser(JSON.parse(browser_data))
+    if (browser_data !== null) {setUser(JSON.parse(browser_data))}
+    const page_selected_data = window.localStorage.getItem('MAINPAGE_SELECTED')
+    if (page_selected_data !== null) {
+      setSelected(JSON.parse(page_selected_data))
+      console.log('page',typeof page_selected_data, JSON.parse(page_selected_data))
+    }
   }, [])
 
   useEffect(() => {
     // console.log('user UseEffect:', user, typeof user.user_id)
-    console.log(user)
+    console.log('user_data',user)
     // setUserAuthorized((user.logged_in))
     // logged = user.logged_in
     // console.log('uawe authorized', user.logged_in)
@@ -74,6 +94,7 @@ const Sidebar = () => {
     // console.log('signing out...')
     set_Logged_In_Status(false)
     window.localStorage.setItem('LOGIN_STATUS', JSON.stringify({ user_id: '', password: '', logged_in: false, role:'' }))
+    window.localStorage.setItem('MAINPAGE_SELECTED', JSON.stringify({ page_selected: '' }))
     // setTimeout(() => {
       // history.push('/Proj2_DBI/')
       // console.log('pushing to /Proj2_DBI/')
@@ -101,8 +122,8 @@ const Sidebar = () => {
         },
       }}
     >
-      <ProSidebar collapsed={isCollapsed}>
-        <Menu iconShape="square">
+      <ProSidebar collapsed={isCollapsed} style={{height: "100%"}}>
+        <Menu iconShape="square" >
           {/* LOGO AND MENU ICON */}
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
@@ -154,10 +175,10 @@ const Sidebar = () => {
           {/* THIS ARE THE SIDE BAR ICONS */}
           <Box paddingLeft={isCollapsed ? undefined : '10%'}>
             <Item
-              title="Dashboard"
+              title="Home"
               to="/Proj2_DBI/MainPage"
               icon={<HomeOutlinedIcon />}
-              selected={selected}
+              selected={selected.page_selected}
               setSelected={setSelected}
             />
 
@@ -168,21 +189,7 @@ const Sidebar = () => {
               title="Incidence"
               to="/Proj2_DBI/MainPage/incidence/"
               icon={<PeopleOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Contacts Information"
-              to="/Proj2_DBI/MainPage/"
-              icon={<ContactsOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Invoices Balances"
-              to="/Proj2_DBI/MainPage/"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
+              selected={selected.page_selected}
               setSelected={setSelected}
             />
 
@@ -192,26 +199,12 @@ const Sidebar = () => {
                 Register Data
               </Typography>
               <Item
-                title="Profile Form"
-                to="/Proj2_DBI/MainPage/"
-                icon={<PersonOutlinedIcon />}
-                selected={selected}
+                title="Insert Incidence"
+                to="/Proj2_DBI/MainPage/insert-incidence"
+                icon={<InsertPageBreakIcon />}
+                selected={selected.page_selected}
                 setSelected={setSelected}
               />
-              <Item
-                title="Calendar"
-                to="/Proj2_DBI/MainPage/"
-                icon={<CalendarTodayOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-              {/* <Item
-                title="FAQ Page"
-                to="/Proj2_DBI/MainPage/"
-                icon={<HelpOutlineOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              /> */}
             </>}
 
             <Typography variant="h6" color={colors.grey[300]} sx={{ m: '20px 0 5px 20px' }}>
@@ -221,32 +214,18 @@ const Sidebar = () => {
               title="Bar Chart"
               to="/Proj2_DBI/MainPage/"
               icon={<BarChartOutlinedIcon />}
-              selected={selected}
+              selected={selected.page_selected}
               setSelected={setSelected}
             />
             <Item
               title="Pie Chart"
               to="/Proj2_DBI/MainPage/"
               icon={<PieChartOutlineOutlinedIcon />}
-              selected={selected}
+              selected={selected.page_selected}
               setSelected={setSelected}
             />
-            {/* <Item
-              title="Line Chart"
-              to="/Proj2_DBI/MainPage/"
-              icon={<TimelineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            /> */}
-            {/* <Item
-              title="Geography Chart"
-              to="/Proj2_DBI/MainPage/"
-              icon={<MapOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            /> */}
             <Typography variant="h6" color={colors.grey[300]} sx={{ m: '20px 0 5px 20px' }}>
-              Close session
+              Exit
             </Typography>
             <Item
               title="Sign Out"

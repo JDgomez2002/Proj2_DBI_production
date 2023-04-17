@@ -16,9 +16,8 @@
 .incindence-mainpage-root {
 	display: grid;
 	place-items: center;
-	height: 100%;
+	height: 80%;
 	width: 100%;
-	background-size: cover;
 	margin: 0px;
 }
 

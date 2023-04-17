@@ -2,19 +2,12 @@ import { useState, useEffect } from 'react'
 import { useHistory, Route, Switch } from 'react-router-dom'
 import { ColorModeContext, useMode } from '../../theme'
 import { CssBaseline, ThemeProvider } from '@mui/material'
-import Incidence from '../Incidence'
 import Topbar from './scenes/global/Topbar'
 import  Sidebar  from './scenes/global/Sidebar'
 import './MainPage.css'
-// import Dashboard from './scenes/dashboard'
-// import Team from "./scenes/team";
-// import Invoices from "./scenes/invoices";
-// import Contacts from "./scenes/contacts";
-// import Bar from "./scenes/bar";
-// import Form from "./scenes/form";
-// import Line from "./scenes/line";
-// import Pie from "./scenes/pie";
-// import FAQ from "./scenes/faq";
+import Incidence from '../Incidence'
+import Insert_Incidence from '../Insert_Incidence'
+import HomePage from './scenes/HomePage/HomePage'
 
 function MainPage() {
   const [user, setUser] = useState({})
@@ -45,6 +38,7 @@ function MainPage() {
     // console.log('signing out...')
     set_Logged_In_Status(false)
     window.localStorage.setItem('LOGIN_STATUS', JSON.stringify({ user_id: '', password: '', logged_in: false, role:'' }))
+    window.localStorage.setItem('MAINPAGE_SELECTED', JSON.stringify({ page_selected: '' }))
     setTimeout(() => {
       history.push('/Proj2_DBI/')
       console.log('pushing to /Proj2_DBI/')
@@ -76,11 +70,13 @@ function MainPage() {
             <Switch>
               <Route path="/Proj2_DBI/MainPage/incidence/">
                 <Incidence/>
-                {/* <div>Hello World!</div> */}
               </Route>
-              {/* <Route path="/Proj2_DBI/MainPage/incidence/"> */}
-                {/* <Incidence /> */}
-              {/* </Route> */}
+              <Route path="/Proj2_DBI/MainPage/insert-incidence/">
+                <Insert_Incidence />
+              </Route>
+              <Route path="/Proj2_DBI/MainPage/">
+                <HomePage/>
+              </Route>
             </Switch>
             {/* <div>You are signed in!</div>
             <div>USER: {user.user_id} <br/>PSSW: {user.password} <br/>ROLE: {user.role} </div>
