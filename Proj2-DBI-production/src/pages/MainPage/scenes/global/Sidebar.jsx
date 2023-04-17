@@ -18,6 +18,7 @@ import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import InsertPageBreakIcon from '@mui/icons-material/InsertPageBreak';
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme()
@@ -202,6 +203,13 @@ const Sidebar = () => {
                 title="Insert Incidence"
                 to="/Proj2_DBI/MainPage/insert-incidence"
                 icon={<InsertPageBreakIcon />}
+                selected={selected.page_selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Inventory"
+                to="/Proj2_DBI/MainPage/inventory"
+                icon={<InventoryIcon />}
                 selected={selected.page_selected}
                 setSelected={setSelected}
               />

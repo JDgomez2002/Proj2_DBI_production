@@ -12,11 +12,11 @@ const HomePage = () => {
 
   return (
     <div style={{ 
-      height: '100%', 
+      width: '100%', 
       height: '91%', 
       display: 'grid', 
       alignContent: 'center',
-      backgroundImage: `url(${forest})`,
+      backgroundImage: 'url(https://github.com/JDgomez2002/Proj2_DBI_production/blob/main/Proj2-DBI-production/src/img/background/forest.jpg?raw=true)',
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
       }}>
