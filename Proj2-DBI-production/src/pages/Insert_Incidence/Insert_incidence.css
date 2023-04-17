@@ -75,15 +75,15 @@ fieldset {
   resize: none;
 }
 
-.buscar {
-  cursor: pointer;
-  width: 100%;
-  border: none;
-  /* background: #0cf; */
-  /* color: #fff; */
-  margin: 0 0 5px;
-  padding: 10px;
-  font-size: 15px;
+.enviar{
+	cursor:pointer;
+	width:100%;
+	border:none;
+	background:#0CF;
+	color:#FFF;
+	margin:0 0 5px;
+	padding:10px;
+	font-size:15px;
 }
 
 .detalles {
