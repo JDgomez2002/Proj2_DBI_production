@@ -190,10 +190,10 @@ function Incidence(){
         </div>
         ); 
     }
-    
+
     //muestra la informacion en la interfaz
     return (
-        <div className='incindence-root'>
+        <div className="incindence-mainpage-root">
             <div className='contenedor'>
                 <form id='dpi_paciente' action='' method='post'>
                     <h3>Expediente del paciente</h3>

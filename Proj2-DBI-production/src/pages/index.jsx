@@ -13,9 +13,7 @@ const Page = () => {
   return (
     <Switch>
       <Route path="/Proj2_DBI/MainPage/incidence/">
-        {console.log('rendering routes')}
           <MainPage />
-          <Incidence />
       </Route>
       <Route path="/Proj2_DBI/MainPage">
           <MainPage />

@@ -97,7 +97,7 @@ function Insert_Incidence(){
     }
 
     return (
-        <div className="incindence-root">
+        <div className="insert-incindence-root">
             <div id="contact" className="container">
                     <h3>Expediente del paciente</h3>
                     <fieldset>

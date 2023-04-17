@@ -22,6 +22,8 @@ function MainPage() {
   const [user_Authorized, setUserAuthorized] = useState(false)
   // MaterialUI mode colors
   const [theme, colorMode] = useMode()
+  const [isSidebar, setIsSidebar] = useState(true);
+
 
   // let logged = false
   const history = useHistory()
@@ -68,21 +70,17 @@ function MainPage() {
       <div>
         {logged_In ?
         <div className="app" >
-          <Sidebar />
+          <Sidebar isSidebar={isSidebar}/>
           <main className="content">
-            <Topbar/>
+            <Topbar setIsSidebar={setIsSidebar}/>
             <Switch>
-              <Route path="/Proj2_DBI/MainPage/incidence/" element={<Incidence />} />
-              {/* <Route path="/team" element={<Team />} /> */}
-              {/* <Route path="/contacts" element={<Contacts />} /> */}
-              {/* <Route path="/invoices" element={<Invoices />} /> */}
-              {/* <Route path="/form" element={<Form />} /> */}
-              {/* <Route path="/bar" element={<Bar />} /> */}
-              {/* <Route path="/pie" element={<Pie />} /> */}
-              {/* <Route path="/line" element={<Line />} /> */}
-              {/* <Route path="/faq" element={<FAQ />} /> */}
-              {/* <Route path="/calendar" element={<Calendar />} /> */}
-              {/* <Route path="/geography" element={<Geography />} /> */}
+              <Route path="/Proj2_DBI/MainPage/incidence/">
+                <Incidence/>
+                {/* <div>Hello World!</div> */}
+              </Route>
+              {/* <Route path="/Proj2_DBI/MainPage/incidence/"> */}
+                {/* <Incidence /> */}
+              {/* </Route> */}
             </Switch>
             {/* <div>You are signed in!</div>
             <div>USER: {user.user_id} <br/>PSSW: {user.password} <br/>ROLE: {user.role} </div>

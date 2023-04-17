@@ -151,10 +151,11 @@ const Sidebar = () => {
             </Box>
           )}
 
+          {/* THIS ARE THE SIDE BAR ICONS */}
           <Box paddingLeft={isCollapsed ? undefined : '10%'}>
             <Item
               title="Dashboard"
-              to="/"
+              to="/Proj2_DBI/MainPage"
               icon={<HomeOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -172,75 +173,81 @@ const Sidebar = () => {
             />
             <Item
               title="Contacts Information"
-              to="/contacts"
+              to="/Proj2_DBI/MainPage/"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Invoices Balances"
-              to="/invoices"
+              to="/Proj2_DBI/MainPage/"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
 
-            <Typography variant="h6" color={colors.grey[300]} sx={{ m: '15px 0 5px 20px' }}>
-              Pages
-            </Typography>
-            <Item
-              title="Profile Form"
-              to="/form"
-              icon={<PersonOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Calendar"
-              to="/calendar"
-              icon={<CalendarTodayOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="FAQ Page"
-              to="/faq"
-              icon={<HelpOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+            { (user.role==='Doctor') &&
+              <>
+              <Typography variant="h6" color={colors.grey[300]} sx={{ m: '20px 0 5px 20px' }}>
+                Register Data
+              </Typography>
+              <Item
+                title="Profile Form"
+                to="/Proj2_DBI/MainPage/"
+                icon={<PersonOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Calendar"
+                to="/Proj2_DBI/MainPage/"
+                icon={<CalendarTodayOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              {/* <Item
+                title="FAQ Page"
+                to="/Proj2_DBI/MainPage/"
+                icon={<HelpOutlineOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              /> */}
+            </>}
 
-            <Typography variant="h6" color={colors.grey[300]} sx={{ m: '15px 0 5px 20px' }}>
-              Charts
+            <Typography variant="h6" color={colors.grey[300]} sx={{ m: '20px 0 5px 20px' }}>
+              Reports
             </Typography>
             <Item
               title="Bar Chart"
-              to="/bar"
+              to="/Proj2_DBI/MainPage/"
               icon={<BarChartOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Pie Chart"
-              to="/pie"
+              to="/Proj2_DBI/MainPage/"
               icon={<PieChartOutlineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
+            {/* <Item
               title="Line Chart"
-              to="/line"
+              to="/Proj2_DBI/MainPage/"
               icon={<TimelineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
-            <Item
+            /> */}
+            {/* <Item
               title="Geography Chart"
-              to="/geography"
+              to="/Proj2_DBI/MainPage/"
               icon={<MapOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> */}
+            <Typography variant="h6" color={colors.grey[300]} sx={{ m: '20px 0 5px 20px' }}>
+              Close session
+            </Typography>
             <Item
               title="Sign Out"
               to="/Proj2_DBI/"
@@ -248,9 +255,7 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
               onClick={signOut2}
-              color={"red"}
             />
-            {/* <button onClick={signOut} >Sign out</button>  */}
           </Box>
         </Menu>
       </ProSidebar>
