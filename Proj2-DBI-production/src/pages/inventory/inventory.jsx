@@ -102,7 +102,7 @@ function Inventory(){
 
     return(
         <div className="inventario-root" style={{width: "100%", height: "100%"}} >
-        {/* <div className='inventario1'> */}
+        <div className='inventario1'>
             <h1>Inventario</h1>
 
             <div className="button-container">
@@ -136,7 +136,7 @@ function Inventory(){
                 <div className="detalles" >{displaySupplies}</div>
             </div>
             )}
-        {/* </div> */}
+        </div>
         </div>
     )
 }
