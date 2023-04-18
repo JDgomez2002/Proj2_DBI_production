@@ -182,9 +182,6 @@ const Sidebar = () => {
                 >
                   {user.user_id}
                 </Typography>
-                <Typography variant="h5" color={colors.greenAccent[500]}>
-                  DB1
-                </Typography>
               </Box>
             </Box>
           )}

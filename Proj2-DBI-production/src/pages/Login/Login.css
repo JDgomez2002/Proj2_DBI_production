@@ -1,4 +1,4 @@
-.login-root {
+.login-container-root {
   /* justify-content: center; */
   /* align-items: center; */
   display: grid;
@@ -6,9 +6,23 @@
   height: 100vh;
   width: 100vw;
   /* position: relative; */
+  /* background-image: url("https://github.com/JDgomez2002/Proj2_DBI_production/blob/main/Proj2-DBI-production/src/img/background/blue-gradient-2.png?raw=true");
+  background-repeat: no-repeat;
+  background-size: cover; */
+}
+
+.login-root {
   background-image: url("https://github.com/JDgomez2002/Proj2_DBI_production/blob/main/Proj2-DBI-production/src/img/background/blue-gradient-2.png?raw=true");
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.login-guest-container {
+  width: 100vw;
+  height: 5px;
+  padding: 20px 0px 0px 0px;
+  display: grid;
+  justify-content: right;
 }
 
 .logo {
@@ -65,6 +79,21 @@
   /* all: unset; */
 }
 
+.login-button-guest {
+  font-size: 12px;
+  position: relative;
+  display: table;
+  margin: 15px 30px 10px 0px;
+  padding: 2px 5px 2px 5px;
+  text-align: center;
+  border-radius: 5px;
+  border: 0.5px solid black;
+  cursor: pointer;
+  color: inherit;
+  text-decoration: inherit;
+  /* all: unset; */
+}
+
 .sign-in-button-link {
   font-size: 20px;
   position: relative;
@@ -82,6 +111,11 @@
 
 .login-button:hover {
   background-color: #a6c3c3c5;
+}
+
+.login-button-guest:hover {
+  background-color: #a6c3c3;
+  color: black;
 }
 
 .sign-in-button-link:hover {
