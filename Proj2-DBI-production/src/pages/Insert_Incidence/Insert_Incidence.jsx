@@ -15,10 +15,13 @@ function Insert_Incidence(){
     const [file, setFile] = useState([])
     const [doctor, setDoctor] = useState([])
     const [doctor_ini, setDoctor_ini] = useState(null)
-    let{ file_id, patient_dpi , disease_id, exam_id, hospital_id, doctor_dpi, date_time, status} = ''
+    const [user, setUser] = useState({})
+    let{ file_id, patient_dpi , disease_id, exam_id, hospital_id, doctor_dpi, date_time, status, user_id} = ''
 
     useEffect(() => {
         fetchPosts()
+        const browser_data = window.localStorage.getItem('LOGIN_STATUS')
+        if (browser_data !== null) setUser(JSON.parse(browser_data))
     }, [])
 
 
@@ -63,14 +66,8 @@ function Insert_Incidence(){
     }
 
     async function InsertInfo() {
-        await supabase.from('incidence').insert([{ file_id, patient_dpi , disease_id, exam_id, hospital_id, doctor_dpi, date_time, status  }]).single()
-    }
-    async function InsertBitacora() {
-        const time = Date.now()
-        const hoy = new Date(time)
-        date_time = hoy.toUTCString()
-        const action = "INSERT"
-        await supabase.from('record').insert([{ doctor_dpi, date_time , file_id, disease_id, exam_id, action}])
+        user_id = user.user_id 
+        await supabase.from('incidence').insert([{ file_id, patient_dpi , disease_id, exam_id, hospital_id, doctor_dpi, date_time, status, user_id }]).single()
     }
 
     const get_Info = () => {
@@ -100,7 +97,6 @@ function Insert_Incidence(){
             status = document.getElementById('statusDelPaciente').value
             console.log('f',file_id,patient_dpi,disease_id,exam_id,hospital_id ,doctor_dpi,date_time, status)
             InsertInfo()
-            InsertBitacora()
         }
     }
 
