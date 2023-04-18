@@ -28,6 +28,9 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
       active={selected === title}
       style={{
         color: colors.grey[100],
+        margin: "0px",
+        padding: "0px 0px",
+        height: "30px"
       }}
       onClick={() => {
         setSelected({page_selected: title})
@@ -123,7 +126,7 @@ const Sidebar = () => {
         },
       }}
     >
-      <ProSidebar collapsed={isCollapsed} style={{height: "100%"}}>
+      <ProSidebar collapsed={isCollapsed}  > {/*style={{height: "100vh"}}*/}
         <Menu iconShape="square" >
           {/* LOGO AND MENU ICON */}
           <MenuItem
@@ -147,12 +150,12 @@ const Sidebar = () => {
           </MenuItem>
 
           {!isCollapsed && (
-            <Box mb="25px">
+            <Box mb="5px">
               <Box display="flex" justifyContent="center" alignItems="center">
                 <img
                   alt="profile-user"
-                  width="100px"
-                  height="100px"
+                  width="70px"
+                  height="70px"
                   src={"https://github.com/JDgomez2002/Proj2_DBI_production/blob/main/Proj2-DBI-production/src/img/stethoscope-icon.png?raw=true"}
                   style={{ cursor: 'pointer', borderRadius: '50%' }}
                 />
@@ -162,6 +165,7 @@ const Sidebar = () => {
                   variant="h2"
                   color={colors.grey[100]}
                   fontWeight="bold"
+                  fontSize={"25px"}
                   sx={{ m: '10px 0 0 0' }}
                 >
                   {user.user_id}
@@ -183,7 +187,7 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-            <Typography variant="h6" color={colors.grey[300]} sx={{ m: '15px 0 5px 20px' }}>
+            <Typography variant="h6" color={colors.grey[300]} fontSize={"12px"} fontFamily={"Bold"} sx={{ m: '20px 0 0px 20px' }}>
               Data
             </Typography>
             <Item
@@ -196,7 +200,7 @@ const Sidebar = () => {
 
             { (user.role==='Doctor') &&
               <>
-              <Typography variant="h6" color={colors.grey[300]} sx={{ m: '20px 0 5px 20px' }}>
+              <Typography variant="h6" color={colors.grey[300]} fontSize={"12px"} fontFamily={"Bold"} sx={{ m: '20px 0 0px 20px' }}>
                 Register Data
               </Typography>
               <Item
@@ -215,7 +219,7 @@ const Sidebar = () => {
               />
             </>}
 
-            <Typography variant="h6" color={colors.grey[300]} sx={{ m: '20px 0 5px 20px' }}>
+            <Typography variant="h6" color={colors.grey[300]} fontSize={"12px"} fontFamily={"Bold"} sx={{ m: '20px 0 0px 20px' }}>
               Reports
             </Typography>
             <Item
@@ -232,7 +236,7 @@ const Sidebar = () => {
               selected={selected.page_selected}
               setSelected={setSelected}
             />
-            <Typography variant="h6" color={colors.grey[300]} sx={{ m: '20px 0 5px 20px' }}>
+            <Typography variant="h6" color={colors.grey[300]} fontSize={"12px"} fontFamily={"Bold"} sx={{ m: '20px 0 0px 20px' }}>
               Exit
             </Typography>
             <Item

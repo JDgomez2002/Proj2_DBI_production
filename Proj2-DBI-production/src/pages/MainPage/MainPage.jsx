@@ -65,7 +65,7 @@ function MainPage() {
       <div>
         {logged_In ?
         <div className="app" >
-          <Sidebar isSidebar={isSidebar}/>
+          <Sidebar isSidebar={isSidebar} style={{height: "100vh"}}/>
           <main className="content">
             <Topbar setIsSidebar={setIsSidebar}/>
             <Switch>
