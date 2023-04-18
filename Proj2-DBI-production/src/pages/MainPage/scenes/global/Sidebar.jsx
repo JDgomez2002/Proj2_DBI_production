@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { ProSidebar, Menu, MenuItem } from 'react-pro-sidebar'
 import { Box, IconButton, Typography, useTheme } from '@mui/material'
 import { Link, useHistory } from 'react-router-dom'
@@ -30,7 +30,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
         color: colors.grey[100],
         margin: "0px",
         padding: "0px 0px",
-        height: "30px"
+        height: "23px"
       }}
       onClick={() => {
         setSelected({page_selected: title})
@@ -40,6 +40,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
         else{
           define_selected_page('')
           window.localStorage.removeItem('MAINPAGE_SELECTED')
+          window.localStorage.removeItem('SIDEBAR_COLAPSED')
         }
       }}
       icon={icon}
@@ -55,29 +56,37 @@ const define_selected_page = (page) => {
   console.log('define',typeof page,page)
 }
 
+const colapse_sidebar = (sidebar_colpased_value) => {
+  window.localStorage.setItem('SIDEBAR_COLAPSED', JSON.stringify({ colapsed: sidebar_colpased_value }))
+}
+
 const Sidebar = () => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
-  const [isCollapsed, setIsCollapsed] = useState(false)
+  const [isCollapsed, setIsCollapsed] = useState({colapsed: false})
   const [selected, setSelected] = useState({page_selected: 'Home'})
   const [user, setUser] = useState({})
   const [logged_In, set_Logged_In_Status] = useState(false)
 
   const history = useHistory()
 
-  useEffect(() => {
+  useMemo(() => {
     const browser_data = window.localStorage.getItem('LOGIN_STATUS')
     if (browser_data !== null) {setUser(JSON.parse(browser_data))}
     const page_selected_data = window.localStorage.getItem('MAINPAGE_SELECTED')
     if (page_selected_data !== null) {
       setSelected(JSON.parse(page_selected_data))
-      console.log('page',typeof page_selected_data, JSON.parse(page_selected_data))
+      // console.log('page',typeof page_selected_data, JSON.parse(page_selected_data))
     }
+    const sidebar_colapsed = window.localStorage.getItem('SIDEBAR_COLAPSED')
+    if (sidebar_colapsed !== null) {setIsCollapsed(JSON.parse(sidebar_colapsed))}
+    const theme_mode = window.localStorage.getItem('THEME_MODE')
+    if (theme_mode !== null) {setIsCollapsed(JSON.parse(theme_mode))}
   }, [])
 
   useEffect(() => {
     // console.log('user UseEffect:', user, typeof user.user_id)
-    console.log('user_data',user)
+    // console.log('user_data',user)
     // setUserAuthorized((user.logged_in))
     // logged = user.logged_in
     // console.log('uawe authorized', user.logged_in)
@@ -126,30 +135,33 @@ const Sidebar = () => {
         },
       }}
     >
-      <ProSidebar collapsed={isCollapsed}  > {/*style={{height: "100vh"}}*/}
+      <ProSidebar collapsed={isCollapsed.colapsed}  > {/*style={{height: "100vh"}}*/}
         <Menu iconShape="square" >
           {/* LOGO AND MENU ICON */}
           <MenuItem
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
+            onClick={() => {
+              setIsCollapsed({colapsed: (!isCollapsed.colapsed)})
+              colapse_sidebar(!isCollapsed.colapsed)
+            }}
+            icon={isCollapsed.colapsed ? <MenuOutlinedIcon /> : undefined}
             style={{
               margin: '10px 0 20px 0',
               color: colors.grey[100],
             }}
           >
-            {!isCollapsed && (
+            {!isCollapsed.colapsed && (
               <Box display="flex" justifyContent="space-between" alignItems="center" ml="15px">
                 <Typography variant="h3" color={colors.grey[100]}>
                   {user.role}
                 </Typography>
-                <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
+                <IconButton onClick={() => setIsCollapsed({colapsed: (!isCollapsed.colapsed)})}>
                   <MenuOutlinedIcon />
                 </IconButton>
               </Box>
             )}
           </MenuItem>
 
-          {!isCollapsed && (
+          {!isCollapsed.colapsed && (
             <Box mb="5px">
               <Box display="flex" justifyContent="center" alignItems="center">
                 <img
@@ -178,7 +190,7 @@ const Sidebar = () => {
           )}
 
           {/* THIS ARE THE SIDE BAR ICONS */}
-          <Box paddingLeft={isCollapsed ? undefined : '10%'}>
+          <Box paddingLeft={isCollapsed.colapsed ? undefined : '10%'}>
             <Item
               title="Home"
               to="/Proj2_DBI/MainPage"
@@ -187,7 +199,7 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-            <Typography variant="h6" color={colors.grey[300]} fontSize={"12px"} fontFamily={"Bold"} sx={{ m: '20px 0 0px 20px' }}>
+            <Typography variant="h6" color={colors.grey[300]} fontSize={"12px"} fontFamily={"Bold"} sx={{ m: '25px 0 0px 20px' }}>
               Data
             </Typography>
             <Item
@@ -200,7 +212,7 @@ const Sidebar = () => {
 
             { (user.role==='Doctor') &&
               <>
-              <Typography variant="h6" color={colors.grey[300]} fontSize={"12px"} fontFamily={"Bold"} sx={{ m: '20px 0 0px 20px' }}>
+              <Typography variant="h6" color={colors.grey[300]} fontSize={"12px"} fontFamily={"Bold"} sx={{ m: '25px 0 0px 20px' }}>
                 Register Data
               </Typography>
               <Item
@@ -219,7 +231,7 @@ const Sidebar = () => {
               />
             </>}
 
-            <Typography variant="h6" color={colors.grey[300]} fontSize={"12px"} fontFamily={"Bold"} sx={{ m: '20px 0 0px 20px' }}>
+            <Typography variant="h6" color={colors.grey[300]} fontSize={"12px"} fontFamily={"Bold"} sx={{ m: '25px 0 0px 20px' }}>
               Reports
             </Typography>
             <Item
@@ -236,7 +248,7 @@ const Sidebar = () => {
               selected={selected.page_selected}
               setSelected={setSelected}
             />
-            <Typography variant="h6" color={colors.grey[300]} fontSize={"12px"} fontFamily={"Bold"} sx={{ m: '20px 0 0px 20px' }}>
+            <Typography variant="h6" color={colors.grey[300]} fontSize={"12px"} fontFamily={"Bold"} sx={{ m: '25px 0 0px 20px' }}>
               Exit
             </Typography>
             <Item
