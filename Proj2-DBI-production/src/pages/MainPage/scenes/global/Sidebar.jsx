@@ -30,7 +30,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
         color: colors.grey[100],
         margin: "0px",
         padding: "0px 0px",
-        height: "23px"
+        height: "25px"
       }}
       onClick={() => {
         setSelected({page_selected: title})
