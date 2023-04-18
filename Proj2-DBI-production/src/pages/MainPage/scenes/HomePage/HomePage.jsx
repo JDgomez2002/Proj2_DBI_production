@@ -13,7 +13,7 @@ const HomePage = () => {
   return (
     <div style={{ 
       width: '100%', 
-      height: '91%', 
+      height: '80%', 
       display: 'grid', 
       alignContent: 'center',
       backgroundImage: 'url(https://github.com/JDgomez2002/Proj2_DBI_production/blob/main/Proj2-DBI-production/src/img/background/forest.jpg?raw=true)',
