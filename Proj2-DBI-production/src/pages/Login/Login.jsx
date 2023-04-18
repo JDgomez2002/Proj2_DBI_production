@@ -14,6 +14,8 @@ function Login() {
   useEffect(() => {
     fetchPosts()
     history.push('/Proj2_DBI/')
+    window.localStorage.removeItem('MAINPAGE_SELECTED')
+    window.localStorage.removeItem('SIDEBAR_COLAPSED')
     // console.log('Users before loading page', users)
     // const browser_data = window.localStorage.getItem('LOGIN_STATUS')
     // if (browser_data !== null) setUser(JSON.parse(browser_data))
