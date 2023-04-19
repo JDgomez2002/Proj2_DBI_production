@@ -6,30 +6,12 @@ import './ChangeDoctorHospital.css'
 function ChangeDoctorHospital() {
   const [hospital, setHospitals] = useState([])
   const [hospital_ini, setHospital_ini] = useState(null)
-  const [lista_dpi, setDPIs] = useState([])
   const [lista_dpi_doctor, setDPIsDoctor] = useState([])
-  const [dise, setDise] = useState(null)
   const [DPIs, setDpi] = useState(null) // IMPORTANTE: almacena el DPI del doctor
-  const [disease_ini, setDisease_ini] = useState([])
-  const [exam, setExam] = useState('')
-  const [exam_ini, setExam_ini] = useState([])
-  const [file, setFile] = useState([])
   const [doctor, setDoctor] = useState({})
   const [doctorHospital, setDoctorHospital] = useState('')
   const [doctorFound, setDoctorFound] = useState(false)
-  const [doctor_ini, setDoctor_ini] = useState(null)
   const [user, setUser] = useState({})
-  let {
-    file_id,
-    patient_dpi,
-    disease_id,
-    exam_id,
-    hospital_id,
-    doctor_dpi,
-    date_time,
-    status,
-    user_id,
-  } = ''
 
   useEffect(() => {
     fetchPosts()
@@ -71,11 +53,6 @@ function ChangeDoctorHospital() {
   async function fetchPosts() {
     await fetchHospitals()
     await fetchDoctors()
-    // await fetchPost()
-    // await fetchPost1()
-    // await fetchPost2()
-    // await fetchPost4()
-    // await fetchPost5()
   }
 
   const fetchDoctors = async () => {
@@ -87,53 +64,6 @@ function ChangeDoctorHospital() {
     const { data } = await supabase.from('hospital').select()
     setHospitals(data)
   }
-
-  // async function fetchPost() {
-  //   const { data } = await supabase.from('patient').select()
-  //   setDPIs(data)
-  // }
-
-  // async function fetchPost1() {
-  //   const { data } = await supabase.from('disease').select()
-  //   setDisease_ini(data)
-  // }
-
-  // async function fetchPost2() {
-  //   const { data } = await supabase.from('exams').select()
-  //   setExam_ini(data)
-  // }
-
-
-  // async function fetchPost4() {
-  //   const { data } = await supabase.from('doctor').select()
-  //   setDoctor(data)
-  // }
-
-  // async function fetchPost5() {
-  //   const { data } = await supabase.from('incidence').select()
-  //   setFile(data)
-  //   console.log('number of files', file.length)
-  // }
-
-  // async function InsertInfo() {
-  //   user_id = user.user_id
-  //   await supabase
-  //     .from('incidence')
-  //     .insert([
-  //       {
-  //         file_id,
-  //         patient_dpi,
-  //         disease_id,
-  //         exam_id,
-  //         hospital_id,
-  //         doctor_dpi,
-  //         date_time,
-  //         status,
-  //         user_id,
-  //       },
-  //     ])
-  //     .single()
-  // }
 
   const updateHospitalFetch = async () => {
     await supabase
@@ -150,45 +80,6 @@ function ChangeDoctorHospital() {
     document.getElementById('status').textContent = 'Doctor cambiado de hospital con éxito!'
     document.getElementById('status').style.color = 'green'
   }
-
-  // const get_Info = () => {
-  //   if (
-  //     document.getElementById('dpi_paciente').value === '' ||
-  //     document.getElementById('fecha').value === '' ||
-  //     document.getElementById('input-state-hereditary-diseases-id').value === '' ||
-  //     document.getElementById('input-state-exam-id').value === '' ||
-  //     document.getElementById('input-state-pais').value === '' ||
-  //     document.getElementById('doctores').value === '' ||
-  //     document.getElementById('statusDelPaciente').value === ''
-  //   ) {
-  //     document.getElementById('status').style.color = 'red'
-  //     document.getElementById('status').textContent =
-  //       "Can't upload information. Complete all the form, please."
-  //   } else {
-  //     document.getElementById('status').textContent = 'Information upload sucessfully!'
-  //     document.getElementById('status').style.color = 'green'
-  //     file_id = file.length + 1
-  //     patient_dpi = document.getElementById('dpi_paciente').value
-  //     disease_id = document.getElementById('input-state-hereditary-diseases-id').value
-  //     exam_id = document.getElementById('input-state-exam-id').value
-  //     hospital_id = document.getElementById('input-state-pais').value
-  //     doctor_dpi = document.getElementById('doctores').value
-  //     date_time = document.getElementById('fecha').value
-  //     status = document.getElementById('statusDelPaciente').value
-  //     console.log(
-  //       'f',
-  //       file_id,
-  //       patient_dpi,
-  //       disease_id,
-  //       exam_id,
-  //       hospital_id,
-  //       doctor_dpi,
-  //       date_time,
-  //       status
-  //     )
-  //     InsertInfo()
-  //   }
-  // }
 
   return (
     <div
@@ -270,9 +161,6 @@ function ChangeDoctorHospital() {
         <button className="enviar" onClick={updateHospital}>
           Asignar
         </button>
-        {/* <button className="enviar" onClick={test}>
-          Test
-        </button> */}
         <div id="status" style={{fontSize: "15px"}}></div>
       </div>
     </div>
