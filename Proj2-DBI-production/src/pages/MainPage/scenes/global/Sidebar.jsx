@@ -19,6 +19,7 @@ import MapOutlinedIcon from '@mui/icons-material/MapOutlined'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import InsertPageBreakIcon from '@mui/icons-material/InsertPageBreak';
 import InventoryIcon from '@mui/icons-material/Inventory';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme()
@@ -30,7 +31,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
         color: colors.grey[100],
         margin: "0px",
         padding: "0px 0px",
-        height: "25px"
+        height: "30px"
       }}
       onClick={() => {
         setSelected({page_selected: title})
@@ -186,7 +187,9 @@ const Sidebar = () => {
             </Box>
           )}
 
+          {/* ------------------------------------------------------------------------------------------------- */}
           {/* THIS ARE THE SIDE BAR ICONS */}
+          {/* ------------------------------------------------------------------------------------------------- */}
           <Box paddingLeft={isCollapsed.colapsed ? undefined : '10%'}>
             <Item
               title="Home"
@@ -206,19 +209,7 @@ const Sidebar = () => {
               selected={selected.page_selected}
               setSelected={setSelected}
             />
-
-            { (user.role==='Doctor') &&
-              <>
-              <Typography variant="h6" color={colors.grey[300]} fontSize={"12px"} fontFamily={"Bold"} sx={{ m: '25px 0 0px 20px' }}>
-                Register Data
-              </Typography>
-              <Item
-                title="Insert Incidence"
-                to="/Proj2_DBI/MainPage/insert-incidence"
-                icon={<InsertPageBreakIcon />}
-                selected={selected.page_selected}
-                setSelected={setSelected}
-              />
+            {(user.role==='Doctor') &&
               <Item
                 title="Inventory"
                 to="/Proj2_DBI/MainPage/inventory"
@@ -226,7 +217,29 @@ const Sidebar = () => {
                 selected={selected.page_selected}
                 setSelected={setSelected}
               />
-            </>}
+            }
+
+            { (user.role==='Doctor') &&
+              <>
+                <Typography variant="h6" color={colors.grey[300]} fontSize={"12px"} fontFamily={"Bold"} sx={{ m: '25px 0 0px 20px' }}>
+                  Edit Data
+                </Typography>
+                <Item
+                  title="Insert Incidence"
+                  to="/Proj2_DBI/MainPage/insert-incidence"
+                  icon={<InsertPageBreakIcon />}
+                  selected={selected.page_selected}
+                  setSelected={setSelected}
+                />
+
+                <Item
+                  title="Update Incidence"
+                  to="/Proj2_DBI/MainPage/update-incidence"
+                  icon={<EditNoteIcon />}
+                  selected={selected.page_selected}
+                  setSelected={setSelected}
+                />
+              </>}
 
             <Typography variant="h6" color={colors.grey[300]} fontSize={"12px"} fontFamily={"Bold"} sx={{ m: '25px 0 0px 20px' }}>
               Reports

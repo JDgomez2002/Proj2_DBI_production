@@ -9,6 +9,7 @@ import Incidence from '../Incidence'
 import Insert_Incidence from '../Insert_Incidence'
 import HomePage from './scenes/HomePage/HomePage'
 import Inventory from '../inventory'
+import Update_Incidence from '../Update_Incidence'
 
 function MainPage() {
   const [user, setUser] = useState({})
@@ -77,6 +78,9 @@ function MainPage() {
               </Route>
               <Route path="/Proj2_DBI/MainPage/inventory/">
                 <Inventory/>
+              </Route>
+              <Route path="/Proj2_DBI/MainPage/update-incidence/">
+                <Update_Incidence/>
               </Route>
               <Route path="/Proj2_DBI/MainPage/">
                 <HomePage/>
