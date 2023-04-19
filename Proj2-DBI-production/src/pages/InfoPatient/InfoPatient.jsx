@@ -95,9 +95,6 @@ function InfoPatient({fullscreen}) {
     }
   }
 
-
-
-
   return (
     <div className={fullscreen ? "info-patient-root" : "info-patient-mainpage"} >
     <div id="contact" className="container-info-patient" style={{backgroundColor: !fullscreen && "rgba(0,0,0,0)"}}>

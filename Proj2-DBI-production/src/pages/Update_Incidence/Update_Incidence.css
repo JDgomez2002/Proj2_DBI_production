@@ -13,11 +13,11 @@
   text-rendering: optimizeLegibility;
 }
 
-.update-incindence-mainpage-root {
+.update-incindence-mainpage-root1 {
   display: grid;
   place-items: center;
-  margin: 0px 0px 0px 0px;
-  height: 100%;
+  margin: 50px 0px 0px 0px;
+  /* height: 100%; */
   width: 100%;
   background-size: cover;
 }

@@ -158,7 +158,7 @@ function ChangeDoctorHospital() {
 
   return (
     <div
-      className="insert-incindence-mainpage-root"
+      className="change-doctor-hospital-mainpage"
       style={{ display: 'grid', placeItems: 'center' }}
     >
       <div

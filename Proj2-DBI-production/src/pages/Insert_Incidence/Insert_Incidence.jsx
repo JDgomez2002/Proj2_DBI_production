@@ -101,7 +101,7 @@ function Insert_Incidence(){
     }
 
     return (
-        <div className="insert-incindence-mainpage-root" style={{display: "grid", placeItems: "center",}}>
+        <div className="insert-incindence-mainpage-root1" style={{display: "grid", placeItems: "center",}}>
             <div id="contact" className="container" style={{width: "300px",background: "rgba(0,0,0,0)"}}>
                     <h3>Nuevo expediente</h3>
                     <fieldset>

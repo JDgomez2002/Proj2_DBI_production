@@ -101,7 +101,7 @@ function Inventory(){
     }
 
     return(
-        <div className="inventario-root" style={{width: "100%", height: "100%"}} >
+        <div className="inventario-root1" style={{margin: "100px 0px 0px 0px", width: "100%"}} >
         <div className='inventario1'>
             <h1>Inventario</h1>
 
