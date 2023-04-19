@@ -74,7 +74,7 @@ function InfoDoctor({fullscreen}) {
 
   return (
     <div className={fullscreen ? "info-doctor-root" : "info-doctor-root-mainpage"} style={{display: "grid", placeItems: "center"}} >
-      <div id="contact" className="container-info-doctor" style={{backgroundColor: !fullscreen && "rgba(0,0,0,0)"}}>
+      <div id="contact" className="container-info-doctor" style={{backgroundColor: !fullscreen && "rgba(0,0,0,0)", padding:"15px", margin: "50px 0px 0px 0px"}}>
       <h3>Información del Doctor</h3>
       <h4>Porfavor llenar todos los espacios asignados</h4>
       <fieldset>

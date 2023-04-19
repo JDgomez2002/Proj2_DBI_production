@@ -102,7 +102,7 @@ function Insert_Incidence(){
 
     return (
         <div className="insert-incindence-mainpage-root1" style={{display: "grid", placeItems: "center",}}>
-            <div id="contact" className="container" style={{width: "300px",background: "rgba(0,0,0,0)"}}>
+            <div id="contact" className="container" style={{width: "300px",background: "rgba(0,0,0,0)", padding:"15px", margin: "50px 0px 0px 0px"}}>
                     <h3>Nuevo expediente</h3>
                     <fieldset>
                         <select id="dpi_paciente" className="cadaDetalle"  onChange={(e) => setDpi(e.target.value)} >

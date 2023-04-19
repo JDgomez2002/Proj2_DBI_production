@@ -174,9 +174,9 @@ function Update_Incidence() {
   return (
     <div
       className="update-incindence-mainpage-root1"
-      style={{ display: 'grid', placeItems: 'center' }}
+      style={{ display: 'grid', placeItems: 'center', margin: "0px" }}
     >
-      <div id="update-contact" className="container" style={{ background: 'rgba(0,0,0,0)' }}>
+      <div id="update-contact" className="container" style={{ background: 'rgba(0,0,0,0)', padding:"15px", margin: "50px 0px 0px 0px"}}>
         <h3>Edición de expediente</h3>
         {statusComponent &&
           statusComponent.split('\n').map((line, index) => (
