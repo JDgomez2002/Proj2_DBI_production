@@ -6,20 +6,14 @@ import "../../../../../node_modules/react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../../../theme";
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined'
-import ContactsOutlinedIcon from '@mui/icons-material/ContactsOutlined'
-import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined'
-import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined'
-import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined'
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
 import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined'
 import PieChartOutlineOutlinedIcon from '@mui/icons-material/PieChartOutlineOutlined'
-import TimelineOutlinedIcon from '@mui/icons-material/TimelineOutlined'
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
-import MapOutlinedIcon from '@mui/icons-material/MapOutlined'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import InsertPageBreakIcon from '@mui/icons-material/InsertPageBreak';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import EditNoteIcon from '@mui/icons-material/EditNote';
+import PostAddIcon from '@mui/icons-material/PostAdd';
+import MedicationIcon from '@mui/icons-material/Medication';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme()
@@ -198,6 +192,15 @@ const Sidebar = () => {
               selected={selected.page_selected}
               setSelected={setSelected}
             />
+            {(user.role==='Administrator') &&
+              <Item
+                title="Hospitals"
+                to="/Proj2_DBI/MainPage/hospitals"
+                icon={<MedicationIcon />}
+                selected={selected.page_selected}
+                setSelected={setSelected}
+              />
+            }
 
             <Typography variant="h6" color={colors.grey[300]} fontSize={"12px"} fontFamily={"Bold"} sx={{ m: '25px 0 0px 20px' }}>
               Data
@@ -209,7 +212,7 @@ const Sidebar = () => {
               selected={selected.page_selected}
               setSelected={setSelected}
             />
-            {(user.role==='Doctor') &&
+            {((user.role==='Doctor')||(user.role==='Administrator')) &&
               <Item
                 title="Inventory"
                 to="/Proj2_DBI/MainPage/inventory"
@@ -219,15 +222,15 @@ const Sidebar = () => {
               />
             }
 
-            { (user.role==='Doctor') &&
+            { ((user.role==='Doctor')||(user.role==='Administrator')) &&
               <>
                 <Typography variant="h6" color={colors.grey[300]} fontSize={"12px"} fontFamily={"Bold"} sx={{ m: '25px 0 0px 20px' }}>
                   Edit Data
                 </Typography>
                 <Item
-                  title="Insert Incidence"
+                  title="Add Incidence"
                   to="/Proj2_DBI/MainPage/insert-incidence"
-                  icon={<InsertPageBreakIcon />}
+                  icon={<PostAddIcon />}
                   selected={selected.page_selected}
                   setSelected={setSelected}
                 />
