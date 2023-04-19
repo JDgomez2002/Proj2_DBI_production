@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { supabase } from '../../client'
 import { useHistory } from 'react-router-dom'
 import './ChangeDoctorHospital.css'
@@ -14,7 +14,9 @@ function ChangeDoctorHospital() {
   const [exam, setExam] = useState('')
   const [exam_ini, setExam_ini] = useState([])
   const [file, setFile] = useState([])
-  const [doctor, setDoctor] = useState([])
+  const [doctor, setDoctor] = useState({})
+  const [doctorHospital, setDoctorHospital] = useState('')
+  const [doctorFound, setDoctorFound] = useState(false)
   const [doctor_ini, setDoctor_ini] = useState(null)
   const [user, setUser] = useState({})
   let {
@@ -36,125 +38,157 @@ function ChangeDoctorHospital() {
   }, [])
 
   useEffect(() => {
-    console.log(DPIs)
-  },[DPIs])
+    // console.log(hospital)
+    let cond_for_counter = 0
+    let hospital_found = false
+    while((cond_for_counter<hospital.length)&&(hospital_found === false)){
+      if(hospital[cond_for_counter].hospital_id===doctor.in_hospital){
+        // console.log('found hosp:',hospital[cond_for_counter].name)
+        setDoctorHospital(hospital[cond_for_counter].name)
+        hospital_found = true
+      } else {
+        cond_for_counter++
+      }
+    }
+  },[hospital, doctor])
+
+  useEffect(() => {
+    // console.log('doctores:',lista_dpi_doctor)
+    let cond_for_counter = 0
+    let doctor_found = false
+    while((cond_for_counter<lista_dpi_doctor.length)&&(doctor_found === false)){
+      if(lista_dpi_doctor[cond_for_counter].doctor_dpi===DPIs){
+        // console.log('found doc:',lista_dpi_doctor[cond_for_counter])
+        setDoctor(lista_dpi_doctor[cond_for_counter])
+        setDoctorFound(true)
+        doctor_found = true
+      } else {
+        cond_for_counter++
+      }
+    }
+  },[lista_dpi_doctor, DPIs])
 
   async function fetchPosts() {
-    await fetchPost()
-    await fetchPost1()
-    await fetchPost2()
-    await fetchPost3()
-    await fetchPost4()
-    await fetchPost5()
+    await fetchHospitals()
     await fetchDoctors()
+    // await fetchPost()
+    // await fetchPost1()
+    // await fetchPost2()
+    // await fetchPost4()
+    // await fetchPost5()
   }
 
   const fetchDoctors = async () => {
     const { data } = await supabase.from('doctor').select()
     setDPIsDoctor(data)
   }
-
-  async function fetchPost() {
-    const { data } = await supabase.from('patient').select()
-    setDPIs(data)
-  }
-
-  async function fetchPost1() {
-    const { data } = await supabase.from('disease').select()
-    setDisease_ini(data)
-  }
-
-  async function fetchPost2() {
-    const { data } = await supabase.from('exams').select()
-    setExam_ini(data)
-  }
-
-  async function fetchPost3() {
+  
+  async function fetchHospitals() {
     const { data } = await supabase.from('hospital').select()
     setHospitals(data)
   }
 
-  async function fetchPost4() {
-    const { data } = await supabase.from('doctor').select()
-    setDoctor(data)
-  }
+  // async function fetchPost() {
+  //   const { data } = await supabase.from('patient').select()
+  //   setDPIs(data)
+  // }
 
-  async function fetchPost5() {
-    const { data } = await supabase.from('incidence').select()
-    setFile(data)
-    console.log('number of files', file.length)
-  }
+  // async function fetchPost1() {
+  //   const { data } = await supabase.from('disease').select()
+  //   setDisease_ini(data)
+  // }
 
-  async function InsertInfo() {
-    user_id = user.user_id
-    await supabase
-      .from('incidence')
-      .insert([
-        {
-          file_id,
-          patient_dpi,
-          disease_id,
-          exam_id,
-          hospital_id,
-          doctor_dpi,
-          date_time,
-          status,
-          user_id,
-        },
-      ])
-      .single()
-  }
+  // async function fetchPost2() {
+  //   const { data } = await supabase.from('exams').select()
+  //   setExam_ini(data)
+  // }
 
-  const updateTest = async () => {
+
+  // async function fetchPost4() {
+  //   const { data } = await supabase.from('doctor').select()
+  //   setDoctor(data)
+  // }
+
+  // async function fetchPost5() {
+  //   const { data } = await supabase.from('incidence').select()
+  //   setFile(data)
+  //   console.log('number of files', file.length)
+  // }
+
+  // async function InsertInfo() {
+  //   user_id = user.user_id
+  //   await supabase
+  //     .from('incidence')
+  //     .insert([
+  //       {
+  //         file_id,
+  //         patient_dpi,
+  //         disease_id,
+  //         exam_id,
+  //         hospital_id,
+  //         doctor_dpi,
+  //         date_time,
+  //         status,
+  //         user_id,
+  //       },
+  //     ])
+  //     .single()
+  // }
+
+  const updateHospitalFetch = async () => {
     await supabase
       .from('doctor')
-      .update({in_hospital: '6'})
-      .eq('doctor_dpi', '1')
+      .update({in_hospital: document.getElementById('input-state-pais').value})
+      .eq('doctor_dpi', doctor.doctor_dpi)
       .select()
   }
 
-  const test = () => {
-    updateTest()
+  const updateHospital = () => {
+    updateHospitalFetch()
+    document.getElementById('dpi_paciente').value = ''
+    setDoctorFound(false)
+    document.getElementById('status').textContent = 'Doctor cambiado de hospital con éxito!'
+    document.getElementById('status').style.color = 'green'
   }
 
-  const get_Info = () => {
-    if (
-      document.getElementById('dpi_paciente').value === '' ||
-      document.getElementById('fecha').value === '' ||
-      document.getElementById('input-state-hereditary-diseases-id').value === '' ||
-      document.getElementById('input-state-exam-id').value === '' ||
-      document.getElementById('input-state-pais').value === '' ||
-      document.getElementById('doctores').value === '' ||
-      document.getElementById('statusDelPaciente').value === ''
-    ) {
-      document.getElementById('status').style.color = 'red'
-      document.getElementById('status').textContent =
-        "Can't upload information. Complete all the form, please."
-    } else {
-      document.getElementById('status').textContent = 'Information upload sucessfully!'
-      document.getElementById('status').style.color = 'green'
-      file_id = file.length + 1
-      patient_dpi = document.getElementById('dpi_paciente').value
-      disease_id = document.getElementById('input-state-hereditary-diseases-id').value
-      exam_id = document.getElementById('input-state-exam-id').value
-      hospital_id = document.getElementById('input-state-pais').value
-      doctor_dpi = document.getElementById('doctores').value
-      date_time = document.getElementById('fecha').value
-      status = document.getElementById('statusDelPaciente').value
-      console.log(
-        'f',
-        file_id,
-        patient_dpi,
-        disease_id,
-        exam_id,
-        hospital_id,
-        doctor_dpi,
-        date_time,
-        status
-      )
-      InsertInfo()
-    }
-  }
+  // const get_Info = () => {
+  //   if (
+  //     document.getElementById('dpi_paciente').value === '' ||
+  //     document.getElementById('fecha').value === '' ||
+  //     document.getElementById('input-state-hereditary-diseases-id').value === '' ||
+  //     document.getElementById('input-state-exam-id').value === '' ||
+  //     document.getElementById('input-state-pais').value === '' ||
+  //     document.getElementById('doctores').value === '' ||
+  //     document.getElementById('statusDelPaciente').value === ''
+  //   ) {
+  //     document.getElementById('status').style.color = 'red'
+  //     document.getElementById('status').textContent =
+  //       "Can't upload information. Complete all the form, please."
+  //   } else {
+  //     document.getElementById('status').textContent = 'Information upload sucessfully!'
+  //     document.getElementById('status').style.color = 'green'
+  //     file_id = file.length + 1
+  //     patient_dpi = document.getElementById('dpi_paciente').value
+  //     disease_id = document.getElementById('input-state-hereditary-diseases-id').value
+  //     exam_id = document.getElementById('input-state-exam-id').value
+  //     hospital_id = document.getElementById('input-state-pais').value
+  //     doctor_dpi = document.getElementById('doctores').value
+  //     date_time = document.getElementById('fecha').value
+  //     status = document.getElementById('statusDelPaciente').value
+  //     console.log(
+  //       'f',
+  //       file_id,
+  //       patient_dpi,
+  //       disease_id,
+  //       exam_id,
+  //       hospital_id,
+  //       doctor_dpi,
+  //       date_time,
+  //       status
+  //     )
+  //     InsertInfo()
+  //   }
+  // }
 
   return (
     <div
@@ -164,18 +198,22 @@ function ChangeDoctorHospital() {
       <div
         id="contact"
         className="container"
-        style={{ width: '300px', background: 'rgba(0,0,0,0)' }}
+        style={{ width: "300px", background: "rgba(0,0,0,0)", padding: "15px", margin: "50px 0px 0px 0px"}}
       >
         <h3>Cambiar a Doctor de hospital</h3>
-        <fieldset>
+        <h4 style={{display: "flex", justifyContent: "left", fontSize: "21px", padding: "0px", margin: "0px"}} >Información del doctor:</h4>
+        <p style={{display: "flex", justifyContent: "left"}}>DPI:</p>
+        <fieldset style={{margin: "0px"}} >
           <select
             id="dpi_paciente"
             className="cadaDetalle"
-            onChange={(e) => setDpi(e.target.value)}
+            onChange={(e) => {
+              setDpi(e.target.value)
+            }}
           >
             <>
               <option className="enfermedad" value="">
-                DPI del doctor:{' '}
+                DPI del doctor:
               </option>
               {lista_dpi_doctor && (
                 <>
@@ -189,54 +227,18 @@ function ChangeDoctorHospital() {
             </>
           </select>
         </fieldset>
-        {/* <fieldset>
-          <input id="fecha" className="cadaDetalle" type="date" />
-        </fieldset> */}
-        {/* <fieldset>
-          <select
-            id="input-state-hereditary-diseases-id"
-            className="cadaDetalle"
-            onChange={(e) => setDise(e.target.value)}
-          >
-            <>
-              <option className="enfermedad" value="">
-                Enfermedad que posee:{' '}
-              </option>
-              {disease_ini && (
-                <>
-                  {disease_ini.map((e) => (
-                    <>
-                      <option value={e.disease_id}>{e.name}</option>
-                    </>
-                  ))}
-                </>
-              )}
-            </>
-          </select>
-        </fieldset> */}
-        {/* <fieldset>
-          <select
-            id="input-state-exam-id"
-            className="cadaDetalle"
-            onChange={(e) => setExam(e.target.value)}
-          >
-            <>
-              <option className="enfermedad" value="">
-                Examen realizado:{' '}
-              </option>
-              {exam_ini && (
-                <>
-                  {exam_ini.map((e) => (
-                    <>
-                      <option value={e.exam_id}>{e.name}</option>
-                    </>
-                  ))}
-                </>
-              )}
-            </>
-          </select>
-        </fieldset> */}
-        <fieldset>
+        {doctorFound && 
+          <div style={{display: "grid", justifyContent: "left", placeContent: "left", alignContent: "left"}}>
+            <p style={{display: "grid", justifyContent: "left"}} >Nombre: {doctor.name} {doctor.last_name}</p>
+            <p style={{display: "grid", justifyContent: "left"}} >Número: {doctor.phone_number}</p>
+            <p style={{display: "grid", justifyContent: "left"}} >Colegiado: {doctor.collegiate_number}</p>
+            <p style={{display: "grid", justifyContent: "left"}} >Dirección: {doctor.direction}</p>
+            <h5 style={{fontSize: "13px", display: "grid", justifyContent: "left"}} >Hospital actual: ({doctor.in_hospital}) {doctorHospital}</h5>
+          </div>
+        }
+        <h4 style={{display: "flex", justifyContent: "left", fontSize: "21px", padding: "0px", margin: "20px 0px 0px 0px"}} >Asignar nuevo hospital:</h4>
+        <p style={{display: "flex", justifyContent: "left"}}>Hospital:</p>
+        <fieldset style={{margin: "0px 0px 0px 0px"}} > {/** onChange={printNewHospital} */}
           <select
             id="input-state-pais"
             name="state"
@@ -247,7 +249,7 @@ function ChangeDoctorHospital() {
           >
             {hospital && (
               <>
-                <option value="">Nuevo Hospital asignado: </option>
+                <option value="">Nuevo Hospital asignado:</option>
                 {hospital.map((e) => (
                   <>
                     <option value={e.hospital_id}>{e.name + ', ' + e.localization}</option>
@@ -257,27 +259,6 @@ function ChangeDoctorHospital() {
             )}
           </select>
         </fieldset>
-        {/* <fieldset>
-          <select
-            id="doctores"
-            name="doct"
-            className="cadaDetalle"
-            required
-            value={doctor_ini}
-            onChange={(e) => setDoctor_ini(e.target.value)}
-          >
-            {doctor && (
-              <>
-                <option value="">Doctor que le atiende: </option>
-                {doctor.map((e) => (
-                  <>
-                    <option value={e.doctor_dpi}>{e.name + ', ' + e.last_name}</option>
-                  </>
-                ))}
-              </>
-            )}
-          </select>
-        </fieldset> */}
         <fieldset>
           <input
             id="statusDelPaciente"
@@ -286,13 +267,13 @@ function ChangeDoctorHospital() {
             type="text"
           />
         </fieldset>
-        <button className="enviar" onClick={get_Info}>
-          Enviar
+        <button className="enviar" onClick={updateHospital}>
+          Asignar
         </button>
-        <button className="enviar" onClick={test}>
+        {/* <button className="enviar" onClick={test}>
           Test
-        </button>
-        <div id="status" className="status-message"></div>
+        </button> */}
+        <div id="status" style={{fontSize: "15px"}}></div>
       </div>
     </div>
   )
