@@ -7,8 +7,9 @@ function ChangeDoctorHospital() {
   const [hospital, setHospitals] = useState([])
   const [hospital_ini, setHospital_ini] = useState(null)
   const [lista_dpi, setDPIs] = useState([])
+  const [lista_dpi_doctor, setDPIsDoctor] = useState([])
   const [dise, setDise] = useState(null)
-  const [DPIs, setDpi] = useState(null)
+  const [DPIs, setDpi] = useState(null) // IMPORTANTE: almacena el DPI del doctor
   const [disease_ini, setDisease_ini] = useState([])
   const [exam, setExam] = useState('')
   const [exam_ini, setExam_ini] = useState([])
@@ -34,6 +35,10 @@ function ChangeDoctorHospital() {
     if (browser_data !== null) setUser(JSON.parse(browser_data))
   }, [])
 
+  useEffect(() => {
+    console.log(DPIs)
+  },[DPIs])
+
   async function fetchPosts() {
     await fetchPost()
     await fetchPost1()
@@ -41,6 +46,12 @@ function ChangeDoctorHospital() {
     await fetchPost3()
     await fetchPost4()
     await fetchPost5()
+    await fetchDoctors()
+  }
+
+  const fetchDoctors = async () => {
+    const { data } = await supabase.from('doctor').select()
+    setDPIsDoctor(data)
   }
 
   async function fetchPost() {
@@ -164,13 +175,13 @@ function ChangeDoctorHospital() {
           >
             <>
               <option className="enfermedad" value="">
-                DPI del paciente:{' '}
+                DPI del doctor:{' '}
               </option>
-              {lista_dpi && (
+              {lista_dpi_doctor && (
                 <>
-                  {lista_dpi.map((e) => (
+                  {lista_dpi_doctor.map((e) => (
                     <>
-                      <option value={e.patient_dpi}>{e.patient_dpi}</option>
+                      <option value={e.doctor_dpi}>{e.doctor_dpi}</option>
                     </>
                   ))}
                 </>
@@ -178,10 +189,10 @@ function ChangeDoctorHospital() {
             </>
           </select>
         </fieldset>
-        <fieldset>
+        {/* <fieldset>
           <input id="fecha" className="cadaDetalle" type="date" />
-        </fieldset>
-        <fieldset>
+        </fieldset> */}
+        {/* <fieldset>
           <select
             id="input-state-hereditary-diseases-id"
             className="cadaDetalle"
@@ -202,8 +213,8 @@ function ChangeDoctorHospital() {
               )}
             </>
           </select>
-        </fieldset>
-        <fieldset>
+        </fieldset> */}
+        {/* <fieldset>
           <select
             id="input-state-exam-id"
             className="cadaDetalle"
@@ -224,7 +235,7 @@ function ChangeDoctorHospital() {
               )}
             </>
           </select>
-        </fieldset>
+        </fieldset> */}
         <fieldset>
           <select
             id="input-state-pais"
@@ -236,7 +247,7 @@ function ChangeDoctorHospital() {
           >
             {hospital && (
               <>
-                <option value="">Hospital en el que se encuentra: </option>
+                <option value="">Nuevo Hospital asignado: </option>
                 {hospital.map((e) => (
                   <>
                     <option value={e.hospital_id}>{e.name + ', ' + e.localization}</option>
@@ -246,7 +257,7 @@ function ChangeDoctorHospital() {
             )}
           </select>
         </fieldset>
-        <fieldset>
+        {/* <fieldset>
           <select
             id="doctores"
             name="doct"
@@ -266,12 +277,12 @@ function ChangeDoctorHospital() {
               </>
             )}
           </select>
-        </fieldset>
+        </fieldset> */}
         <fieldset>
           <input
             id="statusDelPaciente"
             className="cadaDetalle"
-            placeholder="Status del paciente"
+            placeholder="Comentario"
             type="text"
           />
         </fieldset>

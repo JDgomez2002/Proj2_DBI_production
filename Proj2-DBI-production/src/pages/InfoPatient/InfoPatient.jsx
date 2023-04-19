@@ -3,7 +3,7 @@ import { supabase } from '../../client'
 import { Switch, BrowserRouter, Link, Route, useHistory } from 'react-router-dom'
 import './InfoPatient.css'
 
-function InfoPatient() {
+function InfoPatient({fullscreen}) {
   const [hospital, setHospitals] = useState([])
   const [hospital_ini, setHospital_ini] = useState(null)
   const [disease, setDisease] = useState("")
@@ -99,8 +99,8 @@ function InfoPatient() {
 
 
   return (
-    <div className="info-patient-root" >
-    <div id="contact" className="container">
+    <div className={fullscreen ? "info-patient-root" : "info-patient-mainpage"} >
+    <div id="contact" className="container-info-patient" style={{backgroundColor: !fullscreen && "rgba(0,0,0,0)"}}>
       <h3>Información del Paciente</h3>
       <h4>Porfavor llenar todos los espacios asignados</h4>
       <fieldset>

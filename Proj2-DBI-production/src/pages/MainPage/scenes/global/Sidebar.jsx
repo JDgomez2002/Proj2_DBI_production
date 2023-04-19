@@ -14,6 +14,8 @@ import InventoryIcon from '@mui/icons-material/Inventory'
 import EditNoteIcon from '@mui/icons-material/EditNote'
 import PostAddIcon from '@mui/icons-material/PostAdd'
 import MedicationIcon from '@mui/icons-material/Medication'
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1'
+import AccessibleIcon from '@mui/icons-material/Accessible'
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme()
@@ -242,6 +244,22 @@ const Sidebar = () => {
                   title="Update Incidence"
                   to="/Proj2_DBI/MainPage/update-incidence"
                   icon={<EditNoteIcon />}
+                  selected={selected.page_selected}
+                  setSelected={setSelected}
+                />
+
+                <Item
+                  title="New Doctor"
+                  to="/Proj2_DBI/MainPage/new-doctor"
+                  icon={<PersonAddAlt1Icon />}
+                  selected={selected.page_selected}
+                  setSelected={setSelected}
+                />
+
+                <Item
+                  title="New Patient"
+                  to="/Proj2_DBI/MainPage/new-patient"
+                  icon={<AccessibleIcon />}
                   selected={selected.page_selected}
                   setSelected={setSelected}
                 />

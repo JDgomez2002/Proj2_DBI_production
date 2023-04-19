@@ -23,6 +23,18 @@
 	background-size: cover;
   }
 
+.info-patient-mainpage {
+	display: grid;
+	place-items: center;
+	height: 100%;
+	width: 100%;
+}
+
+.container-info-patient {
+	height: fit-content;
+	width: 300px;
+}
+
 body {
 	font-family:"Open Sans", Helvetica, Arial, sans-serif;
 	font-weight:300;

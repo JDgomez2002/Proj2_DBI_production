@@ -22,10 +22,10 @@ const Page = () => {
         <SignIn />
       </Route>
       <Route path="/Proj2_DBI/InfoPatient">
-        <InfoPatient />
+        <InfoPatient fullscreen={true} />
       </Route>
       <Route path="/Proj2_DBI/InfoDoctor">
-        <InfoDoctor />
+        <InfoDoctor fullscreen={true} />
       </Route>
       <Route path="/">
         <Login />
