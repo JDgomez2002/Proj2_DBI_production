@@ -2,18 +2,18 @@ import { useState, useEffect, useMemo } from 'react'
 import { ProSidebar, Menu, MenuItem } from 'react-pro-sidebar'
 import { Box, IconButton, Typography, useTheme } from '@mui/material'
 import { Link, useHistory } from 'react-router-dom'
-import "../../../../../node_modules/react-pro-sidebar/dist/css/styles.css";
-import { tokens } from "../../../../theme";
+import '../../../../../node_modules/react-pro-sidebar/dist/css/styles.css'
+import { tokens } from '../../../../theme'
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined'
 import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined'
 import PieChartOutlineOutlinedIcon from '@mui/icons-material/PieChartOutlineOutlined'
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import InventoryIcon from '@mui/icons-material/Inventory';
-import EditNoteIcon from '@mui/icons-material/EditNote';
-import PostAddIcon from '@mui/icons-material/PostAdd';
-import MedicationIcon from '@mui/icons-material/Medication';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp'
+import InventoryIcon from '@mui/icons-material/Inventory'
+import EditNoteIcon from '@mui/icons-material/EditNote'
+import PostAddIcon from '@mui/icons-material/PostAdd'
+import MedicationIcon from '@mui/icons-material/Medication'
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme()
@@ -23,19 +23,19 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
       active={selected === title}
       style={{
         color: colors.grey[100],
-        margin: "0px",
-        padding: "0px 0px",
-        height: "30px"
+        margin: '0px',
+        padding: '0px 0px',
+        height: '30px',
       }}
       onClick={() => {
-        setSelected({page_selected: title})
-        if(title!=='Sign Out'){
+        setSelected({ page_selected: title })
+        if (title !== 'Sign Out') {
           define_selected_page(title)
-        }
-        else{
+        } else {
           define_selected_page('')
           window.localStorage.removeItem('MAINPAGE_SELECTED')
           window.localStorage.removeItem('SIDEBAR_COLAPSED')
+          signOut()
         }
       }}
       icon={icon}
@@ -48,18 +48,21 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 
 const define_selected_page = (page) => {
   window.localStorage.setItem('MAINPAGE_SELECTED', JSON.stringify({ page_selected: page }))
-  console.log('define',typeof page,page)
+  console.log('define', typeof page, page)
 }
 
 const colapse_sidebar = (sidebar_colpased_value) => {
-  window.localStorage.setItem('SIDEBAR_COLAPSED', JSON.stringify({ colapsed: sidebar_colpased_value }))
+  window.localStorage.setItem(
+    'SIDEBAR_COLAPSED',
+    JSON.stringify({ colapsed: sidebar_colpased_value })
+  )
 }
 
 const Sidebar = () => {
   const theme = useTheme()
   const colors = tokens(theme.palette.mode)
-  const [isCollapsed, setIsCollapsed] = useState({colapsed: false})
-  const [selected, setSelected] = useState({page_selected: 'Home'})
+  const [isCollapsed, setIsCollapsed] = useState({ colapsed: false })
+  const [selected, setSelected] = useState({ page_selected: 'Home' })
   const [user, setUser] = useState({})
   const [logged_In, set_Logged_In_Status] = useState(false)
 
@@ -67,16 +70,22 @@ const Sidebar = () => {
 
   useMemo(() => {
     const browser_data = window.localStorage.getItem('LOGIN_STATUS')
-    if (browser_data !== null) {setUser(JSON.parse(browser_data))}
+    if (browser_data !== null) {
+      setUser(JSON.parse(browser_data))
+    }
     const page_selected_data = window.localStorage.getItem('MAINPAGE_SELECTED')
     if (page_selected_data !== null) {
       setSelected(JSON.parse(page_selected_data))
       // console.log('page',typeof page_selected_data, JSON.parse(page_selected_data))
     }
     const sidebar_colapsed = window.localStorage.getItem('SIDEBAR_COLAPSED')
-    if (sidebar_colapsed !== null) {setIsCollapsed(JSON.parse(sidebar_colapsed))}
+    if (sidebar_colapsed !== null) {
+      setIsCollapsed(JSON.parse(sidebar_colapsed))
+    }
     const theme_mode = window.localStorage.getItem('THEME_MODE')
-    if (theme_mode !== null) {setIsCollapsed(JSON.parse(theme_mode))}
+    if (theme_mode !== null) {
+      setIsCollapsed(JSON.parse(theme_mode))
+    }
   }, [])
 
   useEffect(() => {
@@ -90,24 +99,11 @@ const Sidebar = () => {
   const signOut = () => {
     // console.log('signing out...')
     set_Logged_In_Status(false)
-    window.localStorage.setItem('LOGIN_STATUS', JSON.stringify({ user_id: '', password: '', logged_in: false, role:'' }))
-    setTimeout(() => {
-      history.push('/Proj2_DBI/')
-      console.log('pushing to /Proj2_DBI/')
-      history.go(0)
-    }, 3000)
-  }
-
-  const signOut2 = () => {
-    // console.log('signing out...')
-    set_Logged_In_Status(false)
-    window.localStorage.setItem('LOGIN_STATUS', JSON.stringify({ user_id: '', password: '', logged_in: false, role:'' }))
+    window.localStorage.setItem(
+      'LOGIN_STATUS',
+      JSON.stringify({ user_id: '', password: '', logged_in: false, role: '' })
+    )
     window.localStorage.setItem('MAINPAGE_SELECTED', JSON.stringify({ page_selected: '' }))
-    // setTimeout(() => {
-      // history.push('/Proj2_DBI/')
-      // console.log('pushing to /Proj2_DBI/')
-      // history.go(0)
-    // }, 3000)
   }
 
   return (
@@ -130,12 +126,14 @@ const Sidebar = () => {
         },
       }}
     >
-      <ProSidebar collapsed={isCollapsed.colapsed}  > {/*style={{height: "100vh"}}*/}
-        <Menu iconShape="square" >
+      <ProSidebar collapsed={isCollapsed.colapsed}>
+        {' '}
+        {/*style={{height: "100vh"}}*/}
+        <Menu iconShape="square">
           {/* LOGO AND MENU ICON */}
           <MenuItem
             onClick={() => {
-              setIsCollapsed({colapsed: (!isCollapsed.colapsed)})
+              setIsCollapsed({ colapsed: !isCollapsed.colapsed })
               colapse_sidebar(!isCollapsed.colapsed)
             }}
             icon={isCollapsed.colapsed ? <MenuOutlinedIcon /> : undefined}
@@ -149,7 +147,7 @@ const Sidebar = () => {
                 <Typography variant="h3" color={colors.grey[100]}>
                   {user.role}
                 </Typography>
-                <IconButton onClick={() => setIsCollapsed({colapsed: (!isCollapsed.colapsed)})}>
+                <IconButton onClick={() => setIsCollapsed({ colapsed: !isCollapsed.colapsed })}>
                   <MenuOutlinedIcon />
                 </IconButton>
               </Box>
@@ -163,7 +161,9 @@ const Sidebar = () => {
                   alt="profile-user"
                   width="70px"
                   height="70px"
-                  src={"https://github.com/JDgomez2002/Proj2_DBI_production/blob/main/Proj2-DBI-production/src/img/stethoscope-icon.png?raw=true"}
+                  src={
+                    'https://github.com/JDgomez2002/Proj2_DBI_production/blob/main/Proj2-DBI-production/src/img/stethoscope-icon.png?raw=true'
+                  }
                   style={{ cursor: 'pointer', borderRadius: '50%' }}
                 />
               </Box>
@@ -172,7 +172,7 @@ const Sidebar = () => {
                   variant="h2"
                   color={colors.grey[100]}
                   fontWeight="bold"
-                  fontSize={"25px"}
+                  fontSize={'25px'}
                   sx={{ m: '10px 0 0 0' }}
                 >
                   {user.user_id}
@@ -192,7 +192,7 @@ const Sidebar = () => {
               selected={selected.page_selected}
               setSelected={setSelected}
             />
-            {(user.role==='Administrator') &&
+            {user.role === 'Administrator' && (
               <Item
                 title="Hospitals"
                 to="/Proj2_DBI/MainPage/hospitals"
@@ -200,9 +200,15 @@ const Sidebar = () => {
                 selected={selected.page_selected}
                 setSelected={setSelected}
               />
-            }
+            )}
 
-            <Typography variant="h6" color={colors.grey[300]} fontSize={"12px"} fontFamily={"Bold"} sx={{ m: '25px 0 0px 20px' }}>
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              fontSize={'12px'}
+              fontFamily={'Bold'}
+              sx={{ m: '25px 0 0px 20px' }}
+            >
               Data
             </Typography>
             <Item
@@ -212,19 +218,16 @@ const Sidebar = () => {
               selected={selected.page_selected}
               setSelected={setSelected}
             />
-            {((user.role==='Doctor')||(user.role==='Administrator')) &&
-              <Item
-                title="Inventory"
-                to="/Proj2_DBI/MainPage/inventory"
-                icon={<InventoryIcon />}
-                selected={selected.page_selected}
-                setSelected={setSelected}
-              />
-            }
 
-            { ((user.role==='Doctor')||(user.role==='Administrator')) &&
+            {(user.role === 'Doctor' || user.role === 'Administrator') && (
               <>
-                <Typography variant="h6" color={colors.grey[300]} fontSize={"12px"} fontFamily={"Bold"} sx={{ m: '25px 0 0px 20px' }}>
+                <Typography
+                  variant="h6"
+                  color={colors.grey[300]}
+                  fontSize={'12px'}
+                  fontFamily={'Bold'}
+                  sx={{ m: '25px 0 0px 20px' }}
+                >
                   Edit Data
                 </Typography>
                 <Item
@@ -242,26 +245,48 @@ const Sidebar = () => {
                   selected={selected.page_selected}
                   setSelected={setSelected}
                 />
-              </>}
+              </>
+            )}
 
-            <Typography variant="h6" color={colors.grey[300]} fontSize={"12px"} fontFamily={"Bold"} sx={{ m: '25px 0 0px 20px' }}>
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              fontSize={'12px'}
+              fontFamily={'Bold'}
+              sx={{ m: '25px 0 0px 20px' }}
+            >
               Reports
             </Typography>
-            <Item
+            {(user.role === 'Doctor' || user.role === 'Administrator') && (
+              <Item
+                title="Inventory"
+                to="/Proj2_DBI/MainPage/inventory"
+                icon={<InventoryIcon />}
+                selected={selected.page_selected}
+                setSelected={setSelected}
+              />
+            )}
+            {/* <Item
               title="Bar Chart"
               to="/Proj2_DBI/MainPage/"
               icon={<BarChartOutlinedIcon />}
               selected={selected.page_selected}
               setSelected={setSelected}
-            />
-            <Item
+            /> */}
+            {/* <Item
               title="Pie Chart"
               to="/Proj2_DBI/MainPage/"
               icon={<PieChartOutlineOutlinedIcon />}
               selected={selected.page_selected}
               setSelected={setSelected}
-            />
-            <Typography variant="h6" color={colors.grey[300]} fontSize={"12px"} fontFamily={"Bold"} sx={{ m: '25px 0 0px 20px' }}>
+            /> */}
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              fontSize={'12px'}
+              fontFamily={'Bold'}
+              sx={{ m: '25px 0 0px 20px' }}
+            >
               Exit
             </Typography>
             <Item
@@ -270,7 +295,6 @@ const Sidebar = () => {
               icon={<ExitToAppIcon />}
               selected={selected}
               setSelected={setSelected}
-              onClick={signOut2}
             />
           </Box>
         </Menu>

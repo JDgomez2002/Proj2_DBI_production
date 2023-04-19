@@ -1,0 +1,104 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600);
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border-radius: 5px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -o-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.insert-incindence-mainpage-root {
+  display: grid;
+  place-items: center;
+  margin: 0px 0px 0px 0px;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+}
+
+body {
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 30px;
+  color: #777;
+  /* background: #0cf; */
+}
+
+/* .container {
+  height: fit-content;
+  width: 500px;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+  display: table;
+  flex-direction: column;
+  background-color: white;
+} */
+
+#contact h3 {
+  color: #f96;
+  display: block;
+  font-size: 30px;
+  font-weight: 400;
+  padding: 10px;
+}
+
+fieldset {
+  border: medium none !important;
+  margin: 0 0 10px;
+  min-width: 100%;
+  padding: 0;
+  width: 100%;
+}
+
+#contact input[type="text"],
+#contact input[type="date"],
+#contact textarea,
+#contact select {
+  width: 100%;
+  /* border: 1px solid #ccc; */
+  /* background: #fff; */
+  margin: 0 0 5px;
+  padding: 10px;
+}
+
+#contact textarea {
+  height: 100px;
+  max-width: 100%;
+  resize: none;
+}
+
+.enviar{
+	cursor:pointer;
+	width:100%;
+	border:none;
+	background:#0CF;
+	color:#FFF;
+	margin:0 0 5px;
+	padding:10px;
+	font-size:15px;
+}
+
+.detalles {
+  font-weight: bolder;
+  font-size: 15px;
+  text-align: left;
+  padding: 15px 0px 0px 0px;
+}
+
+.status-message {
+  font-size: 15px;
+}
+
+.cadaDetalle {
+  font-size: 15px;
+  text-align: left;
+  padding: 0px 0px 15px 15px;
+}
