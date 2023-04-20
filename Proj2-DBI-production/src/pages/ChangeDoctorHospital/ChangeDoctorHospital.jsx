@@ -12,7 +12,7 @@ function ChangeDoctorHospital() {
   const [doctorHospital, setDoctorHospital] = useState('')
   const [doctorFound, setDoctorFound] = useState(false)
   const [user, setUser] = useState({})
-  let { doctor_dpi, initial_date, name, last_name , phone_number, medical_speciality_id, in_hospital, direction, collegiate_number } = ''
+  let { doctor_dpi, initial_date, name, last_name , phone_number, medical_speciality_id, in_hospital, direction, collegiate_number, actualDate, observation } = ''
 
   useEffect(() => {
     fetchPosts()
@@ -74,8 +74,26 @@ function ChangeDoctorHospital() {
       .select()
   }
 
+  async function InsertDoctorHospitalResgistration() {
+    await supabase
+    .from('doctor_hospital_registration')
+    .insert([{ 
+      doctor_dpi: doctor.doctor_dpi, 
+      hospital_id: document.getElementById('input-state-pais').value, 
+      initial_date: actualDate, 
+      final_date: null, 
+      observation: null}])
+    .single()
+  }
+
   const updateHospital = () => {
+    actualDate = getDate()
+    observation = document.getElementById('statusDelPaciente').value
     updateHospitalFetch()
+    updateResgitration()
+    setTimeout(() => {
+      InsertDoctorHospitalResgistration()
+    }, 3000)
     document.getElementById('dpi_paciente').value = ''
     setDoctorFound(false)
     document.getElementById('status').textContent = 'Doctor cambiado de hospital con éxito!'
@@ -85,23 +103,32 @@ function ChangeDoctorHospital() {
   const test = async () => {
     await supabase
       .from('doctor_hospital_registration')
-      .insert([
-        {
-          patient_dpi,
-          user_id,
-          name,
-          last_name,
-          phone_number,
-          country,
-          hereditary_diseases,
-          disease_id,
-          body_mass_index,
-          height,
-          weight,
-          addictions,
-        },
-      ])
-      .single()
+      .update({ final_date: '2023-5-12', observation: 'Hey!'})
+      .eq('doctor_dpi', '134')
+      .is('final_date', null)
+      .select()
+  }
+
+  const updateDoctorHospitalRegistrationFetch = async () => {
+    await supabase
+      .from('doctor_hospital_registration')
+      .update({ final_date: actualDate, observation: observation})
+      .eq('doctor_dpi', doctor.doctor_dpi)
+      .is('final_date', null)
+      .select()
+  }
+
+  const getDate = () => {
+    const date = new Date()
+    const year = date.getFullYear()
+    const month = date.getMonth()+1
+    const day = date.getDate()
+    const actual_date = `${year}-${month}-${day}`
+    return actual_date
+  }
+
+  const updateResgitration = () => {
+    updateDoctorHospitalRegistrationFetch()
   }
 
   return (
@@ -224,9 +251,9 @@ function ChangeDoctorHospital() {
         <button className="enviar" onClick={updateHospital}>
           Asignar
         </button>
-        <button className="enviar" onClick={test}>
+        {/* <button className="enviar" onClick={test}>
           Test
-        </button>
+        </button> */}
         <div id="status" style={{ fontSize: '15px' }}></div>
       </div>
     </div>

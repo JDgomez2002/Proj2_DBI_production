@@ -10,7 +10,7 @@ function InfoDoctor({fullscreen}) {
   const [medical_speciality, setMedical_speciality] = useState([])
   const [medical_speciality_ini, setMedical_speciality_ini] = useState(null)
   const [user, setUser] = useState({ username: '', password_entry: '', role:'' })
-  let { doctor_dpi, user_id, name, last_name , phone_number, medical_speciality_id, in_hospital, direction, collegiate_number } = ''
+  let { doctor_dpi, user_id, name, last_name , phone_number, medical_speciality_id, in_hospital, direction, collegiate_number, actualDate, initial_date, final_date, hospital_id, observation} = ''
   const history = useHistory()
 
   useEffect(() => {
@@ -28,6 +28,20 @@ function InfoDoctor({fullscreen}) {
     }
   }
 
+  async function InsertDoctorHospitalResgistration() {
+    await supabase
+    .from('doctor_hospital_registration')
+    .insert([{ doctor_dpi: doctor_dpi, hospital_id: in_hospital, initial_date: actualDate, final_date: null, observation: null}])
+    .single()
+  }
+
+  async function InsertTest() {
+    await supabase
+    .from('doctor_hospital_registration')
+    .insert([{ doctor_dpi: '1', hospital_id: '11', initial_date: getDate(), final_date: null, observation: null}])
+    .single()
+  }
+
   async function fetchPostAll(){
     fetchPost1()
     fetchPost2()
@@ -41,6 +55,15 @@ function InfoDoctor({fullscreen}) {
   async function fetchPost2(){
     const { data } = await supabase.from('medical_speciality').select()
     setMedical_speciality(data)
+  }
+
+  const getDate = () => {
+    const date = new Date()
+    const year = date.getFullYear()
+    const month = date.getMonth()+1
+    const day = date.getDate()
+    const actual_date = `${year}-${month}-${day}`
+    return actual_date
   }
 
   const get_Info = () => {
@@ -70,7 +93,9 @@ function InfoDoctor({fullscreen}) {
       in_hospital = document.getElementById('input-state-hospital').value
       direction = document.getElementById('input-direccion').value
       collegiate_number = document.getElementById('input-numero-colegiado').value
+      actualDate = getDate()
       InsertInfo()
+      InsertDoctorHospitalResgistration()
     }
   }
 
@@ -106,7 +131,12 @@ function InfoDoctor({fullscreen}) {
           </select>
       </fieldset>
       <fieldset>
-          <select id = "input-state-hospital" name="state" className="form-control selectpicker" required value={hospital_ini} onChange={(e) => setHospital_ini(e.target.value)}>
+          <select id = "input-state-hospital" name="state" className="form-control selectpicker" required value={hospital_ini} 
+          onChange={(e) => {
+            setHospital_ini(e.target.value)
+            // console.log(document.getElementById('input-state-hospital').value)
+            // InsertTest()
+            }}>
             {hospital&&(
               <>
               <option value="" >En que hospital se encuentra: </option>
