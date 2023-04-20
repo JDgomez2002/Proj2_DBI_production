@@ -7,6 +7,7 @@ function Otros(){
     const [mortales, setMortales] = useState([])
     const [doctores, setDoctores] = useState([])
     const [pacientes, setPacientes] = useState([])
+    const [hospitales, setHospitales] = useState([])
     const [medicamentosQ, setMedicamentosQ] = useState([])
     const [supplies, setSupplies] = useState([])
     let quincePorciento = 200
@@ -39,65 +40,65 @@ function Otros(){
         enfermedades()
         fetchTopDoctores()
         fetchPacientes()
-      }, [])
+        fetcHospitales()
+    }, [])
 
     //top 10 de los doctores que más pacientes han atendido
     async function fetchTopDoctores() {
         const { data: incidenceData, error } = await supabase
-          .from('incidence')
-          .select('doctor_dpi')
-      
+        .from('incidence')
+        .select('doctor_dpi')
+
         if (error) {
-          console.log('Error fetching data from Supabase:', error);
-          return;
+        console.log('Error fetching data from Supabase:', error);
+        return;
         }
-      
+
         const doctoresDPIs = incidenceData.map((item) => item.doctor_dpi)
         const { data: doctorData, error: doctorError } = await supabase
-          .from('doctor')
-          .select('name, last_name, doctor_dpi')
-          .in('doctor_dpi', doctoresDPIs)
-      
+        .from('doctor')
+        .select('name, last_name, doctor_dpi')
+        .in('doctor_dpi', doctoresDPIs)
+
         if (doctorError) {
-          console.log('Error fetching data from Supabase:', doctorError);
-          return;
+        console.log('Error fetching data from Supabase:', doctorError);
+        return;
         }
-      
+
         const doctoresWithIncidences = doctorData.map((doctor) => {
-          const doctorIncidences = incidenceData.filter((incidence) => incidence.doctor_dpi === doctor.doctor_dpi)
-          const incidencesCount = doctorIncidences.length
-          return { name: doctor.name, last_name: doctor.last_name, count: incidencesCount }
+        const doctorIncidences = incidenceData.filter((incidence) => incidence.doctor_dpi === doctor.doctor_dpi)
+        const incidencesCount = doctorIncidences.length
+        return { name: doctor.name, last_name: doctor.last_name, count: incidencesCount }
         })
-      
+
         const sortedDoctores = doctoresWithIncidences.sort((a, b) => b.count - a.count).slice(0, 10)
         const doctores = sortedDoctores.map((item) => `${item.name} ${item.last_name}`)
-      
+
         setDoctores(doctores);
         console.log('doctores', doctores.length);
     }
-      
+
     //El top 5 de los pacientes con más asistencias a alguna unidad de salud y que debe de incluir su información general (peso, altura, índice de masa corporal, etc.)
     async function fetchPacientes() {
         const { data: incidenceData, error } = await supabase
-          .from('incidence')
-          .select('patient_dpi')
-      
+        .from('incidence')
+        .select('patient_dpi')
+
         const pacienteDPI = incidenceData.map((item) => item.patient_dpi)
         const { data: pacienteData, error: doctorError } = await supabase
-          .from('patient')
-          .select('name, last_name, patient_dpi, height, weight, body_mass_index')
-          .in('patient_dpi', pacienteDPI)
-      
-      
+        .from('patient')
+        .select('name, last_name, patient_dpi, height, weight, body_mass_index')
+        .in('patient_dpi', pacienteDPI)
+
         const pacientesWithIncidences = pacienteData.map((patient) => {
-          const pacienteIncidence = incidenceData.filter((incidence) => incidence.patient_dpi === patient.patient_dpi)
-          const incidencesCount = pacienteIncidence.length
-          return { name: patient.name, last_name: patient.last_name, height: patient.height, weight: patient.weight, body_mass_index: patient.body_mass_index ,count: incidencesCount }
+        const pacienteIncidence = incidenceData.filter((incidence) => incidence.patient_dpi === patient.patient_dpi)
+        const incidencesCount = pacienteIncidence.length
+        return { name: patient.name, last_name: patient.last_name, height: patient.height, weight: patient.weight, body_mass_index: patient.body_mass_index ,count: incidencesCount }
         })
-      
+
         const sortedPacientes = pacientesWithIncidences.sort((a, b) => b.count - a.count).slice(0, 5)
         const pacientes = sortedPacientes.map((item) => `${item.name} ${item.last_name} ${item.height} ${item.weight} ${item.body_mass_index}`)
-      
+
         setPacientes(pacientes);
         console.log('pacientes', pacientes.length);
     }
@@ -132,26 +133,49 @@ function Otros(){
         setSupplies(supplies)
     }
 
-    const displayMedicamentosCantidad = []; 
+    const displayMedicamentosCantidad = [];
     for (let i = 0; i < n && i < medicamentosQ.length; i++) {
         displayMedicamentosCantidad.push(
         <div key={medicamentosQ[i]}>
             <p>{medicamentosQ[i]}</p>
         </div>
-        ); 
+        );
     }
 
-    const displaySupplies = []; 
+    const displaySupplies = [];
     for (let i = 0; i < n && i < supplies.length; i++) {
         displaySupplies.push(
         <div key={supplies[i]}>
             <p>{supplies[i]}</p>
         </div>
-        ); 
+        );
     }
 
 
     //Reporte de las 3 unidades de salud (hospitales, centros de salud y clínicas) que más pacientes atienden
+    async function fetcHospitales() {
+        const { data: incidenceData, error } = await supabase
+        .from('incidence')
+        .select('hospital_id')
+
+        const hospital_id = incidenceData.map((item) => item.hospital_id)
+        const { data: hospitalData, error: doctorError } = await supabase
+        .from('hospital')
+        .select('name, localization')
+        .in('hospital_id', hospital_id)
+
+        const hospitalesWithIncidences = hospitalData.map((hospital) => {
+        const hospitalesIncidence = incidenceData.filter((incidence) => incidence.hospital_id === hospital.hospital_id)
+        const incidencesCount = hospitalesIncidence.length
+        return { name: hospital.name, localization: hospital.localization, count: incidencesCount }
+        })
+
+        const sortedHospitales = hospitalesWithIncidences.sort((a, b) => b.count - a.count).slice(0, 3)
+        const hospitales = sortedHospitales.map((item) => `${item.name} ${item.localization} `)
+
+        setHospitales(hospitales);
+        console.log('hospitales', hospitales.length);
+    }
 
 
     return(
@@ -185,6 +209,9 @@ function Otros(){
 
                 <hr></hr>
                 <h2>Top 3 de las unidades de salud que más pacientes atienden</h2>
+                <div className="detalles">
+                    {hospitales.map((HospitalInfo, index) => <p key={index}>{HospitalInfo}</p>)}
+                </div>
             </div>
         </div>
     )
