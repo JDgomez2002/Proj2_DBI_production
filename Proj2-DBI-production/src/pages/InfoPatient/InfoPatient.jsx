@@ -25,9 +25,11 @@ function InfoPatient({fullscreen}) {
 
   async function InsertInfo() {
     await supabase.from('patient').insert([{ patient_dpi, user_id , name, last_name, phone_number, country, hereditary_diseases, disease_id, body_mass_index, height, weight, addictions  }]).single()
-    setTimeout(() => {
-        history.push('/Proj2_DBI/')
-    }, 3000)
+    if(fullscreen){
+      setTimeout(() => {
+          history.push('/Proj2_DBI/')
+      }, 3000)
+    }
   }
 
 

@@ -21,9 +21,11 @@ function InfoDoctor({fullscreen}) {
 
   async function InsertInfo() {
     await supabase.from('doctor').insert([{ doctor_dpi, user_id , name, last_name, phone_number, direction, collegiate_number, medical_speciality_id, in_hospital }]).single()
-    setTimeout(() => {
+    if(fullscreen){
+      setTimeout(() => {
         history.push('/Proj2_DBI/')
-    }, 3000)
+      }, 3000)
+    }
   }
 
   async function fetchPostAll(){

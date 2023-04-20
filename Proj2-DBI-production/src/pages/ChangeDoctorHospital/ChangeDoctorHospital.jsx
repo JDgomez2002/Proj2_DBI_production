@@ -12,6 +12,7 @@ function ChangeDoctorHospital() {
   const [doctorHospital, setDoctorHospital] = useState('')
   const [doctorFound, setDoctorFound] = useState(false)
   const [user, setUser] = useState({})
+  let { doctor_dpi, initial_date, name, last_name , phone_number, medical_speciality_id, in_hospital, direction, collegiate_number } = ''
 
   useEffect(() => {
     fetchPosts()
@@ -23,8 +24,8 @@ function ChangeDoctorHospital() {
     // console.log(hospital)
     let cond_for_counter = 0
     let hospital_found = false
-    while((cond_for_counter<hospital.length)&&(hospital_found === false)){
-      if(hospital[cond_for_counter].hospital_id===doctor.in_hospital){
+    while (cond_for_counter < hospital.length && hospital_found === false) {
+      if (hospital[cond_for_counter].hospital_id === doctor.in_hospital) {
         // console.log('found hosp:',hospital[cond_for_counter].name)
         setDoctorHospital(hospital[cond_for_counter].name)
         hospital_found = true
@@ -32,14 +33,14 @@ function ChangeDoctorHospital() {
         cond_for_counter++
       }
     }
-  },[hospital, doctor])
+  }, [hospital, doctor])
 
   useEffect(() => {
     // console.log('doctores:',lista_dpi_doctor)
     let cond_for_counter = 0
     let doctor_found = false
-    while((cond_for_counter<lista_dpi_doctor.length)&&(doctor_found === false)){
-      if(lista_dpi_doctor[cond_for_counter].doctor_dpi===DPIs){
+    while (cond_for_counter < lista_dpi_doctor.length && doctor_found === false) {
+      if (lista_dpi_doctor[cond_for_counter].doctor_dpi === DPIs) {
         // console.log('found doc:',lista_dpi_doctor[cond_for_counter])
         setDoctor(lista_dpi_doctor[cond_for_counter])
         setDoctorFound(true)
@@ -48,7 +49,7 @@ function ChangeDoctorHospital() {
         cond_for_counter++
       }
     }
-  },[lista_dpi_doctor, DPIs])
+  }, [lista_dpi_doctor, DPIs])
 
   async function fetchPosts() {
     await fetchHospitals()
@@ -59,7 +60,7 @@ function ChangeDoctorHospital() {
     const { data } = await supabase.from('doctor').select()
     setDPIsDoctor(data)
   }
-  
+
   async function fetchHospitals() {
     const { data } = await supabase.from('hospital').select()
     setHospitals(data)
@@ -68,7 +69,7 @@ function ChangeDoctorHospital() {
   const updateHospitalFetch = async () => {
     await supabase
       .from('doctor')
-      .update({in_hospital: document.getElementById('input-state-pais').value})
+      .update({ in_hospital: document.getElementById('input-state-pais').value })
       .eq('doctor_dpi', doctor.doctor_dpi)
       .select()
   }
@@ -81,6 +82,28 @@ function ChangeDoctorHospital() {
     document.getElementById('status').style.color = 'green'
   }
 
+  const test = async () => {
+    await supabase
+      .from('doctor_hospital_registration')
+      .insert([
+        {
+          patient_dpi,
+          user_id,
+          name,
+          last_name,
+          phone_number,
+          country,
+          hereditary_diseases,
+          disease_id,
+          body_mass_index,
+          height,
+          weight,
+          addictions,
+        },
+      ])
+      .single()
+  }
+
   return (
     <div
       className="change-doctor-hospital-mainpage"
@@ -89,12 +112,27 @@ function ChangeDoctorHospital() {
       <div
         id="contact"
         className="container"
-        style={{ width: "300px", background: "rgba(0,0,0,0)", padding: "15px", margin: "50px 0px 0px 0px"}}
+        style={{
+          width: '300px',
+          background: 'rgba(0,0,0,0)',
+          padding: '15px',
+          margin: '50px 0px 0px 0px',
+        }}
       >
         <h3>Cambiar a Doctor de hospital</h3>
-        <h4 style={{display: "flex", justifyContent: "left", fontSize: "21px", padding: "0px", margin: "0px"}} >Información del doctor:</h4>
-        <p style={{display: "flex", justifyContent: "left"}}>DPI:</p>
-        <fieldset style={{margin: "0px"}} >
+        <h4
+          style={{
+            display: 'flex',
+            justifyContent: 'left',
+            fontSize: '21px',
+            padding: '0px',
+            margin: '0px',
+          }}
+        >
+          Información del doctor:
+        </h4>
+        <p style={{ display: 'flex', justifyContent: 'left' }}>DPI:</p>
+        <fieldset style={{ margin: '0px' }}>
           <select
             id="dpi_paciente"
             className="cadaDetalle"
@@ -118,18 +156,43 @@ function ChangeDoctorHospital() {
             </>
           </select>
         </fieldset>
-        {doctorFound && 
-          <div style={{display: "grid", justifyContent: "left", placeContent: "left", alignContent: "left"}}>
-            <p style={{display: "grid", justifyContent: "left"}} >Nombre: {doctor.name} {doctor.last_name}</p>
-            <p style={{display: "grid", justifyContent: "left"}} >Número: {doctor.phone_number}</p>
-            <p style={{display: "grid", justifyContent: "left"}} >Colegiado: {doctor.collegiate_number}</p>
-            <p style={{display: "grid", justifyContent: "left"}} >Dirección: {doctor.direction}</p>
-            <h5 style={{fontSize: "13px", display: "grid", justifyContent: "left"}} >Hospital actual: ({doctor.in_hospital}) {doctorHospital}</h5>
+        {doctorFound && (
+          <div
+            style={{
+              display: 'grid',
+              justifyContent: 'left',
+              placeContent: 'left',
+              alignContent: 'left',
+            }}
+          >
+            <p style={{ display: 'grid', justifyContent: 'left' }}>
+              Nombre: {doctor.name} {doctor.last_name}
+            </p>
+            <p style={{ display: 'grid', justifyContent: 'left' }}>Número: {doctor.phone_number}</p>
+            <p style={{ display: 'grid', justifyContent: 'left' }}>
+              Colegiado: {doctor.collegiate_number}
+            </p>
+            <p style={{ display: 'grid', justifyContent: 'left' }}>Dirección: {doctor.direction}</p>
+            <h5 style={{ fontSize: '13px', display: 'grid', justifyContent: 'left' }}>
+              Hospital actual: ({doctor.in_hospital}) {doctorHospital}
+            </h5>
           </div>
-        }
-        <h4 style={{display: "flex", justifyContent: "left", fontSize: "21px", padding: "0px", margin: "20px 0px 0px 0px"}} >Asignar nuevo hospital:</h4>
-        <p style={{display: "flex", justifyContent: "left"}}>Hospital:</p>
-        <fieldset style={{margin: "0px 0px 0px 0px"}} > {/** onChange={printNewHospital} */}
+        )}
+        <h4
+          style={{
+            display: 'flex',
+            justifyContent: 'left',
+            fontSize: '21px',
+            padding: '0px',
+            margin: '20px 0px 0px 0px',
+          }}
+        >
+          Asignar nuevo hospital:
+        </h4>
+        <p style={{ display: 'flex', justifyContent: 'left' }}>Hospital:</p>
+        <fieldset style={{ margin: '0px 0px 0px 0px' }}>
+          {' '}
+          {/** onChange={printNewHospital} */}
           <select
             id="input-state-pais"
             name="state"
@@ -161,7 +224,10 @@ function ChangeDoctorHospital() {
         <button className="enviar" onClick={updateHospital}>
           Asignar
         </button>
-        <div id="status" style={{fontSize: "15px"}}></div>
+        <button className="enviar" onClick={test}>
+          Test
+        </button>
+        <div id="status" style={{ fontSize: '15px' }}></div>
       </div>
     </div>
   )
