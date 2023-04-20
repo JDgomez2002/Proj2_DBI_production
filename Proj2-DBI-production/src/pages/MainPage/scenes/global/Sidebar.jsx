@@ -4,10 +4,8 @@ import { Box, IconButton, Typography, useTheme } from '@mui/material'
 import { Link, useHistory } from 'react-router-dom'
 import '../../../../../node_modules/react-pro-sidebar/dist/css/styles.css'
 import { tokens } from '../../../../theme'
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
+import HomeIcon from '@mui/icons-material/Home';
 import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined'
-import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined'
-import PieChartOutlineOutlinedIcon from '@mui/icons-material/PieChartOutlineOutlined'
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import InventoryIcon from '@mui/icons-material/Inventory'
@@ -16,6 +14,7 @@ import PostAddIcon from '@mui/icons-material/PostAdd'
 import MedicationIcon from '@mui/icons-material/Medication'
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1'
 import AccessibleIcon from '@mui/icons-material/Accessible'
+import PieChartIcon from '@mui/icons-material/PieChart';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme()
@@ -190,7 +189,7 @@ const Sidebar = () => {
             <Item
               title="Home"
               to="/Proj2_DBI/MainPage"
-              icon={<HomeOutlinedIcon />}
+              icon={<HomeIcon />}
               selected={selected.page_selected}
               setSelected={setSelected}
             />
@@ -266,38 +265,33 @@ const Sidebar = () => {
               </>
             )}
 
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              fontSize={'12px'}
-              fontFamily={'Bold'}
-              sx={{ m: '25px 0 0px 20px' }}
-            >
-              Reports
-            </Typography>
             {(user.role === 'Doctor' || user.role === 'Administrator') && (
-              <Item
-                title="Inventory"
-                to="/Proj2_DBI/MainPage/inventory"
-                icon={<InventoryIcon />}
-                selected={selected.page_selected}
-                setSelected={setSelected}
-              />
+              <>
+                <Typography
+                  variant="h6"
+                  color={colors.grey[300]}
+                  fontSize={'12px'}
+                  fontFamily={'Bold'}
+                  sx={{ m: '25px 0 0px 20px' }}
+                >
+                  Reports
+                </Typography>
+                <Item
+                  title="Inventory"
+                  to="/Proj2_DBI/MainPage/inventory"
+                  icon={<InventoryIcon />}
+                  selected={selected.page_selected}
+                  setSelected={setSelected}
+                />
+                <Item
+                  title="Other"
+                  to="/Proj2_DBI/MainPage/other"
+                  icon={<PieChartIcon />}
+                  selected={selected.page_selected}
+                  setSelected={setSelected}
+                />
+              </>
             )}
-            {/* <Item
-              title="Bar Chart"
-              to="/Proj2_DBI/MainPage/"
-              icon={<BarChartOutlinedIcon />}
-              selected={selected.page_selected}
-              setSelected={setSelected}
-            /> */}
-            {/* <Item
-              title="Pie Chart"
-              to="/Proj2_DBI/MainPage/"
-              icon={<PieChartOutlineOutlinedIcon />}
-              selected={selected.page_selected}
-              setSelected={setSelected}
-            /> */}
             <Typography
               variant="h6"
               color={colors.grey[300]}

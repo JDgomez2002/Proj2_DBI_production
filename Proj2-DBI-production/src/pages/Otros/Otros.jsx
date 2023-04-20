@@ -181,7 +181,7 @@ function Otros(){
     return(
         <div className="otros-root" style={{width: "100%", height: "100%"}} >
             {show()}
-            <div className='otros'>
+            <div className='otros' style={{width: "300px"}}>
                 <h1>Otra información interesante</h1>
                 <hr></hr>
                 <h2>Top 10 de las enfermedades más mortales</h2>

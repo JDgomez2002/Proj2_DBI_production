@@ -13,6 +13,7 @@ import Update_Incidence from '../Update_Incidence'
 import ChangeDoctorHospital from '../ChangeDoctorHospital'
 import InfoDoctor from '../InfoDoctor'
 import InfoPatient from '../InfoPatient'
+import Otros from '../Otros'
 
 function MainPage() {
   const [user, setUser] = useState({})
@@ -93,6 +94,9 @@ function MainPage() {
               </Route>
               <Route path="/Proj2_DBI/MainPage/new-patient/">
                 <InfoPatient fullscreen={false}/>
+              </Route>
+              <Route path="/Proj2_DBI/MainPage/other/">
+                <Otros/>
               </Route>
               <Route path="/Proj2_DBI/MainPage/">
                 <HomePage/>
