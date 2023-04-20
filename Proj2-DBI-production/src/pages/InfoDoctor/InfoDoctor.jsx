@@ -9,6 +9,7 @@ function InfoDoctor({fullscreen}) {
   const [hospital_ini, setHospital_ini] = useState(null)
   const [medical_speciality, setMedical_speciality] = useState([])
   const [medical_speciality_ini, setMedical_speciality_ini] = useState(null)
+  const [doctors, setDoctors] = useState([])
   const [user, setUser] = useState({ username: '', password_entry: '', role:'' })
   let { doctor_dpi, user_id, name, last_name , phone_number, medical_speciality_id, in_hospital, direction, collegiate_number, actualDate, initial_date, final_date, hospital_id, observation} = ''
   const history = useHistory()
@@ -18,6 +19,10 @@ function InfoDoctor({fullscreen}) {
     if (browser_data !== null) setUser(JSON.parse(browser_data))
     fetchPostAll()
   }, [])
+
+  useEffect(() => {
+    console.log(doctors)
+  }, [doctors])
 
   async function InsertInfo() {
     await supabase.from('doctor').insert([{ doctor_dpi, user_id , name, last_name, phone_number, direction, collegiate_number, medical_speciality_id, in_hospital }]).single()
@@ -45,6 +50,7 @@ function InfoDoctor({fullscreen}) {
   async function fetchPostAll(){
     fetchPost1()
     fetchPost2()
+    fetchDoctors()
   }
 
   async function fetchPost1(){
@@ -57,6 +63,11 @@ function InfoDoctor({fullscreen}) {
     setMedical_speciality(data)
   }
 
+  const fetchDoctors = async () => {
+    const { data } = await supabase.from('doctor').select()
+    setDoctors(data)
+  }
+
   const getDate = () => {
     const date = new Date()
     const year = date.getFullYear()
@@ -64,6 +75,56 @@ function InfoDoctor({fullscreen}) {
     const day = date.getDate()
     const actual_date = `${year}-${month}-${day}`
     return actual_date
+  }
+
+  const evaluateNewDoctor = () => {
+    console.log('evaluating')
+    doctor_dpi = document.getElementById('input-DPI').value
+    collegiate_number = document.getElementById('input-numero-colegiado').value
+    evaluateDPI(doctor_dpi)
+    evaluateCollegiate(collegiate_number)
+  }
+
+  const evaluateDPI = (doctorDPI) => {
+    let new_doctor = true
+    let cond_for_counter = 0
+    while((cond_for_counter<doctors.length)&&(new_doctor)){
+      console.log(doctors[cond_for_counter].doctor_dpi)
+      if(doctorDPI===doctors[cond_for_counter].doctor_dpi){
+        new_doctor = false
+      } else{
+        cond_for_counter++
+      }
+    }
+    if(!new_doctor){
+      document.getElementById('dpi-status').style.color = 'red'
+      document.getElementById('dpi-status').textContent =
+      "DPI already exist."
+    } 
+    else {
+      document.getElementById('dpi-status').textContent = ''
+    }
+    return new_doctor
+  }
+
+  const evaluateCollegiate = (doctorCollegiate) => {
+    let new_doctor = true
+    let cond_for_counter = 0
+    while((cond_for_counter<doctors.length)&&(new_doctor)){
+      if(doctorCollegiate===doctors[cond_for_counter].collegiate_number){
+        new_doctor = false
+      } else{
+        cond_for_counter++
+      }
+    }
+    if(!new_doctor){
+      document.getElementById('collegiate-status').style.color = 'red'
+      document.getElementById('collegiate-status').textContent =
+      "Collegiate already exist."
+    } else {
+      document.getElementById('collegiate-status').textContent = ''
+    }
+    return new_doctor
   }
 
   const get_Info = () => {
@@ -82,8 +143,6 @@ function InfoDoctor({fullscreen}) {
         "Can't upload information. Complete all the form, please."
     }
     else{
-      document.getElementById('div-sign-in-status').textContent = 'Information upload sucessfully!'
-      document.getElementById('div-sign-in-status').style.color = 'green'
       doctor_dpi = document.getElementById('input-DPI').value
       user_id = user.username
       name = document.getElementById('input-nombres').value
@@ -94,8 +153,24 @@ function InfoDoctor({fullscreen}) {
       direction = document.getElementById('input-direccion').value
       collegiate_number = document.getElementById('input-numero-colegiado').value
       actualDate = getDate()
-      InsertInfo()
-      InsertDoctorHospitalResgistration()
+      if(evaluateDPI(doctor_dpi)){
+        if(evaluateCollegiate(collegiate_number)){
+          document.getElementById('div-sign-in-status').textContent = 'Information upload sucessfully!'
+          document.getElementById('div-sign-in-status').style.color = 'green'
+          InsertInfo()
+          InsertDoctorHospitalResgistration()
+        } 
+        // else {
+        //   document.getElementById('div-sign-in-status').style.color = 'red'
+        //   document.getElementById('div-sign-in-status').textContent =
+        //   "Can't upload information. Collegiate already exist."
+        // }
+      } 
+      // else {
+      //   document.getElementById('div-sign-in-status').style.color = 'red'
+      //   document.getElementById('div-sign-in-status').textContent =
+      //   "Can't upload information. DPI already exist."
+      // }
     }
   }
 
@@ -104,10 +179,11 @@ function InfoDoctor({fullscreen}) {
       <div id="contact" className="container-info-doctor" style={{backgroundColor: !fullscreen && "rgba(0,0,0,0)", padding:"15px", margin: "50px 0px 0px 0px"}}>
       <h3>Información del Doctor</h3>
       <h4>Porfavor llenar todos los espacios asignados</h4>
-      <fieldset>
-        <input id = "input-DPI" placeholder="DPI del Doctor" type="text" tabIndex="1" required />
+      <fieldset style={{margin: "0px"}} >
+        <input id = "input-DPI" placeholder="DPI del Doctor" type="text" tabIndex="1" required onChange={evaluateNewDoctor} />
       </fieldset>
-      <fieldset>
+      <div id="dpi-status" ></div>
+      <fieldset style={{margin: "10px 0px 10px 0px"}} >
         <input id = "input-nombres" placeholder="Nombres" type="text" tabIndex="2" required />
       </fieldset>
       <fieldset>
@@ -152,11 +228,12 @@ function InfoDoctor({fullscreen}) {
       <fieldset>
         <input id = "input-direccion" placeholder="Dirección" type="text" tabIndex="4" required />
       </fieldset>
-      <fieldset>
-        <input id = "input-numero-colegiado" placeholder="Numero de colegiado" type="text" tabIndex="4" required />
+      <fieldset style={{margin: "10px 0px 0px 0px"}}>
+        <input id = "input-numero-colegiado" placeholder="Numero de colegiado" type="text" tabIndex="4" required onChange={evaluateNewDoctor}/>
       </fieldset>
-    <button type="submit" onClick={get_Info} >Submit</button>
-    <div id="div-sign-in-status" className="div-login-message"></div>
+      <div id="collegiate-status" ></div>
+    <button type="submit" onClick={get_Info} style={{margin: "10px 0px 0px 0px"}} >Submit</button>
+    <div id="div-sign-in-status" className="div-login-message" style={{fontSize: '14px', margin: "10px 0px 0px 0px"}}></div>
   </div>
 </div>
   )
