@@ -16,7 +16,7 @@ function Insert_Incidence(){
     const [doctor, setDoctor] = useState([])
     const [doctor_ini, setDoctor_ini] = useState(null)
     const [user, setUser] = useState({})
-    let{ file_id, patient_dpi , disease_id, exam_id, hospital_id, doctor_dpi, date_time, status, user_id} = ''
+    let{ file_id, patient_dpi , disease_id, exam_id, hospital_id, doctor_dpi, date_time, status, user_id, entry_time} = ''
 
     useEffect(() => {
         fetchPosts()
@@ -67,7 +67,7 @@ function Insert_Incidence(){
 
     async function InsertInfo() {
         user_id = user.user_id 
-        await supabase.from('incidence').insert([{ file_id, patient_dpi , disease_id, exam_id, hospital_id, doctor_dpi, date_time, status, user_id }]).single()
+        await supabase.from('incidence').insert([{ file_id, patient_dpi , disease_id, exam_id, hospital_id, doctor_dpi, date_time, status, user_id, entry_time }]).single()
     }
 
     const get_Info = () => {
@@ -78,7 +78,8 @@ function Insert_Incidence(){
         document.getElementById('input-state-exam-id').value === '' ||
         document.getElementById('input-state-pais').value === '' ||
         document.getElementById('doctores').value === '' ||
-        document.getElementById('statusDelPaciente').value === ''
+        document.getElementById('statusDelPaciente').value === '' ||
+        document.getElementById('hora').value === ''
     ) {
         document.getElementById('status').style.color = 'red'
         document.getElementById('status').textContent =
@@ -95,6 +96,7 @@ function Insert_Incidence(){
             doctor_dpi = document.getElementById('doctores').value
             date_time = document.getElementById('fecha').value
             status = document.getElementById('statusDelPaciente').value
+            entry_time = document.getElementById('hora').value
             console.log('f',file_id,patient_dpi,disease_id,exam_id,hospital_id ,doctor_dpi,date_time, status)
             InsertInfo()
         }
@@ -185,6 +187,9 @@ function Insert_Incidence(){
                     </fieldset>
                     <fieldset>
                         <input id="statusDelPaciente" className="cadaDetalle" placeholder="Status del paciente" type="text"/>
+                    </fieldset>
+                    <fieldset>
+                        <input id="hora" className="cadaDetalle" type="time" />
                     </fieldset>
                 <button className="enviar" onClick={get_Info}  >Enviar</button>
                 <div id="status" className="status-message"></div>
