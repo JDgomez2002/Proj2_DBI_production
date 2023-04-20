@@ -101,7 +101,7 @@ function InfoPatient({fullscreen}) {
       <h3>Información del Paciente</h3>
       <h4>Porfavor llenar todos los espacios asignados</h4>
       <fieldset>
-        <input id = "input-DPI"  placeholder="DPI del Paciente" type="text" tabIndex="1" required autoFocus />
+        <input id = "input-DPI"  placeholder="DPI del Paciente" type="text" tabIndex="1" required />
       </fieldset>
       <fieldset>
         <input id = "input-nombres" placeholder="Nombres" type="text" tabIndex="2" required />
