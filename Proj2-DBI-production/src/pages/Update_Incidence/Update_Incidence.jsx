@@ -22,6 +22,9 @@ function Update_Incidence() {
   const [exam_toto, setExam_toto] = useState('')
   const [hospital_ini, setHospital_ini] = useState([])
   const [hospital_tot, setHospital_tot] = useState([])
+  const [medication, setMedication] = useState([])
+  const [medication_ini, setMedication_ini] = useState([])
+  const [medication_tot, setMedication_tot] = useState('')
   const [doctor_ini, setDoctor_ini] = useState([])
   const [doctor_tot, setDoctor_tot] = useState([])
   const [user, setUser] = useState({})
@@ -35,6 +38,8 @@ function Update_Incidence() {
     date_time,
     status,
     user_id,
+    entry_time,
+    medications_id
   } = ''
 
   useEffect(() => {
@@ -49,6 +54,7 @@ function Update_Incidence() {
     await fetchPost8()
     await fetchPost9()
     await fetchPost10()
+    await fetchPost11()
   }
 
   async function fetchPost() {
@@ -95,6 +101,10 @@ function Update_Incidence() {
     const { data } = await supabase.from('doctor').select().eq('doctor_dpi', file_fin[0].doctor_dpi)
     setDoctor_ini(data)
   }
+  async function fetchPost12() {
+    const { data } = await supabase.from('medications').select().eq('medications_id', file_fin[0].medications_id)
+    setMedication_ini(data)
+  }
 
   const get_Info = () => {
     patient_dpi = document.getElementById('input-dpi-paciente').value
@@ -109,6 +119,7 @@ function Update_Incidence() {
     fetchPost4()
     fetchPost5()
     fetchPost6()
+    fetchPost12()
   }
 
   const export_info = () => {
@@ -118,9 +129,11 @@ function Update_Incidence() {
         disease: ${disease_ini[0].name}
         exam: ${exam_ini[0].name}
         hospital: ${hospital_ini[0].name}
-        doctor name: ${doctor_ini[0].name}
+        doctor name: ${doctor_ini[0].name + ' ' + doctor_ini[0].last_name}
         date_time: ${file_fin[0].date_time}
-        status: ${file_fin[0].status}`)
+        status: ${file_fin[0].status}
+        entry_time: ${file_fin[0].entry_time}
+        medication: ${medication_ini[0].name}`)
   }
 
   async function fetchPost7() {
@@ -141,6 +154,10 @@ function Update_Incidence() {
     const { data } = await supabase.from('doctor').select()
     setDoctor(data)
   }
+  async function fetchPost11(){
+    const { data } = await supabase.from('medications').select()
+    setMedication(data)
+  }
 
   async function update_info() {
     patient_dpi = document.getElementById('input-dpi-paciente').value
@@ -151,6 +168,8 @@ function Update_Incidence() {
     date_time = document.getElementById('fecha').value
     status = document.getElementById('statusDelPaciente').value
     user_id = user.user_id
+    entry_time = document.getElementById('hora').value
+    medications_id = document.getElementById('input-state-medication').value
     await supabase
       .from('incidence')
       .update({
@@ -162,6 +181,8 @@ function Update_Incidence() {
         date_time: date_time,
         status: status,
         user_id: user_id,
+        entry_time: entry_time,
+        medications_id: medications_id
       })
       .eq('file_id', document.getElementById('input-state-file-id').value)
       .then((result) => {
@@ -334,6 +355,33 @@ function Update_Incidence() {
             placeholder="Status del paciente"
             type="text"
           />
+        </fieldset>
+        <fieldset>
+          <input
+            id="hora"
+            className="cadaDetalle"
+            type="time" />
+        </fieldset>
+        <fieldset>
+          <select
+            id="input-state-medication"
+            name="state"
+            className="form-control selectpicker"
+            required
+            value={medication_tot}
+            onChange={(e) => setMedication_tot(e.target.value)}
+          >
+            {medication && (
+              <>
+                <option value="">Medicina que se le administró: </option>
+                {medication.map((e) => (
+                  <>
+                    <option value={e.medications_id}>{e.name + ', ' + e.description}</option>
+                  </>
+                ))}
+              </>
+            )}
+          </select>
         </fieldset>
         <button className="buscar" onClick={update_info}>
           {' '}
