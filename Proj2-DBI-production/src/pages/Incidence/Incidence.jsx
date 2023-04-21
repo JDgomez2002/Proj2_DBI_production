@@ -5,10 +5,12 @@ import './Incidence.css'
 function Incidence(){
     const [lista_dpi, setDPIs] = useState([])
     const [fecha, setFecha] = useState([])
+    const [horas, setHoras] = useState([])
     const [enfermedad, setEnfermedad] = useState([])
     const [examen, setExamen] = useState([])
     const [hospital, setHospital] = useState([])
     const [doctor, setDoctor] = useState([])
+    const [medicamentos, setMedicamentos] = useState([])
     const [status_paciente, setStatusPaciente] = useState([])
     const [fileIds, setFileIds] = useState([]);
     let{dpi_ingresado} = ''
@@ -18,10 +20,12 @@ function Incidence(){
         await fetchPost()
         await fetchPost1()
         await fetchPost2()
+        await fetchPostH()
         await fetchPost3()
         await fetchPost4()
         await fetchPost5()
         await fetchPost6()
+        await fetchPostM()
         await fetchPost7()
     }
 
@@ -43,6 +47,12 @@ function Incidence(){
         setFecha(fecha)
     }
 
+    async function fetchPostH(){
+        const {data} = await supabase.from('incidence').select('entry_time').eq('patient_dpi', dpi_ingresado)
+        const horas = data.map((item) => item.entry_time)
+        setHoras(horas)
+    }
+
     async function fetchPost3(){
         const {data} = await supabase
             .from('incidence')
@@ -57,6 +67,7 @@ function Incidence(){
         const enfermedad = generalData.map((item) => item.name)
         setEnfermedad(enfermedad)   
     }
+      
 
     async function fetchPost4(){
         const {data} = await supabase
@@ -103,6 +114,18 @@ function Incidence(){
         setDoctor(doctor)
     }
 
+    async function fetchPostM(){
+        const {data} = await supabase.from('incidence').select('medications_id').eq('patient_dpi', dpi_ingresado)
+        const medicamentosId = data.map((item) => item.medications_id)
+
+        const {data: generalData} = await supabase
+            .from('medications')
+            .select('name')
+            .in('medications_id', medicamentosId)
+        const medicamentos = generalData.map((item) => item.name)
+        setMedicamentos(medicamentos)
+    }
+
     async function fetchPost7(){
         const {data} = await supabase.from('incidence').select('status').eq('patient_dpi', dpi_ingresado)
         const status_paciente = data.map((item) => item.status)
@@ -146,6 +169,15 @@ function Incidence(){
         ); 
     }
 
+    const displayedHoras = []; 
+    for (let i = 0; i < n && i < horas.length; i++) {
+        displayedHoras.push(
+        <div key={horas[i]}>
+            <p>{horas[i]}</p>
+        </div>
+        ); 
+    }
+
     const displayedEnfermedades = []; 
     for (let i = 0; i < n && i < enfermedad.length; i++) {
         displayedEnfermedades.push(
@@ -178,6 +210,15 @@ function Incidence(){
         displayedDoctores.push(
         <div key={doctor[i]}>
             <p>{doctor[i]}</p>
+        </div>
+        ); 
+    }
+
+    const displayedMedicamentos = []; 
+    for (let i = 0; i < n && i < medicamentos.length; i++) {
+        displayedMedicamentos.push(
+        <div key={medicamentos[i]}>
+            <p>{medicamentos[i]}</p>
         </div>
         ); 
     }
@@ -216,6 +257,11 @@ function Incidence(){
                             {displayedFechas[0]}
                             </div>
 
+                            <h4>Hora: </h4>
+                            <div id="hora" className="cadaDetalle">
+                            {displayedHoras[0]}
+                            </div>
+
                             <h4>Enfermedades padecidas: </h4>
                             <div id="enfermedades" className="cadaDetalle">
                             {displayedEnfermedades[0]}
@@ -236,6 +282,11 @@ function Incidence(){
                             {displayedDoctores[0]}
                             </div>
 
+                            <h4>Medicamentos suministrados: </h4>
+                            <div id="medicinas" className="cadaDetalle">
+                            {displayedMedicamentos[0]}
+                            </div>
+
                             <h4>Status del paciente: </h4>
                             <div id="statusDelPaciente" className="cadaDetalle">
                             {displayedStatus[0]}
@@ -253,6 +304,11 @@ function Incidence(){
                             <h4>Fecha: </h4>
                             <div id="fecha" className="cadaDetalle">
                             {displayedFechas[1]}
+                            </div>
+
+                            <h4>Hora: </h4>
+                            <div id="fecha" className="cadaDetalle">
+                            {displayedHoras[1]}
                             </div>
 
                             <h4>Enfermedades padecidas: </h4>
@@ -275,6 +331,11 @@ function Incidence(){
                             {displayedDoctores[1]}
                             </div>
 
+                            <h4>Medicamentos suministrados: </h4>
+                            <div id="medicinas" className="cadaDetalle">
+                            {displayedMedicamentos[1]}
+                            </div>
+
                             <h4>Status del paciente: </h4>
                             <div id="statusDelPaciente" className="cadaDetalle">
                             {displayedStatus[1]}
@@ -293,6 +354,11 @@ function Incidence(){
                             <h4>Fecha: </h4>
                             <div id="fecha" className="cadaDetalle">
                             {displayedFechas[2]}
+                            </div>
+
+                            <h4>Hora: </h4>
+                            <div id="fecha" className="cadaDetalle">
+                            {displayedHoras[2]}
                             </div>
 
                             <h4>Enfermedades padecidas: </h4>
@@ -315,6 +381,11 @@ function Incidence(){
                             {displayedDoctores[2]}
                             </div>
 
+                            <h4>Medicamentos suministrados: </h4>
+                            <div id="medicinas" className="cadaDetalle">
+                            {displayedMedicamentos[2]}
+                            </div>
+
                             <h4>Status del paciente: </h4>
                             <div id="statusDelPaciente" className="cadaDetalle">
                             {displayedStatus[2]}
@@ -335,6 +406,11 @@ function Incidence(){
                             {displayedFechas[3]}
                             </div>
 
+                            <h4>Hora: </h4>
+                            <div id="fecha" className="cadaDetalle">
+                            {displayedHoras[3]}
+                            </div>
+
                             <h4>Enfermedades padecidas: </h4>
                             <div id="enfermedades" className="cadaDetalle">
                             {displayedEnfermedades[3]}
@@ -353,6 +429,11 @@ function Incidence(){
                             <h4>Doctor que le atendió: </h4>
                             <div id="doctores" className="cadaDetalle">
                             {displayedDoctores[3]}
+                            </div>
+
+                            <h4>Medicamentos suministrados: </h4>
+                            <div id="medicinas" className="cadaDetalle">
+                            {displayedMedicamentos[3]}
                             </div>
 
                             <h4>Status del paciente: </h4>
