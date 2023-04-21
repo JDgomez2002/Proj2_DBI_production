@@ -62,12 +62,11 @@ function Incidence(){
 
         const {data: generalData} = await supabase
             .from('disease')
-            .select('name')
-            .in('disease_id', diseaseIds)
-        const enfermedad = generalData.map((item) => item.name)
-        setEnfermedad(enfermedad)   
+            .select('disease_id , name')
+        const enfermedad = diseaseIds.map(enfermedad => generalData.find(e => e.disease_id === enfermedad).name)
+        generalData.map((item) => item.name)
+        setEnfermedad(enfermedad)
     }
-      
 
     async function fetchPost4(){
         const {data} = await supabase
@@ -75,12 +74,13 @@ function Incidence(){
             .select('exam_id')
             .eq('patient_dpi', dpi_ingresado)
         const examenId = data.map((item) => item.exam_id)
-
+        console.log('exams',examenId)
         const {data: generalData} = await supabase
             .from('exams')
-            .select('name')
-            .in('exam_id', examenId)
-        const examen = generalData.map((item) => item.name)
+            .select('exam_id , name')
+            console.log('generalData', generalData)
+        const examen = examenId.map(examen => generalData.find(d=> d.exam_id === examen).name)
+            console.log('examen', examen)
         setExamen(examen)
     }
 
@@ -93,10 +93,9 @@ function Incidence(){
 
         const {data: generalData} = await supabase
             .from('hospital')
-            .select('name')
-            .in('hospital_id', hospitalId)
-        const examen = generalData.map((item) => item.name)
-        setHospital(examen)
+            .select('hospital_id , name')
+        const hospital = hospitalId.map(hospital => generalData.find(h=> h.hospital_id === hospital).name)
+        setHospital(hospital)
     }
 
     async function fetchPost6(){
@@ -108,9 +107,11 @@ function Incidence(){
 
         const {data: generalData} = await supabase
             .from('doctor')
-            .select('name, last_name')
-            .in('doctor_dpi', doctorId)
-        const doctor = generalData.map((item) => `${item.name} ${item.last_name}`)
+            .select('doctor_dpi, name, last_name')
+            const doctor = doctorId.map(doctor => {
+                const foundDoctor = generalData.find(h => h.doctor_dpi === doctor);
+                return foundDoctor ? `${foundDoctor.name} ${foundDoctor.last_name}` : null;
+            })
         setDoctor(doctor)
     }
 
@@ -120,9 +121,8 @@ function Incidence(){
 
         const {data: generalData} = await supabase
             .from('medications')
-            .select('name')
-            .in('medications_id', medicamentosId)
-        const medicamentos = generalData.map((item) => item.name)
+            .select('medications_id , name')
+        const medicamentos = medicamentosId.map(medicamentos => generalData.find(n=> n.medications_id === medicamentos).name)
         setMedicamentos(medicamentos)
     }
 
@@ -154,7 +154,7 @@ function Incidence(){
     const displayedFileIds = []; 
     for (let i = 0; i < n && i < fileIds.length; i++) {
         displayedFileIds.push(
-        <div key={fileIds[i]}>
+        <div key={`fileIds[${i}]`}>
             <p>{fileIds[i]}</p>
         </div>
         ); 
@@ -163,7 +163,7 @@ function Incidence(){
     const displayedFechas = []; 
     for (let i = 0; i < n && i < fecha.length; i++) {
         displayedFechas.push(
-        <div key={fecha[i]}>
+        <div key={`fecha[${i}]`}>
             <p>{fecha[i]}</p>
         </div>
         ); 
@@ -172,7 +172,7 @@ function Incidence(){
     const displayedHoras = []; 
     for (let i = 0; i < n && i < horas.length; i++) {
         displayedHoras.push(
-        <div key={horas[i]}>
+        <div key={`horas[${i}]`}>
             <p>{horas[i]}</p>
         </div>
         ); 
@@ -181,7 +181,7 @@ function Incidence(){
     const displayedEnfermedades = []; 
     for (let i = 0; i < n && i < enfermedad.length; i++) {
         displayedEnfermedades.push(
-        <div key={enfermedad[i]}>
+        <div key={`enfermedad[${i}]`}>
             <p>{enfermedad[i]}</p>
         </div>
         ); 
@@ -190,7 +190,7 @@ function Incidence(){
     const displayedExamenes = []; 
     for (let i = 0; i < n && i < examen.length; i++) {
         displayedExamenes.push(
-        <div key={examen[i]}>
+        <div key={`examen[${i}]`}>
             <p>{examen[i]}</p>
         </div>
         ); 
@@ -199,7 +199,7 @@ function Incidence(){
     const displayedHospitales = []; 
     for (let i = 0; i < n && i < hospital.length; i++) {
         displayedHospitales.push(
-        <div key={hospital[i]}>
+        <div key={`hospital[${i}]`}>
             <p>{hospital[i]}</p>
         </div>
         ); 
@@ -208,7 +208,7 @@ function Incidence(){
     const displayedDoctores = []; 
     for (let i = 0; i < n && i < doctor.length; i++) {
         displayedDoctores.push(
-        <div key={doctor[i]}>
+        <div key={`doctor[${i}]`}>
             <p>{doctor[i]}</p>
         </div>
         ); 
@@ -217,7 +217,7 @@ function Incidence(){
     const displayedMedicamentos = []; 
     for (let i = 0; i < n && i < medicamentos.length; i++) {
         displayedMedicamentos.push(
-        <div key={medicamentos[i]}>
+        <div key={`medicamentos[${i}]`}>
             <p>{medicamentos[i]}</p>
         </div>
         ); 
@@ -226,7 +226,7 @@ function Incidence(){
     const displayedStatus = []; 
     for (let i = 0; i < n && i < status_paciente.length; i++) {
         displayedStatus.push(
-        <div key={status_paciente[i]}>
+        <div key={`status_paciente[${i}]`}>
             <p>{status_paciente[i]}</p>
         </div>
         ); 
