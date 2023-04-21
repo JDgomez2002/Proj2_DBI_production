@@ -12,11 +12,15 @@ function Otros(){
     const [supplies, setSupplies] = useState([])
     let quincePorciento = 200
 
-    const show = () => {
+    useEffect(() => {
+        enfermedades()
+        fetchTopDoctores()
+        fetchPacientes()
+        fetcHospitales()
         enfermedades()
         MedicamentosCantidad()
         Supplies()
-    }
+    }, [])
 
     //top 10 de enfermedades más mortales
     async function enfermedades(){
@@ -37,13 +41,6 @@ function Otros(){
         </div>
         ); 
     }
-
-    useEffect(() => {
-        enfermedades()
-        fetchTopDoctores()
-        fetchPacientes()
-        fetcHospitales()
-    }, [])
 
     //top 10 de los doctores que más pacientes han atendido
     async function fetchTopDoctores() {
@@ -83,14 +80,14 @@ function Otros(){
     //El top 5 de los pacientes con más asistencias a alguna unidad de salud y que debe de incluir su información general (peso, altura, índice de masa corporal, etc.)
     async function fetchPacientes() {
         const { data: incidenceData, error } = await supabase
-        .from('incidence')
-        .select('patient_dpi')
+            .from('incidence')
+            .select('patient_dpi')
 
         const pacienteDPI = incidenceData.map((item) => item.patient_dpi)
         const { data: pacienteData, error: doctorError } = await supabase
-        .from('patient')
-        .select('name, last_name, patient_dpi, height, weight, body_mass_index')
-        .in('patient_dpi', pacienteDPI)
+            .from('patient')
+            .select('name, last_name, patient_dpi, height, weight, body_mass_index')
+            .in('patient_dpi', pacienteDPI)
 
         const pacientesWithIncidences = pacienteData.map((patient) => {
         const pacienteIncidence = incidenceData.filter((incidence) => incidence.patient_dpi === patient.patient_dpi)
@@ -136,7 +133,7 @@ function Otros(){
         //obtiene toda la data de la tabla 'inventory_supplies'
         const { data } = await supabase
           .from('inventory_supplies')
-          .select()
+          .select('supply_id, quantity')
           .lt('quantity', quincePorciento)
         const suppliesId = data.map((item) => item.supply_id)
     
@@ -187,7 +184,6 @@ function Otros(){
 
     return(
         <div className="otros-root" style={{width: "100%", height: "100%"}} >
-            {show()}
             <div className='otros' style={{width: "300px"}}>
                 <h1>Otra información interesante</h1>
                 <hr></hr>
