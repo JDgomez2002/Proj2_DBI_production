@@ -14,6 +14,8 @@ function Otros(){
 
     const show = () => {
         enfermedades()
+        MedicamentosCantidad()
+        Supplies()
     }
 
     //top 10 de enfermedades más mortales
@@ -104,33 +106,21 @@ function Otros(){
     }
 
     //Medicinas o suministros prontos a terminar por la unidad de salud dada
-    async function porTerminar() {
+    async function MedicamentosCantidad() {
+        //obtiene toda la data de la tabla 'inventory_medication'
         const { data } = await supabase
-            .from('inventory_medication')
-            .select('medications_id, quantity')
-            .lt('quantity', quincePorciento)
+          .from('inventory_medication')
+          .select('medications_id, quantity')
+          .lt('quantity', quincePorciento)
         const medicamentosId = data.map((item) => item.medications_id)
-
-        const {data: dataMedicinas} = await supabase
-            .from('medications')
-            .select('name')
-            .in('medications_id', medicamentosId)
-        const medicamentosQ = dataMedicinas.map((item) => item.name)
-
-        const { dataS } = await supabase
-            .from('inventory_supplies')
-            .select('supply_id, quantity')
-            .lt('quantity', quincePorciento)
-        const suppliesId = dataS.map((item) => item.supply_id)
-
-        const {data: dataSuministros} = await supabase
-            .from('supplies')
-            .select('name')
-            .in('supply_id', suppliesId)
-        const supplies = dataSuministros.map((item) => item.name)
-
-        setMedicamentosQ(medicamentosQ)
-        setSupplies(supplies)
+    
+        //realiza el join de la tabla 'inventory_medication' con 'medications' para obtener el nombre
+        const { data: generalData } = await supabase
+          .from('medications')
+          .select('name')
+          .in('medications_id', medicamentosId)
+        const medicamentosQ = generalData.map((item) => item.name)
+        setMedicamentosQ(medicamentosQ, medicamentosId)
     }
 
     const displayMedicamentosCantidad = [];
@@ -141,6 +131,23 @@ function Otros(){
         </div>
         );
     }
+
+    async function Supplies() {
+        //obtiene toda la data de la tabla 'inventory_supplies'
+        const { data } = await supabase
+          .from('inventory_supplies')
+          .select()
+          .lt('quantity', quincePorciento)
+        const suppliesId = data.map((item) => item.supply_id)
+    
+        //realiza el join de la tabla 'inventory_supplies' con 'supplies' para obtener el nombre
+        const { data: generalData } = await supabase
+          .from('supplies')
+          .select('name')
+          .in('supply_id', suppliesId)
+        const supplies = generalData.map((item) => item.name)
+        setSupplies(supplies)
+      }
 
     const displaySupplies = [];
     for (let i = 0; i < n && i < supplies.length; i++) {
@@ -204,8 +211,10 @@ function Otros(){
 
                 <hr></hr>
                 <h2>Medicinas o suministros prontos a terminar</h2>
-                <div className="detalles" >{}</div>
-                <div className="detalles" >{}</div>
+                <div className="detalles" >
+                    {displayMedicamentosCantidad}
+                    {displaySupplies}
+                </div>
 
                 <hr></hr>
                 <h2>Top 3 de las unidades de salud que más pacientes atienden</h2>
